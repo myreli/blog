@@ -1,0 +1,21 @@
+title:             Myreli Borba
+email:             borbamyreli@gmail.com
+description:       Personal blog, sharing lines of code and pieces of my life.
+author:            myreli
+url:               "https://myreli.dev/blog"
+baseurl:           "/blog"
+production_url :   https://myreli.dev/blog
+BASE_PATH :        https://myreli.dev/blog
+
+# Social Profiles
+twitter_username:  borbamyreli
+github_username:   myreli
+facebook_username: myreli-borba
+
+# Build settings
+markdown:          kramdown
+paginate:          10
+paginate_path:     "/posts/page:num/"
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
