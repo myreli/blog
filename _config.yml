@@ -1,21 +1,26 @@
-title:             Myreli
-email:             borbamyreli@gmail.com
-description:       Personal blog, sharing lines of code and pieces of my life.
-author:            myreli
-url:               "https://myreli.dev/blog"
-baseurl:           "/blog"
-production_url :   https://myreli.dev/blog
-BASE_PATH :        https://myreli.dev/blog
-
-# Social Profiles
-twitter_username:  borbamyreli
-github_username:   myreli
+---
+title: Myreli
+timezone: UTC
+collections:
+  posts:
+    title: Posts
+    output: true
+  uploads:
+    title: Uploads
+    output: true
+email: borbamyreli@gmail.com
+description: Personal blog, sharing lines of code and pieces of my life.
+author: myreli
+url: https://myreli.dev/blog
+baseurl: "/blog"
+production_url: https://myreli.dev/blog
+BASE_PATH: https://myreli.dev/blog
+twitter_username: borbamyreli
+github_username: myreli
 facebook_username: myreli-borba
-
-# Build settings
-markdown:          kramdown
-paginate:          5
-paginate_path:     "/posts/page:num/"
+markdown: kramdown
+paginate: 5
+paginate_path: "/posts/page:num/"
 plugins:
-  - jekyll-feed
-  - jekyll-paginate
+- jekyll-feed
+- jekyll-paginate
