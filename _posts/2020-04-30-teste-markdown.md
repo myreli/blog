@@ -2,7 +2,7 @@
 title: Teste com markdown direto, exportando do Typora
 date: 2020-04-30 00:26:13 Z
 layout: post
-background: "https://www.hypeness.com.br/wp-content/uploads/2018/12/imagens-surreais.jpg"
+background: https://www.hypeness.com.br/wp-content/uploads/2018/12/imagens-surreais.jpg
 ---
 
 # Isso é um teste. 
