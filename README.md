@@ -30,8 +30,6 @@ bundle exec jekyll serve
 
 ## Copyright and License
 
-Copyright 2017-2020 Myreli.
-
 There are two main parts composing this blog: writing (which are my blog posts - referred as Content) and code (which is the Jekyll theme and its modifications referred as Code) so we have different types of license and copyright. 
 
 Basically: please respect my mind's effort but feel free to create a blog of your own being original. =D
@@ -42,6 +40,6 @@ The work is under exclusive copyright by default, nobody else can copy, distribu
 
 ### Code
 
-By code I mean the blog code itself which follows the same MIT License as Start Bootstrap's Clean Blog.
+By code I mean the blog code itself which follows the same MIT License as Start Bootstrap's Clean Blog. Copyright 2013-2019 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-clean-blog-jekyll/blob/gh-pages/LICENSE) license.
 
-Copyright 2013-2019 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-clean-blog-jekyll/blob/gh-pages/LICENSE) license.
+Copyright 2017-2020 Myreli.
