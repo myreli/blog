@@ -2,7 +2,7 @@
 title: Hello World!
 date: 2020-05-01 01:20:06 Z
 layout: post
-subtitle: Uma breve e gentil introdução e boas vindas
+subtitle: Boas Vindas, uma breve e gentil introdução 
 background: "/img/bg-index.jpg"
 ---
 
@@ -12,7 +12,7 @@ background: "/img/bg-index.jpg"
 
 Obrigada por estar aqui. E hello world dos blogs. 
 
-Primeiramente obrigada [Ingrid <3](ingridmachado.github.io) pela inspiração de primeiro post, foi surpreendentemente bem difícil decidir por onde começar. 
+Primeiramente obrigada [Ingrid <3](https://ingridmachado.github.io) pela inspiração de primeiro post, foi surpreendentemente bem difícil decidir por onde começar. 
 
 E obrigada a todo mundo que sempre me incentivou a este momento. 
 
