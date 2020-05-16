@@ -8,8 +8,8 @@ collections:
   uploads:
     title: Uploads
     output: true
-email: borbamyreli@gmail.com
-description: Personal blog, sharing lines of code and pieces of my life.
+email: oi@myreli.dev
+description: Personal blog sharing lines of code and pieces of my life.
 author: myreli
 url: https://myreli.dev/blog
 baseurl: "/blog"
@@ -19,6 +19,8 @@ twitter_username: borbamyreli
 github_username: myreli
 facebook_username: myreli-borba
 markdown: kramdown
+kramdown:
+  auto_ids: true
 paginate: 5
 paginate_path: "/posts/page:num/"
 plugins:

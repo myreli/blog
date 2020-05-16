@@ -1,0 +1,11 @@
+{% capture path %}{{ page.date | date: "%Y-%m-%d" }}-{{ page.key }}/{{ include.name }}{% endcapture %}
+{% if include.caption %}
+<figure class="figure">
+    <img class="figure-img img-fluid rounded shadow" src="{{site.baseurl}}/img/posts/{{ path }}" {% if include.alt %} alt="{{ include.alt }}" {% endif %} {% if include.width %}
+        width="{{ include.width }}" {% endif %} />
+    <figcaption class="figure-caption">{{ include.caption }}</figcaption>
+</figure>
+{% else %}
+<img class="figure-img img-fluid rounded shadow" src="{{site.baseurl}}/img/posts/{{ path }}" {% if include.alt %} alt="{{ include.alt }}" {% endif %} {% if include.width %}
+    width="{{ include.width }}" {% endif %} />
+{% endif %}
