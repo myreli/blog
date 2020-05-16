@@ -2,7 +2,7 @@
 title: Hello World!
 date: 2020-05-01 01:20:06 Z
 layout: post
-subtitle: Uma breve e gentil introdução e boas vindas
+subtitle: Boas Vindas, uma breve e gentil introdução 
 background: "/img/bg-index.jpg"
 ---
 
