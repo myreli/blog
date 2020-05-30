@@ -10,6 +10,13 @@
 
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
+  <meta content="myreli.dev" property="og:site_name">
+  <meta content="article" property="og:type">
+  <meta content="{{ page.subtitle }}" property="og:description">
+  <meta content="{{ page.title }}" property="og:title">
+  <meta content="{{ page.background | absolute_url }}" property="og:image">
+  <meta content="{{ page.url | replace:'index.html','' | absolute_url }}" property="og:url">
+
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 

@@ -1,5 +1,6 @@
 ---
 title: Myreli
+name: myreli.dev
 timezone: UTC
 collections:
   posts:
@@ -15,7 +16,7 @@ url: https://myreli.dev/blog
 baseurl: "/blog"
 production_url: https://myreli.dev/blog
 BASE_PATH: https://myreli.dev/blog
-twitter_username: borbamyreli
+twitter_username: myreliborba
 github_username: myreli
 facebook_username: myreli-borba
 markdown: kramdown
