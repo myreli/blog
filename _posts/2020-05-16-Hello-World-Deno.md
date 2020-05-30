@@ -7,6 +7,10 @@ subtitle: Uhul! Saiu oficialmente a primeira versão da nova runtime Deno 🦕
 background: "/img/posts/2020-05-16-Hello-World-Deno/cover.jpg"
 ---
 
+## WTF is Deno?! 🦕
+
+Uhul! Saiu oficialmente a primeira versão da nova runtime Deno 🦕
+
 > Essa é a primeira parte de uma série de artigos sobre Deno:
   0. [Hello World, Deno! - Parte I](#) **você está aqui**
   1. [Hello World, Deno! - Iniciando uma aplicação - Parte II](#) *em breve*
@@ -14,36 +18,32 @@ background: "/img/posts/2020-05-16-Hello-World-Deno/cover.jpg"
   3. [Hello World, Deno! - Visitando APIS Nativas - Parte IV](#) *em breve*
   4. [Hello World, Deno! - Considerações finais Parte V](#) *em breve*
 
-## WTF is Deno?! 🦕
+Com suporte nativo a JavaScript e TypeScript, utilizando a engine V8 e construído em Rust, acho que Deno tem tudo pra decolar: 
 
-Uhul! Saiu oficialmente a primeira versão da nova runtime Deno 🦕
-
-Com suporte nativo a JavaScript e TypeScript, utilizando a engine V8 e construído em Rust, sinceramente acho que Deno tem tudo pra decolar: 
-
-- Construído com segurança por padrão
-- Instalação extramente simples e entregue em um único, muito pequeno, arquivo executável
-- Funcionalidades próprias de inspeção, formatação e uma especia de curadoria de módulos
-- Módulos de arquivos super simples e rápidos, suporte a WebAssembly, customizável e bem estruturado
-- Sem reinventar a roda: se existem APIs bem estruturadas e com performance satisfatória na Web, Deno traz ela para a runtime
-- Erros exibidos de forma clara e com sugestões de ação
-- Focado em produtividade e simplicidade: olhem o código fonte, é limpo e objetivo. É simples. É claro. 🦕
-- E uma imagem muito linda (que utilizei como capa dessa postagem, espero que isso não dê problemas):
+- Construído com segurança por padrão;
+- Instalação extramente simples e entregue em um único, muito pequeno, arquivo executável;
+- Funcionalidades próprias de inspeção, formatação e uma espécie de curadoria de módulos;
+- Módulos de arquivos super simples e rápidos, suporte a WebAssembly, customizável e bem estruturado;
+- Sem reinventar a roda: se existem APIs bem estruturadas e com performance satisfatória na Web, Deno traz ela para a runtime;
+- Erros exibidos de forma clara e com sugestões de ação;
+- Focado em produtividade e simplicidade: olhem o código fonte é limpo e objetivo. É simples. É claro. 🦕;
+- E uma imagem muito linda (que utilizei como capa dessa postagem, espero que isso não dê problemas)
   {% include figure.html name="cover.jpg" %}
 
 ### DeNo <=> NoDe
 
 Antes de começar a bisbilhotar o ecossistema Deno, vamos falar sobre Node. 
 
-Node está cada vez mais famoso e com uma comunidade cada vez maior e mais solida, inclusive no ambiente corporativo. No entanto, Node tem *vários* problemas, todo mundo sabe disso. 
+Node está cada vez mais famoso e com uma comunidade cada vez maior e mais sólida, inclusive no ambiente corporativo. No entanto, Node tem *vários* problemas, todo mundo sabe disso. 
 
 Ok, talvez não seja todo mundo que sabe disso, então para citar alguns problemas:
 
-- grande demora na adoção das novas versões de ECMAScript
-- sem suporte ao TypeScript
-- consideravelmente devagar
-- documentação extensa
-- implementação complexa
-- *péssimo* gerenciamento de dependencias
+- grande demora na adoção das novas versões de ECMAScript;
+- sem suporte ao TypeScript;
+- consideravelmente devagar;
+- documentação extensa;
+- implementação complexa;
+- *péssimo* gerenciamento de dependências.
 
 Não apenas isso, mas montar um ambiente de desenvolvimento no Node exige muita "garimpagem". Quase nenhum desenvolvedor Node sabe utilizar Node (estranho, mas verídico). A maioria sabe utilizar express e um template pré-pronto com Babel, Webpack, ESLint, Prettier e toda a parafernália necessária. 
 
@@ -175,7 +175,7 @@ Então, vamos ver como podemos recuperar informações acessando "links", mas ut
 
 Experimente a URL [https://www.potterapi.com/v1/sortingHat/](https://www.potterapi.com/v1/sortingHat/){:target="_blank"} no seu navegador. Vai retornar a qual casa você pertence no universo de Harry Potter, em homenagem a pessoinha que me fez maratonar a saga inteira pela primeira vez em 21 anos de vida. 
 
-Então, como faríamos para obter essa mesma informação em uma nossa aplicação rodando em Deno? Vamos utilizar o exemplo de `curl` oficial, dessa forma: 
+Então, como faríamos para obter essa mesma informação através de uma aplicação rodando em Deno? Vamos utilizar o exemplo de `curl` oficial, dessa forma: 
 
 ```shell
 deno run https://deno.land/std/examples/curl.ts https://www.potterapi.com/v1/sortingHat/
@@ -189,23 +189,23 @@ Para que nosso dinossauro acesse a internet e se comunique com o mundo, precisam
 
 *Gryffindor!* (E eu juro que foi de primeira). 
 
-Enfim, voltando ao foco, é necessário permitir explicitamente todas as operações sensíveis, como acesso a rede, ao sistema de arquivos, etc... A única exceção é para as importações de módulos a partir da URL, a runtime permite o acesso quando é necessário dependências adicionais e fazer o cacheamento delas. 
+É necessário permitir explicitamente todas as operações sensíveis, como acesso a rede, ao sistema de arquivos, etc... A única exceção é para as importações de módulos a partir da URL, a runtime permite o acesso quando é necessário dependências adicionais e fazer o cacheamento delas. 
 
 ## "Bem sênior, né meu?"
 
-Se alguém já viu algum vídeo do [Erick Wendel](https://erickwendel.com.br/), ele menciona bastante essa frase haha. E eu pensei bastante nela enquanto navegava pelos fontes de Deno. 
+Se alguém já viu algum vídeo do [Erick Wendel](https://erickwendel.com.br/), ele menciona bastante essa frase haha. E pensei bastante nela enquanto navegava pelos fontes de Deno. 
 
-Todas as implementações são simples e seguem o principio de responsabilidade única. Você já tentou fazer uma requisição nativamente em Node? É beeem feio. E eu não entendo a necessidade, quando no JavaScript nos browsers já tem a `fetch`. Acho que Deno também pensa assim, pois esse é [justamente o exemplo no site](https://deno.land/manual/runtime){:target="_blank"}. 
+Todas as implementações são simples e seguem o principio de responsabilidade única. Já tentou fazer uma requisição nativamente em Node? É beeem feio. E não entendo a necessidade, quando no JavaScript nos browsers já tem a `fetch`. Acho que Deno também pensa assim, pois esse é [justamente o exemplo no site](https://deno.land/manual/runtime){:target="_blank"}. 
 
 {% include figure.html name="cool-deno.png" %}
 
-Eu lembro que uma vez, quando eu ainda era estagiária, meu amigo falou "Eu vi o código do nosso líder... não tem nada demais". Na época eu ri, mas depois fiquei pensando: o que teria demais? O que seria o código de um sênior? Deveria ser super complexo e impossível de ler sendo um mero mortal? 
+Lembro que uma vez, quando ainda era estagiária, meu amigo falou "Eu vi o código do nosso líder... não tem nada demais". Na época ri, mas depois fiquei pensando: o que teria demais? O que seria o código de um sênior? Deveria ser super complexo e impossível de ler sendo um mero mortal? 
 
 Muito pelo contrário, deve ser ainda mais legível e simples. (Mas isso fica para outro post, quem sabe.) E Deno faz justamente isso, combinando simplicidade com legibilidade, segurança e performance. 
 
 Por isso existem as Web APIs (que seguem os mesmos contratos das APIs da Web) e as APIs próprias, que são as que não são sólidas ou não existem na Web, e estão disponíveis em `deno`. 
 
- Advinha uma coisa *bem sênior, né meu?* que não existe em Deno? `node_modules`! Eu detesto essa parte do Node então fiquei bem feliz hahaha. Deno faz um gerenciamento de cache otimizado, utilizando a configuração de cache do sistema operacional. Yep. Sem node_modules vagando por aí enchendo espaço. Sem mais `zip`s enormes porque alguém esqueceu de deixar de fora. [Velocidade e agilidade](https://www.youtube.com/watch?v=txLnaTojgyg){:target="_blank"}. 
+ Advinha uma coisa *bem sênior, né meu?* em Deno? Não existe `node_modules`! Eu detesto essa parte do Node então fiquei bem feliz hahaha. Deno faz um gerenciamento de cache otimizado, utilizando a configuração de cache do sistema operacional. Yep. Sem node_modules vagando por aí enchendo espaço. Sem mais `zip`s enormes porque alguém esqueceu de deixar de fora. [Velocidade e agilidade](https://www.youtube.com/watch?v=txLnaTojgyg){:target="_blank"}. 
 
 ##  Desenvolvendo
 
