@@ -19,7 +19,7 @@ layout: default
             <h2 class="subheading">{{ page.subtitle }}</h2>
             {% endif %}
             <span class="meta">Escrito por
-              <a href="#">{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}</a>
+              <a href="{{site.baseurl}}/about">{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}</a>
               em {{ page.date | date: '%B %d, %Y' }} &middot; {% include read_time.html
               content=page.content %}</span>
           </div>
@@ -66,7 +66,7 @@ layout: default
             var HYVOR_TALK_CONFIG = {
                 url: '{{ page.url | absolute_url }}',
                 id: '{{page.id}}',
-                loadMode: 'scroll'
+                // loadMode: 'scroll'
             };
         </script>
         <script async type="text/javascript" src="//talk.hyvor.com/web-api/embed"></script>
