@@ -11,7 +11,7 @@ E aí! Tudo bem?
 
 No último artigo eu escrevi um pouco sobre Deno 🦕 , a nova runtime JavaScript do mesmo criador de Node, que foi a primeira parte de uma série de artigos sobre este tema. Caso ainda não tenha lido, pode começar [aqui](https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html){:target="_blank"}. 
 
-Hoje vamos dar continuidade aquele artigo, colocando a mão na massa para dar os primeiros passos nessa runtime. 
+Hoje vamos dar continuidade àquele artigo, colocando a mão na massa para dar os primeiros passos nessa runtime. 
 
 > Essa é a segunda parte de uma série de artigos sobre Deno:
   0. [Hello World, Deno! - Parte I](https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html){:target="_blank"} *disponível*
@@ -114,7 +114,7 @@ O global `Deno` disponibiliza `args`, que retorna para o nosso programa o array 
 
 {% include figure.html name="deno-args.png" %}
 
-Por questões de didática e simplicidade, no momento vamos aceitar apenas um nome por vez em nosso programa. Então, vamos fazer assim: 
+Por questões de didática e simplicidade, no momento, vamos aceitar apenas um nome por vez em nosso programa. Então, vamos fazer assim: 
 
 ```typescript
 const student = Deno.args[0]
