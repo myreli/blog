@@ -1,6 +1,6 @@
 ---
 title: Hello World, Deno! - Parte 3 - Visitando APIs Web
-key: Hello-World-Deno-Parte-2
+key: Hello-World-Deno-Parte-3
 date: 2020-06-29 09:23:21 Z
 layout: post
 subtitle: O poder do JavaScript do browser no Back-End de verdade - APIs da Web em Deno 🦕
@@ -77,7 +77,7 @@ Agora vamos testar nossa própria implementação para chamar a API de Harry Pot
 
 Para isso, utilizamos essa API e basta substituir o texto `'URL'` pela URL que queremos chamar, neste caso, a do Chapéu Seletor. Em um arquivo `.ts` qualquer, vai ser algo, mais ou menos, assim: 
 
-![image-20200521110732467](/home/myreli/code/myrelib/blog/img/posts/2020-05-18-Hello-World-Deno-Parte-2/hello-deno-sorting-hat.png) 
+{% include figure.html name="hello-deno-sorting-hat.png" %}
 
 Para executar, lembre-se de permitir corretamente o acesso a rede.  
 
@@ -93,13 +93,13 @@ Até o momento temos as peças do nosso projeto de forma separadas então precis
 
 Do último artigo discutimos sobre qual seria a estrutura, mas não executamos ela de fato. E encerramos assim: 
 
-![image-20200629172601152](/home/myreli/code/myrelib/blog/img/posts/2020-05-18-Hello-World-Deno-Parte-3/review.png)
+{% include figure.html name="review.png" %}
 
 Agora vamos fazer aplicar essa estrutura. Apesar de ser uma simples CLI é importante manter as coisas minimamente organizadas, principalmente para no artigo final quando dermos uma olhadinha na suite nativa de testes. :)
 
 A primeira coisa que eu fiz foi mover a lógica anterior para uma função chamada `identifyStudent` e chamar essa função dentro do meu arquivo. 
 
-![image-20200629180018118](/home/myreli/code/myrelib/blog/img/posts/2020-05-18-Hello-World-Deno-Parte-3/identify-student.png)
+{% include figure.html name="identify-student.png" %}
 
 Tudo funciona exatamente como antes, mas agora temos um código mais legível. 
 
@@ -120,7 +120,7 @@ Tudo funciona exatamente como antes, mas agora temos um código mais legível.
 
 Seguindo o mesmo procedimento para os outros dois que precisamos, vamos terminar com algo assim: 
 
-![image-20200629180550938](/home/myreli/code/myrelib/blog/img/posts/2020-05-18-Hello-World-Deno-Parte-3/refactoring.png)
+{% include figure.html name="refactoring.png" %}
 
 Algumas coisas importantes: 
 
@@ -152,7 +152,7 @@ return house;
 
 Agora, retornando para o nosso terminal, vamos ver como ficou tudo no final. Lembre-se de utilizar a flag de permissão de internet dessa vez, já que estamos acessando a internet: 
 
-![image-20200630214008295](/home/myreli/code/myrelib/blog/img/posts/2020-05-18-Hello-World-Deno-Parte-3/identify-house.png)
+{% include figure.html name="identify-house.png" %}
 
 > **#code-tip:** a qualquer momento você pode executar `deno fmt <arquivo>` para formatar seu arquivo com as indentações, espaçamentos e organização corretinhas :wink:
 
