@@ -13,7 +13,7 @@ No artigo anterior falamos sobre várias coisas em busca de um único objetivo: 
 
 > Demorei, mas voltei. :) 
 >
-> Primeiramente, peço desculpas pela demora eterna hehe. Se por acaso você gostaria de saber o porquê de tanta demora, eu estou considerando abrir meu coração sobre aqui, mas enquanto isso [acesse todos esses links](https://vidasnegrasimportam.carrd.co/){:target="_blank"}. Caso eu não tome coragem para publicar quero dizer aos meus amigos, conhecidos e desconhecidos negros: Eu sinto muito. Vidas negras importam.
+> Peço desculpas pela demora eterna hehe. Caso tenha curiosidade de saber o porquê de tanta demora, estou considerando abrir meu coração sobre aqui, mas enquanto isso [acesse todos esses links](https://vidasnegrasimportam.carrd.co/){:target="_blank"}. Caso não tome coragem para publicar quero dizer aos meus amigos, conhecidos e desconhecidos negros: Eu sinto muito. Vidas negras importam.
 >
 > Além disso, nesse último final de semana saiu a terceira e última temporada de Dark.
 
@@ -27,7 +27,7 @@ Hoje, vamos evoluir nossa aplicação comunicando de verdade com o Chapéu Selet
   4. [Hello World, Deno! - Considerações finais Parte V](#) *em breve*
 
 
-Recorda a introdução sobre Deno em que fizemos uma chamada no terminal para o chapéu seletor e ele dizia qual era a casa? 
+Lembra a introdução sobre Deno em que fizemos uma chamada no terminal para o chapéu seletor e ele dizia qual era a casa? 
 
 Pois então, vamos trazer aquela mágica para dentro do nosso código. 
 
