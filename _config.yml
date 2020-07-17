@@ -18,7 +18,7 @@ production_url: https://myreli.dev/blog
 BASE_PATH: https://myreli.dev/blog
 twitter_username: myreliborba
 github_username: myreli
-facebook_username: myreli-borba
+linkedin_username: myreli
 markdown: kramdown
 kramdown:
   auto_ids: true
