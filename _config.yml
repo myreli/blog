@@ -11,7 +11,7 @@ collections:
     output: true
 email: oi@myreli.dev
 description: Personal blog sharing lines of code and pieces of my life.
-author: myreli
+author: Myreli
 url: https://myreli.dev/blog
 baseurl: "/blog"
 production_url: https://myreli.dev/blog
