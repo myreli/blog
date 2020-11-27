@@ -7,7 +7,7 @@ subtitle: Como particionar (ou dividir) um array em JavaScript puro baseado em u
 background: "/img/posts/2020-11-27-Como-Particionar-Array-JavaScript/cover.jpg"
 ---
 
-**TL;DR:** Você pode pular diretamente para a [função `partition`]() que teremos implementado ao fim do artigo, ela será utilizada dessa forma (ou através do `Array.prototype.partition`):
+**TL;DR:** Você pode pular diretamente para a [função `partition`](#resultado) que teremos implementado ao fim do artigo, ela será utilizada dessa forma (ou através do `Array.prototype.partition`):
 
 ```javascript
 const [filteredIn, filteredOut] = partition(array, condition)
