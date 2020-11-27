@@ -263,6 +263,8 @@ A parte mais legal disso é a disponibilização da flag `--json`, que exporta a
 
 ## Considerações finais
 
+Todo o código que criamos hoje está disponível no [Github](https://github.com/myreli/hello-deno-harry-potter/tree/setup-and-testing).
+
 Espero que isso tenha te dado um gostinho para continuar explorado Deno por aí... É realmente **muito** legal e resolve alguns problemas que o Node.js acaba tendo por natureza. 
 
 Também recomendo que você visite o [site de Deno](https://deno.land/) e explore tudo por lá, é muito bacana e é a melhor forma de conhecer a *runtime* e entender o porquê ela surgiu. 
