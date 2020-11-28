@@ -12,11 +12,11 @@ collections:
 email: oi@myreli.dev
 description: Sharing lines of code and pieces of my life.
 author: Myreli
-url: https://myreli.dev/blog
+url: https://myreli.dev
 baseurl: "/blog"
-production_url: https://myreli.dev/blog
-BASE_PATH: https://myreli.dev/blog
-twitter_username: myreliborba
+production_url: https://myreli.dev
+BASE_PATH: https://myreli.dev
+twitter_username: myreli_
 github_username: myreli
 linkedin_username: myreli
 markdown: kramdown
