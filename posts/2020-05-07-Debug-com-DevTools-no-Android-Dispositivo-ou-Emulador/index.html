@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>Debug com DevTools no Android (Dispositivo ou Emulador) | by Myreli</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button { 
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>blog.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/all/">Posts</a></li>
+<li><a href="https://listed.to/@myreli">Rascunhos</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="debug-com-devtools-no-android-dispositivo-ou-emulador">Debug com DevTools no Android (Dispositivo ou Emulador)</h1>
+            <h2 id="depuracao-remota-como-utilizar-devtools-para-debuggar-comportamento-no-android-navegador-e-webview">Depuração Remota - como utilizar DevTools para debuggar comportamento no Android (Navegador e WebView)</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <h2 id="como-e-o-porque-de-utilizar-as-devtools-em-uma-aplicacao-rodando-no-android">Como (e o porquê de) utilizar as DevTools em uma aplicação rodando no Android?</h2>
+<p>Se tratando de web, as ferramentas para desenvolvedores são <em>muito</em> úteis. E muito poderosas. Elas permitem inspeção detalhada de código e estilo, debug poderoso e diversos recursos para monitoramento e testes.  No entanto, elas só estão disponíveis do <em>desktop</em> então como podemos aproveitar todo o potencial delas - e o nosso costume - para <em>debuggar</em> um site rodando em um <em>smartphone</em>?  Ou ainda a WebView de uma aplicação?</p>
+<p><picture><source type="image/avif" srcset="/assets/932jAA-1Rkkyk8Mbn-150w.avif 150w, /assets/932jAA-1Rkkyk8Mbn-300w.avif 300w, /assets/932jAA-1Rkkyk8Mbn-450w.avif 450w, /assets/932jAA-1Rkkyk8Mbn-600w.avif 600w, /assets/932jAA-1Rkkyk8Mbn-750w.avif 750w, /assets/932jAA-1Rkkyk8Mbn-900w.avif 900w, /assets/932jAA-1Rkkyk8Mbn-1050w.avif 1050w, /assets/932jAA-1Rkkyk8Mbn-1200w.avif 1200w, /assets/932jAA-1Rkkyk8Mbn-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/932jAA-1Rkkyk8Mbn-150w.webp 150w, /assets/932jAA-1Rkkyk8Mbn-300w.webp 300w, /assets/932jAA-1Rkkyk8Mbn-450w.webp 450w, /assets/932jAA-1Rkkyk8Mbn-600w.webp 600w, /assets/932jAA-1Rkkyk8Mbn-750w.webp 750w, /assets/932jAA-1Rkkyk8Mbn-900w.webp 900w, /assets/932jAA-1Rkkyk8Mbn-1050w.webp 1050w, /assets/932jAA-1Rkkyk8Mbn-1200w.webp 1200w, /assets/932jAA-1Rkkyk8Mbn-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/932jAA-1Rkkyk8Mbn-150w.jpeg 150w, /assets/932jAA-1Rkkyk8Mbn-300w.jpeg 300w, /assets/932jAA-1Rkkyk8Mbn-450w.jpeg 450w, /assets/932jAA-1Rkkyk8Mbn-600w.jpeg 600w, /assets/932jAA-1Rkkyk8Mbn-750w.jpeg 750w, /assets/932jAA-1Rkkyk8Mbn-900w.jpeg 900w, /assets/932jAA-1Rkkyk8Mbn-1050w.jpeg 1050w, /assets/932jAA-1Rkkyk8Mbn-1200w.jpeg 1200w, /assets/932jAA-1Rkkyk8Mbn-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/932jAA-1Rkkyk8Mbn-750w.jpeg" width="1350" height="653" alt="Exemplo de página com as Ferramentas do Desenvolvedor no Firefox Developer Edition" loading="lazy" decoding="async"></picture></p>
+<p>Recentemente me deparei com uma situação em que determinado comportamento de uma página Web ocorria somente em versões especificas de um aparelho Android utilizando WebView, ou seja, o <em>troubleshooting</em> no navegador comum em ambiente de desenvolvimento não era o bastante. No entanto, é possível utilizar as ferramentas de desenvolvedor (atalho <code>f12</code> no Firefox) em dispositivos remotos que estejam executando instâncias do navegador, mesmo que seja em WebView.</p>
+<blockquote>
+<p><strong>WebView</strong> é um componente presente nos smartphones baseado no projeto Chromium da Google (sim, o Chrome também vem daí), basicamente é um navegador compacto que permite que aplicativos executem páginas Web como se fossem aplicativos nativos. Também permite que esses aplicativos acessem mais recursos do que se estivessem rodando apenas em uma página do navegador.</p>
+</blockquote>
+<h3 id="como-vai-funcionar">Como vai funcionar?</h3>
+<p>Pretendo compartilhar aqui uma ferramenta útil no desenvolvimento de aplicativos web que utilizem o componente WebView dos dispositivos móveis para operarem como um aplicativo com a sensação de "nativo".</p>
+<p>Vou mostrar de forma breve como conectar o console do Chrome e Firefox em dispositivos e emuladores Android executando estes navegadores ou o WebView. Infelizmente não possuo nenhum iOS para validar se é possível, mas em teoria funcionaria da mesma forma se você ativar os mesmos recursos.</p>
+<h3 id="configurando-android">Configurando Android</h3>
+<p>Siga estes passos somente se você quer inspecionar uma aplicação rodando em um dispositivo Android físico, caso esteja utilizando um emulador - como do Android Studio - pule para a etapa de DevTools no <a href="#utilizando-devtools-do-chrome">Chrome</a> ou <a href="#utilizando-devtools-do-firefox">Firefox</a>.</p>
+<h4 id="ativando-o-modo-desenvolvedor">Ativando o Modo Desenvolvedor</h4>
+<p>Acesse <code>Configurações =&gt; Sistema =&gt; Sobre o Dispositivo</code> e procure pela opção "Número da Versão" ou semelhante. Pressione no número da versão diversas vezes (entre 5 e 7). Isso ativa as ferramentas de desenvolvedor no dispositivo.</p>
+<h4 id="implementacao-do-webview">Implementação do WebView</h4>
+<p>Acesse <code>Configurações =&gt; Sistema =&gt; Opções do Desenvolvedor</code> e procure pela opção "Implementação do WebView" normalmente existem duas opções "Android WebView" ou "Chrome WebView". A do Chrome costuma ser a padrão na maioria dos dispositivos, mas você pode selecionar aí a que está dando problema e deseja utilizar para o debug.</p>
+<h4 id="depuracao-usb">Depuração USB</h4>
+<p>Acesse  <code>Configurações =&gt; Sistema =&gt; Opções do Desenvolvedor</code> e procure pela opção "Depuração USB", deixando-a ativada. Essa opção é responsável por permitir que o DevTools Remoto acesse o dispositivo e possa se comunicar com o aplicativo para fazermos o debug.</p>
+<p>Também sugiro dar uma explorada nessas opções, existem várias úteis para o desenvolvimento de aplicações mobile.</p>
+<h3 id="utilizando-devtools-do-chrome">Utilizando DevTools do Chrome</h3>
+<p>Em um navegador Chrome, acesse o endereço <a href="chrome://inspect">chrome://inspect</a> e marque as opções <code>Discover USB devices</code> e <code>Discover network targets</code> (a segunda somente se quiser utilizar por WiFi).</p>
+<p><picture><source type="image/avif" srcset="/assets/4uIMNl--B6eylEskm-150w.avif 150w, /assets/4uIMNl--B6eylEskm-300w.avif 300w, /assets/4uIMNl--B6eylEskm-450w.avif 450w, /assets/4uIMNl--B6eylEskm-600w.avif 600w, /assets/4uIMNl--B6eylEskm-750w.avif 750w" sizes="100vw"><source type="image/webp" srcset="/assets/4uIMNl--B6eylEskm-150w.webp 150w, /assets/4uIMNl--B6eylEskm-300w.webp 300w, /assets/4uIMNl--B6eylEskm-450w.webp 450w, /assets/4uIMNl--B6eylEskm-600w.webp 600w, /assets/4uIMNl--B6eylEskm-750w.webp 750w" sizes="100vw"><source type="image/jpeg" srcset="/assets/4uIMNl--B6eylEskm-150w.jpeg 150w, /assets/4uIMNl--B6eylEskm-300w.jpeg 300w, /assets/4uIMNl--B6eylEskm-450w.jpeg 450w, /assets/4uIMNl--B6eylEskm-600w.jpeg 600w, /assets/4uIMNl--B6eylEskm-750w.jpeg 750w" sizes="100vw"><img src="/assets/4uIMNl--B6eylEskm-450w.jpeg" width="750" height="362" alt="Exemplo de página de inspeção do Navegador Chrome" loading="lazy" decoding="async"></picture></p>
+<p>Caso queira <em>debuggar</em> um dispositivo físico: após todos os passos de ativação do Debug por USB no dispositivo, basta conectar o dispositivo ao computador através de uma USB.</p>
+<p>Caso queira <em>debuggar</em> um dispositivo emulado: inicie a aplicação no emulador de forma comum. Testei apenas com o Android Studio, mas a grande maioria utiliza a mesma <em>engine</em> de emulação, então deve operar de forma semelhante.</p>
+<p>Agora, abra o navegador do Chrome (ou a aplicação em WebView), caso ainda não tenha o feito, e o inspetor vai detectar que existe uma aplicação para ser inspecionada e solicitará acesso:</p>
+<p><picture><source type="image/avif" srcset="/assets/jTQ8kg-jx5b7tHIF5-150w.avif 150w, /assets/jTQ8kg-jx5b7tHIF5-300w.avif 300w, /assets/jTQ8kg-jx5b7tHIF5-450w.avif 450w, /assets/jTQ8kg-jx5b7tHIF5-600w.avif 600w, /assets/jTQ8kg-jx5b7tHIF5-750w.avif 750w, /assets/jTQ8kg-jx5b7tHIF5-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/jTQ8kg-jx5b7tHIF5-150w.webp 150w, /assets/jTQ8kg-jx5b7tHIF5-300w.webp 300w, /assets/jTQ8kg-jx5b7tHIF5-450w.webp 450w, /assets/jTQ8kg-jx5b7tHIF5-600w.webp 600w, /assets/jTQ8kg-jx5b7tHIF5-750w.webp 750w, /assets/jTQ8kg-jx5b7tHIF5-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/jTQ8kg-jx5b7tHIF5-150w.jpeg 150w, /assets/jTQ8kg-jx5b7tHIF5-300w.jpeg 300w, /assets/jTQ8kg-jx5b7tHIF5-450w.jpeg 450w, /assets/jTQ8kg-jx5b7tHIF5-600w.jpeg 600w, /assets/jTQ8kg-jx5b7tHIF5-750w.jpeg 750w, /assets/jTQ8kg-jx5b7tHIF5-900w.jpeg 900w" sizes="100vw"><img src="/assets/jTQ8kg-jx5b7tHIF5-600w.jpeg" width="900" height="442" alt="Exemplo de autenticação na inspeção do Navegador Chrome" loading="lazy" decoding="async"></picture></p>
+<p>No dispositivo móvel, permita a depuração USB (pressione OK) e veja que o inspetor mostra as páginas abertas e os WebViews (Chrome) em execução, selecione o que você quer inspecionar clicando em <code>inspect</code>. Precisei grifar partes do exemplo pois eram informações confidenciais, mas você verá os dados do seu aplicativo, bem como versões, endereços e títulos.</p>
+<p><picture><source type="image/avif" srcset="/assets/1Ippc8-3l-DP_jyl6-150w.avif 150w, /assets/1Ippc8-3l-DP_jyl6-300w.avif 300w, /assets/1Ippc8-3l-DP_jyl6-450w.avif 450w, /assets/1Ippc8-3l-DP_jyl6-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/1Ippc8-3l-DP_jyl6-150w.webp 150w, /assets/1Ippc8-3l-DP_jyl6-300w.webp 300w, /assets/1Ippc8-3l-DP_jyl6-450w.webp 450w, /assets/1Ippc8-3l-DP_jyl6-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/1Ippc8-3l-DP_jyl6-150w.jpeg 150w, /assets/1Ippc8-3l-DP_jyl6-300w.jpeg 300w, /assets/1Ippc8-3l-DP_jyl6-450w.jpeg 450w, /assets/1Ippc8-3l-DP_jyl6-600w.jpeg 600w" sizes="100vw"><img src="/assets/1Ippc8-3l-DP_jyl6-450w.jpeg" width="600" height="427" alt="Exemplo de seleção de dispositivo na inspeção do Navegador Chrome" loading="lazy" decoding="async"></picture></p>
+<p>E agora você tem acesso a todas as ferramentas de desenvolvedor que teria se o aplicativo estivesse rodando em sua máquina, dessa forma:</p>
+<p><picture><source type="image/avif" srcset="/assets/ZZQjDV-I9qp1UgGI_-150w.avif 150w, /assets/ZZQjDV-I9qp1UgGI_-300w.avif 300w, /assets/ZZQjDV-I9qp1UgGI_-450w.avif 450w, /assets/ZZQjDV-I9qp1UgGI_-600w.avif 600w, /assets/ZZQjDV-I9qp1UgGI_-750w.avif 750w, /assets/ZZQjDV-I9qp1UgGI_-900w.avif 900w, /assets/ZZQjDV-I9qp1UgGI_-1050w.avif 1050w, /assets/ZZQjDV-I9qp1UgGI_-1200w.avif 1200w, /assets/ZZQjDV-I9qp1UgGI_-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/ZZQjDV-I9qp1UgGI_-150w.webp 150w, /assets/ZZQjDV-I9qp1UgGI_-300w.webp 300w, /assets/ZZQjDV-I9qp1UgGI_-450w.webp 450w, /assets/ZZQjDV-I9qp1UgGI_-600w.webp 600w, /assets/ZZQjDV-I9qp1UgGI_-750w.webp 750w, /assets/ZZQjDV-I9qp1UgGI_-900w.webp 900w, /assets/ZZQjDV-I9qp1UgGI_-1050w.webp 1050w, /assets/ZZQjDV-I9qp1UgGI_-1200w.webp 1200w, /assets/ZZQjDV-I9qp1UgGI_-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/ZZQjDV-I9qp1UgGI_-150w.jpeg 150w, /assets/ZZQjDV-I9qp1UgGI_-300w.jpeg 300w, /assets/ZZQjDV-I9qp1UgGI_-450w.jpeg 450w, /assets/ZZQjDV-I9qp1UgGI_-600w.jpeg 600w, /assets/ZZQjDV-I9qp1UgGI_-750w.jpeg 750w, /assets/ZZQjDV-I9qp1UgGI_-900w.jpeg 900w, /assets/ZZQjDV-I9qp1UgGI_-1050w.jpeg 1050w, /assets/ZZQjDV-I9qp1UgGI_-1200w.jpeg 1200w, /assets/ZZQjDV-I9qp1UgGI_-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/ZZQjDV-I9qp1UgGI_-750w.jpeg" width="1350" height="696" alt="Exemplo de debug de dispositivo na inspeção do Navegador Chrome" loading="lazy" decoding="async"></picture></p>
+<p>Todos os recursos estão disponíveis e o visualizador do dispositivo exibe em tempo real exatamente a mesma tela sendo navegada, então permite que todos os comportamentos sejam inspecionados de forma fluida, respeitando o comportamento nativo.</p>
+<h3 id="utilizando-devtools-do-firefox">Utilizando DevTools do Firefox</h3>
+<p>Em um navegador Firefox, acesse o endereço <a href="about:debugging">about:debugging</a> e clique em <code>Enable USB Devices</code>. Isso, claro, se você deseja fazer o debug via USB. Caso esteja utilizando um emulador ou quer conectar via rede, insira o IP ou endereço no campo <code>Host</code> na parte de <code>Network Location</code>.</p>
+<p><picture><source type="image/avif" srcset="/assets/cKdzzR-PJRA4mQsD--150w.avif 150w, /assets/cKdzzR-PJRA4mQsD--300w.avif 300w, /assets/cKdzzR-PJRA4mQsD--450w.avif 450w, /assets/cKdzzR-PJRA4mQsD--600w.avif 600w, /assets/cKdzzR-PJRA4mQsD--750w.avif 750w, /assets/cKdzzR-PJRA4mQsD--900w.avif 900w, /assets/cKdzzR-PJRA4mQsD--1050w.avif 1050w, /assets/cKdzzR-PJRA4mQsD--1200w.avif 1200w, /assets/cKdzzR-PJRA4mQsD--1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/cKdzzR-PJRA4mQsD--150w.webp 150w, /assets/cKdzzR-PJRA4mQsD--300w.webp 300w, /assets/cKdzzR-PJRA4mQsD--450w.webp 450w, /assets/cKdzzR-PJRA4mQsD--600w.webp 600w, /assets/cKdzzR-PJRA4mQsD--750w.webp 750w, /assets/cKdzzR-PJRA4mQsD--900w.webp 900w, /assets/cKdzzR-PJRA4mQsD--1050w.webp 1050w, /assets/cKdzzR-PJRA4mQsD--1200w.webp 1200w, /assets/cKdzzR-PJRA4mQsD--1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/cKdzzR-PJRA4mQsD--150w.jpeg 150w, /assets/cKdzzR-PJRA4mQsD--300w.jpeg 300w, /assets/cKdzzR-PJRA4mQsD--450w.jpeg 450w, /assets/cKdzzR-PJRA4mQsD--600w.jpeg 600w, /assets/cKdzzR-PJRA4mQsD--750w.jpeg 750w, /assets/cKdzzR-PJRA4mQsD--900w.jpeg 900w, /assets/cKdzzR-PJRA4mQsD--1050w.jpeg 1050w, /assets/cKdzzR-PJRA4mQsD--1200w.jpeg 1200w, /assets/cKdzzR-PJRA4mQsD--1350w.jpeg 1350w" sizes="100vw"><img src="/assets/cKdzzR-PJRA4mQsD--750w.jpeg" width="1350" height="645" alt="Exemplo de página de inspeção do Navegador Firefox Developer Edition" loading="lazy" decoding="async"></picture></p>
+<p>Conecte seu dispositivo pela porta USB ou inicie o dispositivo no emulador e pressione <code>Refresh Devices</code>. A depuração remota vai identificar seu dispositivo e informar que não existe nenhuma instância do Firefox em execução. Basta abrir uma aplicação Firefox (dos aplicativos oficiais na <em>PlayStore</em>, apenas não funcionou com o Focus pelos testes que fiz) e atualizar os dispositivos novamente. Conecte-se ao dispositivo desejado em <code>Connect</code> e você verá diversas opções de inspeção.</p>
+<p><picture><source type="image/avif" srcset="/assets/UVtyDY-D3QX5K4Yt1-150w.avif 150w, /assets/UVtyDY-D3QX5K4Yt1-300w.avif 300w, /assets/UVtyDY-D3QX5K4Yt1-450w.avif 450w, /assets/UVtyDY-D3QX5K4Yt1-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/UVtyDY-D3QX5K4Yt1-150w.webp 150w, /assets/UVtyDY-D3QX5K4Yt1-300w.webp 300w, /assets/UVtyDY-D3QX5K4Yt1-450w.webp 450w, /assets/UVtyDY-D3QX5K4Yt1-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/UVtyDY-D3QX5K4Yt1-150w.jpeg 150w, /assets/UVtyDY-D3QX5K4Yt1-300w.jpeg 300w, /assets/UVtyDY-D3QX5K4Yt1-450w.jpeg 450w, /assets/UVtyDY-D3QX5K4Yt1-600w.jpeg 600w" sizes="100vw"><img src="/assets/UVtyDY-D3QX5K4Yt1-450w.jpeg" width="600" height="307" alt="Exemplo de seleção de dispositivo do Navegador Firefox Developer Edition" loading="lazy" decoding="async"></picture></p>
+<p>Você pode inspecionar páginas web, extensões ou <em>service workers</em>. Selecione <code>Inspect</code> no que deseja inspecionar e as ferramentas do desenvolvedor ficarão disponíveis, como no caso abaixo que inspecionei uma aba web:</p>
+<p><picture><source type="image/avif" srcset="/assets/cMYtrI-VuYfNxB6a7-150w.avif 150w, /assets/cMYtrI-VuYfNxB6a7-300w.avif 300w, /assets/cMYtrI-VuYfNxB6a7-450w.avif 450w" sizes="100vw"><source type="image/webp" srcset="/assets/cMYtrI-VuYfNxB6a7-150w.webp 150w, /assets/cMYtrI-VuYfNxB6a7-300w.webp 300w, /assets/cMYtrI-VuYfNxB6a7-450w.webp 450w" sizes="100vw"><source type="image/jpeg" srcset="/assets/cMYtrI-VuYfNxB6a7-150w.jpeg 150w, /assets/cMYtrI-VuYfNxB6a7-300w.jpeg 300w, /assets/cMYtrI-VuYfNxB6a7-450w.jpeg 450w" sizes="100vw"><img src="/assets/cMYtrI-VuYfNxB6a7-300w.jpeg" width="450" height="298" alt="Exemplo de debug de dispositivo do Navegador Firefox Developer Edition" loading="lazy" decoding="async"></picture></p>
+<p><em>Nota: infelizmente, até o momento não consegui conectar as ferramentas do desenvolvedor do Firefox em uma WebView do Chrome, somente nas instâncias do Firefox mesmo. Caso eu descubra, volto aqui para contar =)</em></p>
+<blockquote>
+<p><strong>Dica top:</strong> na verdade não é nada muito inovador, mas é algo que muitas pessoas não se dão conta e que pode ser muito util. O webview nada mais é do que janela enxuta de navegador com acesso privilegiado a alguns recursos nativos fornecidos pelo aplicativo base. Ou seja o que define a página em execução é apenas um endereço web então durante a inspeção, no seu console do Chrome, é possível fazer qualquer injeção de código e alteração que você quiser. Isso é muito útil, por exemplo, se você possui um APK e quer testar diferentes versões de um WebView nele. Ou ainda, se você quer debuggar seu webview rodando em localhost dentro do apk no celular!</p>
+</blockquote>
+<p>E é isso, muito obrigada por chegar até aqui, espero que tenha sido uma leitura útil e agradável.</p>
+<p>Até a próxima.</p>
+<p>As imagens do tutorial são capturas de tela próprias, e a capa do artigo é uma imagem belíssima do <a href="https://unsplash.com/@ikukevk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kevin Ku</a> disponível no <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<p>Obrigada ao <a href="https://github.com/debugmaster">@debugmaster</a> por me apresentar este recurso através desse <a href="https://dev.to/dev0x0/using-google-chrome-console-on-any-mobile-device-9ec">artigo</a>.</p>
+
+        
+        
+            <hr>
+            
+            <section id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </section>
+        
+    </main>
+
+    <hr>
+    
+    <footer>
+        <article>
+            <p>Gostaria de receber esse conteúdo por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="E-mail" required="">
+                <button data-tooltip="Todo o dia 15 você receberá por e-mail a minha newsletter, incluindo os últimos artigos publicados aqui." type="submit">Receber um e-mail por mês</button>
+            </form>
+        </article>
+        <hr>
+        <p>Copyright © <a href="https://myreli.dev">Myreli</a> 2022</p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "/2020/05/07/Debug-com-DevTools-no-Android-Dispositivo-ou-Emulador"
+        }
+        
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+          
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+          
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+</body></html>

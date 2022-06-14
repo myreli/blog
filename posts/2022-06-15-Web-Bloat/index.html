@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>O Inchaço da Web | by Myreli</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button { 
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>blog.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/all/">Posts</a></li>
+<li><a href="https://listed.to/@myreli">Rascunhos</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="o-inchaco-da-web">O Inchaço da Web</h1>
+            <h2 id="porque-a-web-esta-crescendo-cada-vez-mais-e-uma-pagina-simples-de-texto-leva-cinco-segundos-para-carregar-e-pesa-mais-que-um-livro">Porque a web está crescendo cada vez mais e uma página simples de texto leva cinco segundos para carregar e pesa mais que um livro?</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p>Atualmente o tamanho médio de uma página na web é 2MB e são feitas aproximadamente 70 requisições para carregar completamente.</p>
+<p>Para referência: um disquete ocupava menos espaço que isso (1,44MB) e um <em>memory card</em> do PlayStation ocupava a metade (1MB).</p>
+<p>Então com um 1MB era possível armazenar nosso progresso de todos os jogos, mas não é o suficiente para ler três paragráfos de texto na internet?</p>
+<p><picture><source type="image/avif" srcset="/assets/Ft5asG-dAHXUXhlUF-150w.avif 150w, /assets/Ft5asG-dAHXUXhlUF-300w.avif 300w, /assets/Ft5asG-dAHXUXhlUF-450w.avif 450w, /assets/Ft5asG-dAHXUXhlUF-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/Ft5asG-dAHXUXhlUF-150w.webp 150w, /assets/Ft5asG-dAHXUXhlUF-300w.webp 300w, /assets/Ft5asG-dAHXUXhlUF-450w.webp 450w, /assets/Ft5asG-dAHXUXhlUF-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/Ft5asG-dAHXUXhlUF-150w.jpeg 150w, /assets/Ft5asG-dAHXUXhlUF-300w.jpeg 300w, /assets/Ft5asG-dAHXUXhlUF-450w.jpeg 450w, /assets/Ft5asG-dAHXUXhlUF-600w.jpeg 600w" sizes="100vw"><img src="/assets/Ft5asG-dAHXUXhlUF-450w.jpeg" width="600" height="454" loading="lazy" decoding="async"></picture></p>
+<p>Quem aguenta? 😟</p>
+<p>Hoje vou trazer umas reflexões sobre esse tema que estou chamando de <em>O Inchaço da Web</em>. Quem já ouviu falar, ou quiser buscar, ele é conhecido por <em>"Web Bloat"</em> na gringa.</p>
+<p>Vou começar com o mesmo <em>disclaimer</em> que a <a href="https://webdirections.org/blog/the-website-obesity-crisis/">palestra que incentivou essa publicação</a>:</p>
+<blockquote>
+<p><em>Let me start by saying that beautiful websites come in all sizes and page weights. I love big websites packed with images. I love high-resolution video. I love sprawling Javascript experiments or well-designed web apps.</em></p>
+<p><em>This talk isn't about any of those. <strong>It's about mostly-text sites that, for unfathomable reasons, are growing bigger with every passing year.</strong></em></p>
+<p><em>While I'll be using examples to keep the talk from getting too abstract, I’m not here to shame anyone, except some companies (Medium) that should know better and are intentionally breaking the web.</em></p>
+</blockquote>
+<h2 id="porque-e-ruim">Porque é ruim</h2>
+<p>O epub que tenho de um dos maiores livros do mundo, Em Busca do Tempo Perdido (Marcel Proust), possui quase 4 mil páginas e pesa menos do que a página para comprar esse ebook: <strong>enquanto o livro ocupa 4894 KB, a página de compra pesa 15940 KB.</strong></p>
+<p>Uma página com informações resumidas sobre o livro (e um botão para comprar) ocupa mais espaço do que o livro inteiro. Por isso ler livros no Kindle que possui <em>hardware</em> modesto é suave e fluido, mas comprar? Nem tanto.</p>
+<p>Observe você mesmo:</p>
+<pre><code>→ https://www.amazon.com.br/Marcel-Proust-Search-volumes-English-ebook/dp/B0837BFZBL
+
+64 / 215 requests
+3.5 MB / 6.0 MB transferred
+13.8 MB / 20.0 MB resources
+Finish: 1.2 min
+DOMContentLoaded: 1.73 s
+Load: 2.75 s
+</code></pre>
+<p>Precisamos de tudo isso para entregar o conteúdo?</p>
+<p>Um site como semi-brincadeira criou o <em>Web Bloat Score Calculator - <strong>Web-BS.</strong></em></p>
+<p>Basicamente faz a seguinte comparação: o tamanho da página web VS o tamanho de um print daquela mesma página.</p>
+<p>Se a página é tão maior que a imagem e o conteúdo não é perdido, substitui a página pela imagem! 😄</p>
+<p>Não de verdade, mas definitivamente re-pense sua página. Foi o que fiz com meu blog e farei com meu site.</p>
+<p>Aqui: <a href="https://www.webbloatscore.com/">https://www.webbloatscore.com/</a></p>
+<h3 id="acessibilidade">Acessibilidade</h3>
+<p>Sites pesados não são acessíveis.</p>
+<p>No Brasil, <a href="https://agenciabrasil.ebc.com.br/geral/noticia/2021-08/brasil-tem-152-milhoes-de-pessoas-com-acesso-internet">embora o acesso seja amplo</a> e quase 80% da população tenha acesso a internet, 90% da população mais pobre acessa somente via celular - e não é 5G. E dos que possuem residencial, menos de 50% são fibra ótica.</p>
+<p>Para exemplificar esse problema resolvi fazer um teste irônico: quanto tempo leva para conseguir ler o conteúdo de uma página que fala sobre acessibilidade. Como a Apple é reconhecida pelo seu minimalismo, design limpo, engenharia inteligente, etc, peguei essa página sobre as <a href="https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility">Human Interface Guidelines, na seção de acessibilidade</a>.</p>
+<p>Os resultados foram mais tristes do que eu esperava. A página pesa quase 10 disquetes (~12MB) e faz quase 200 requisições.</p>
+<p>Em um Moto G4, com a conexão 3g lenta (o padrão do Brasil), esses foram os resultados:</p>
+<pre><code>→ https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility
+
+178 requests
+12.2 MB transferred
+
+Finish: 4.4 min
+DOMContentLoaded: 36.28 s
+Load: 4.4 min
+</code></pre>
+<p>Embora o conteúdo tenha carregado em 36.28s, a página só se tornou visível após 2 minutos e 36 segundos. Para concluir tudo levou <em><strong>mais de quatro minutos</strong></em>! Li todo o conteúdo em cinco minutos, então literalmente me custou o tempo de outro artigo.</p>
+<p>Imagine viver com essa conexão para estudar, escrever um artigo ou assistir a aula online enquanto o mundo está fechado por causa da pandemia?</p>
+<p>Bom, sessa página são descritas as melhores práticas de acessibilidade de acordo com a Apple, a primeira delas sendo <em>design with accessibility in mind</em>:</p>
+<blockquote>
+<p><em>Accessibility is not just about making information available to people with disabilities — <strong>it’s about making information</strong> <strong>available to everyone</strong>, <strong>regardless of their capabilities or situation</strong>. Designing your app with accessibility in mind means <strong>prioritizing simplicity and perceivability</strong> and examining every design decision to <strong>ensure that it doesn’t exclude people</strong> who have different abilities or interact with their devices in different ways.</em></p>
+</blockquote>
+<p>É... ¯\_(ツ)_/¯</p>
+<h3 id="qualidade">Qualidade</h3>
+<p>Páginas inchadas são lentas, dificeis de acessar, e com tanto conteúdo desnecessário que tira o foco do principal. Os anuncios e <em>scripts</em> de rastreamento rentabilizam e trazem mais compras, de fato. Por outro lado as páginas que anunciam perdem visitantes ou são bloqueadas por Ad-Blocks, cada vez mais utilizados.</p>
+<p>O navegador Brave, por exemplo, tem ad-blocker por padrão e quantifica a economia. Segundo o navegador do meu computador principal - o que mais utilizo - essas são as estatísticas dos últimos três meses:</p>
+<ul>
+<li>
+<p><strong>323.738</strong> Rastreadores &amp; anúncios bloqueados</p>
+</li>
+<li>
+<p><strong>6.24 GB</strong> Banda economizada</p>
+</li>
+<li>
+<p><strong>4.5 horas</strong> Tempo economizado</p>
+</li>
+</ul>
+<p>Misericórdia! Lembrando que isso é de uma máquina que uso apenas para trabalho e estudo, portanto acesso apenas conteúdos que giram em torno de tecnologia.</p>
+<p><em>Páginas inchadas são páginas ruins</em>. E isso tem causado uma quebra de expectativa de qualidade.</p>
+<h2 id="esperanca">Esperança</h2>
+<h3 id="anti-esperanca">Anti-Esperança</h3>
+<p>"Google AMP" e "Facebook Instant Articles" não são soluções. Na verdade, são anti-soluções.</p>
+<p>Porque criar outro tipo de marcação (AMP) para resolver um problema que não existe no HTML?</p>
+<p>Não precisamos de técnicas de otimização e minificação de <em>megabytes</em> de JavaScript automaticas. Podemos simplesmente remover, não utilizar, etc.</p>
+<blockquote>
+<p><em>Para quem só sabe usar martelo, todo problema é um prego.</em></p>
+</blockquote>
+<p>Por que JavaScript se tornou o martelo da Web?</p>
+<h3 id="necessidade">Necessidade</h3>
+<p>A <a href="https://idlewords.com/talks/website_obesity.htm">palestra que mencionei</a> antes tem uma pirâmide alegórica a de nutricionistas adaptada para a web bem didática:</p>
+<p><picture><source type="image/avif" srcset="/assets/ob.037.thumb-powlZeQjaZ-150w.avif 150w, /assets/ob.037.thumb-powlZeQjaZ-300w.avif 300w" sizes="100vw"><source type="image/webp" srcset="/assets/ob.037.thumb-powlZeQjaZ-150w.webp 150w, /assets/ob.037.thumb-powlZeQjaZ-300w.webp 300w" sizes="100vw"><source type="image/jpeg" srcset="/assets/ob.037.thumb-powlZeQjaZ-150w.jpeg 150w, /assets/ob.037.thumb-powlZeQjaZ-300w.jpeg 300w" sizes="100vw"><img src="/assets/ob.037.thumb-powlZeQjaZ-300w.jpeg" width="300" height="168" loading="lazy" decoding="async"></picture></p>
+<p>O conteúdo deve ser distribuído de tal forma que <code>Texto &gt; Formatação &gt; Ilustrações &gt; Estilização &gt; Scripts</code>. Quando penso em um jornal, penso em um papel com uma grande quantidade de texto bem formatado, complementado com imagens. Me parece que jornais poderiam seguir essa pirâmide (diferente de um aplicativo interativo).</p>
+<p>Ainda assim a página do G1 faz 70 requisições e carrega 3MB de conteúdo, sendo que 75% são <em>scripts</em> do site e de rastreamento, 10% imagens mal otimizadas e 15% o que parece ser conteúdo.</p>
+<p>A verdade é que se você desativar o JavaScript no navegador a maioria das páginas que utilizamos não vai funcionar como esperado. E claro que não me refiro aos <em>web apps</em>, como um sofisticado aplicativo de Mapas, mas sim sites normais em que a maioria do conteúdo é textual.</p>
+<p>Segundo a pirâmide, JavaScript está no topo, então porque permitimos que se tornasse uma parte vital? Para a maioria dos sites isso não é necessário e fazemos somente <em>porque sim</em>. Ou porque parece simples, ou certo, ou a moda.</p>
+<p>Na publicação sobre a construção do blog comentei um pouco melhor sobre como reconstruí o site mas, em síntese:</p>
+<ul>
+<li>
+<p>O foco do conteúdo é texto puro (e seus links)</p>
+</li>
+<li>
+<p>Migrei as imagens dos <em>posts</em> existentes, mas ainda estou decidindo sobre as capas</p>
+</li>
+<li>
+<p>Utilizo CSS porque simplicidade e leveza não significa feio :p</p>
+</li>
+<li>
+<p>JavaScript é desnecessário para consumir o conteúdo do blog, mas útil para estender duas funcionalidades:</p>
+<ul>
+<li>
+<p>Newsletter: a inscrição na newsletter é um aplicativo externo, para onde o usuário é redirecionado</p>
+</li>
+<li>
+<p>Comentários: os comentários são um webapp por si só, injetados através de um widget Javascript</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Em ambos os casos, JavaScript só estende comportamentos para além da funcionalidade de <em>blog</em> - e só acontecer a partir da ação do usuário. E o CSS não afeta a <em>marcação</em>, apenas os estilos. Então se você desativar tudo, remover todos os estilos, continuará sendo um blog funcional e legível, que pode ser consumido em qualquer leitor que você desejar.</p>
+<p>É claro que as cinco pessoas que leem meu blog, incluindo a minha mãe, não serão afetadas por isso. Se você também tem um blog e pensa o mesmo, o ponto é que serve como prova de conceito e estudo. Pegue aquele projeto na gaveta que utilizou <code>create-react-app</code> sem nem saber porque e experimenta reconstruir ele começando pelo bom e velho HTML. Ou, no meu caso, pelo mais simples ainda: texto puro (Markdown).</p>
+<p>A esperança aqui é que esse é um tema em pauta, e cada vez mais tem ficado à tona a necessidade de reduzir a complexidade das coisas porque a tecnologia está evoluindo muito rápido.</p>
+<p>Conseguimos enviar coisas para o espaço com menos de 1MB de RAM, mas precisamos de mais que isso para ler uma notícia local? Esse <a href="http://astroblog.cosmobc.com/2010/03/27/did-you-know-the-space-shuttle-runs-on-only-one-megabyte-of-ram/">blog trazendo a informação</a> pesa mais que, quase 2MB.</p>
+<h3 id="conhecimento">Conhecimento</h3>
+<p>O inchaço da web não é causado por falta de conhecimento e isso significa que não precisamos re-ensinar tudo para todos os programadores para evitar que ocorra.</p>
+<p>Ninguém aumenta a complexidade de um site simples para um super produto porque desconhece o formato mais simples. Todos os devs web começam por HTML e CSS. O motivo é a busca constante por inovação, estar utilizando a tecnologia do hype e a comparação entre os concorrentes.</p>
+<p>A forma como o mercado funciona hoje é insustentável para o desenvolvimento web. A maior parte do nosso trabalho se torna explicar o que as pessoas <em>não precisam</em> em vez de construir o que elas precisam.</p>
+<p>Em vez de ensinar tudo do zero podemos "só" mudar o paradigma das indústrias e trabalhar com prazos mais justos e expectativas mais próximas da realidade - talvez aquela vitrine não precise ser um Remix utilizando Bootstrap, JQuery, microfrontends blá blá blá. Talvez precise ser um simples HTML + CSS + JavaScript com links para as redes sociais.</p>
+<hr>
+<h3 id="paliativos">Paliativos</h3>
+<p><em>Enquanto reduzir o inchaço da web não se torna, de verdade, uma preocupação das grandes corporações...</em></p>
+<p>Nos últimos meses, com a pandemia e todo o resto, meu interesse por esse assunto e minha missão por uma web mais minimalista foi amplificada pelo sentimento de <strong>sobrecarga</strong>.</p>
+<p>Para qualquer atividade simples o esforço cognitivo aumentou muito:</p>
+<ul>
+<li>
+<p>Ler um artigo exige sair dos anúncios, pausar vídeos, recusar <em>cookies</em>, recusar <em>newsletters</em>, recusar notificações, etc;</p>
+</li>
+<li>
+<p>Fazer uma pesquisa simples no Google precisa fazer um a dois <em>scrolls</em> para passar pelos resultados que são anuncios;</p>
+</li>
+<li>
+<p>Acessar a caixa de entrada (e-mail) se tornou impossível, pela quantidade de e-mails de marketing, spam, para serviços que fui obrigada a inscrever ou nem recordo de ter acessado algum dia;</p>
+</li>
+<li>
+<p>Acessar um aplicativo no celular exigia uma busca porque, hoje em dia, <em>tudo é um aplicativo</em>! E todos precisam de todo tipo de permissão. <em>(poxa, Reddit!)</em></p>
+</li>
+</ul>
+<p>Para endereçar cada uma dessas situações, tomei algumas medidas individuais:</p>
+<ul>
+<li>
+<p><strong>Artigos</strong>: comecei a utilizar agregadores e leitores específicos para newsletters. Meu preferido é o <a href="https://getmatter.app/">Matter</a> e quando ele está indisponível uso o <a href="https://12ft.io/">https://12ft.io/</a> diretamente. Também tive uma boa experiência com o <a href="https://slickinbox.com/">Slick Inbox</a> no celular.</p>
+</li>
+<li>
+<p><strong>Pesquisa</strong>: Migrei para o <a href="https://search.brave.com/">Brave Search</a>. Gostaria de usar mais o <a href="https://duckduckgo.com/">DuckDuckGo</a>, mas não funcionou para mim durante o trabalho.</p>
+</li>
+<li>
+<p><strong>E-mail</strong>: Migrei para o <a href="https://proton.me/">Proton</a> todas as minhas contas importantes - Bancos, Github, etc e desativei a newsletter e marketing de todas elas. Ainda utilizo o Google porque é <em>"gratuito"</em> e tem filtros poderosos, faço isso através de um <em>alias</em> único do DuckDuckGo e para tudo que não são contas urgentes. Utilizo <em>aliases</em> do <a href="https://www.simpleslogin.com/">SimpleLogin</a> para tudo que pede um e-mail e não deveria - depois excluo ou bloqueio. Dessa forma,</p>
+<ul>
+<li>
+<p>ProtonMail: notificações ativadas que acesso diariamente, pois são e-mails importantes como contato direto de amigos ou colegas e transações bancarias;</p>
+</li>
+<li>
+<p>Google via Duck: notificações desativadas, leio ocasionalmente quando tenho tempo e vontade porque são sites menos relevantes, e-commerces, etc;</p>
+</li>
+<li>
+<p>Google via SimpleLogin: notificações desativadas, leio quando necessário e bloqueio ou removo os <em>aliases</em> que não são mais úteis;</p>
+</li>
+<li>
+<p>E as <em>newsletters</em> interessantes foram todas movidas para os aplicativos mencionados anteriormente.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Smartphone</strong>: migrei para a <a href="https://play.google.com/store/apps/details?id=com.devswhocare.productivitylauncher&amp;hl=en&amp;gl=US">Minimalist Launcher</a> para fazer um detox. Depois organizei a original de forma mais minimalista, com foco no que realmente preciso.</p>
+</li>
+</ul>
+<p>Idealmente o rumo do desenvolvimento web vai evoluir substancialmente e essa sensação de sobrecarga por utilizar a internet vai reduzir, vamos cultivar hábitos mais saudáveis. Mas, como dev, sei como é fácil cairmos na complexidade, e como as stacks de desenvolvimento atualmente contribuem para isso, então acho que é algo que ainda vai demorar. Já se tornou aceitável um computador para navegar na web para estudos precisar de SSD e 8gb RAM, hehe.</p>
+<p>Até lá, essas são algumas medidas que tomei para melhorar a minha experiência individual. Além disso, reconstruí meu blog do zero. E vou manter o inchaço da web em mente para todas as soluções das quais eu fizer parte da construção, seja como arquiteta ou como desenvolvedora.</p>
+<p>Precisamos reduzir a complexidade.</p>
+<hr>
+<p>Muito obrigada por ler até aqui! Espero que essa tenha sido uma reflexão interessante. Se quiser ler mais sobre o tema, recomendo:</p>
+<ul>
+<li><a href="https://www.hq.nasa.gov/office/pao/History/computers/Ch4-3.html">Computers in Spaceflight: The NASA Experience</a></li>
+<li><a href="https://httparchive.org/reports/state-of-the-web">Report: State of the Web</a></li>
+<li><a href="https://medium.com/hackernoon/web-bloat-isnt-a-knowledge-problem-46e561031663">Web bloat isn’t a knowledge problem</a></li>
+</ul>
+<p>Como o inchaço da web tem te afetado?</p>
+
+        
+        
+            <hr>
+            
+            <section id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </section>
+        
+    </main>
+
+    <hr>
+    
+    <footer>
+        <article>
+            <p>Gostaria de receber esse conteúdo por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="E-mail" required="">
+                <button data-tooltip="Todo o dia 15 você receberá por e-mail a minha newsletter, incluindo os últimos artigos publicados aqui." type="submit">Receber um e-mail por mês</button>
+            </form>
+        </article>
+        <hr>
+        <p>Copyright © <a href="https://myreli.dev">Myreli</a> 2022</p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+        
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+          
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+          
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+</body></html>
