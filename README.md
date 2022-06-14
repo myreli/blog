@@ -1,8 +1,8 @@
-# [Myreli - Blog](https://myreli.dev/blog/)
+# myreli/blog
 
 Personal blog. Sharing lines of code and pieces of my life.
 
-**[Acesse](https://myreli.dev/blog/)**
+**[Acesse](https://blog.myreli.dev)**
 
 ## Issues
 
@@ -16,6 +16,6 @@ npm run serve
 
 ## License
 
-CC BY-SA
+`CC BY-SA`
 
 Copyright 2017-2020 Myreli.
