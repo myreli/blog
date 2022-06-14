@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0" />
+    <meta name="author" content="{{ author or 'Myreli <myreli@proton.me>' }}">
+
+    <title>{{ title }} | by {{ author or 'Myreli' }}</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button { 
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>blog.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            {{ collections.all | eleventyNavigation | eleventyNavigationToHtml | safe }}
+        </nav>
+        <hgroup>
+            <h1>{{ title }}</h1>
+            <h2>{{ subtitle }}</h2>
+        </hgroup>
+        <hr />
+    </header>
+    <main>
+        {{ content | safe }}
+        
+        {% if not hideComments %}
+            <hr />
+            
+            <section id="discussion-section">
+                <button onClick="loadDiscussionSection()">ver comentários</button>
+            </section>
+        {% endif %}
+    </main>
+
+    <hr />
+    
+    <footer>
+        <article>
+            <p>Gostaria de receber esse conteúdo por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow"
+                onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="E-mail" required>
+                <button
+                    data-tooltip="Todo o dia 15 você receberá por e-mail a minha newsletter, incluindo os últimos artigos publicados aqui."
+                    type="submit">Receber um e-mail por mês</button>
+            </form>
+        </article>
+        <hr />
+        <p>Copyright © <a href="https://myreli.dev">Myreli</a> 2022</p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "{{ id or false }}"
+        }
+        
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+          
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+          
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+</body>
+
+</html>
