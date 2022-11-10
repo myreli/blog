@@ -35,7 +35,8 @@
                 </li>
             </ul>
             <ul><li><a href="/about/">Sobre</a></li>
-<li><a href="/posts/">Posts</a></li></ul>
+<li><a href="/posts/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
         </nav>
         <hgroup>
             <h1 id="hello-world-deno-parte-2-iniciando-uma-aplicacao">Hello World, Deno! - Parte 2 - Iniciando uma aplicação</h1>
@@ -103,7 +104,7 @@
 <pre class="language-shell"><code class="language-shell">code <span class="token builtin class-name">.</span></code></pre>
 <p>No fim fica, mais ou menos, assim:</p>
 <p><picture><source type="image/avif" srcset="/assets/pWe0ry-hUd8ZiV0LE-150w.avif 150w, /assets/pWe0ry-hUd8ZiV0LE-300w.avif 300w, /assets/pWe0ry-hUd8ZiV0LE-450w.avif 450w, /assets/pWe0ry-hUd8ZiV0LE-600w.avif 600w, /assets/pWe0ry-hUd8ZiV0LE-750w.avif 750w, /assets/pWe0ry-hUd8ZiV0LE-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/pWe0ry-hUd8ZiV0LE-150w.webp 150w, /assets/pWe0ry-hUd8ZiV0LE-300w.webp 300w, /assets/pWe0ry-hUd8ZiV0LE-450w.webp 450w, /assets/pWe0ry-hUd8ZiV0LE-600w.webp 600w, /assets/pWe0ry-hUd8ZiV0LE-750w.webp 750w, /assets/pWe0ry-hUd8ZiV0LE-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/pWe0ry-hUd8ZiV0LE-150w.jpeg 150w, /assets/pWe0ry-hUd8ZiV0LE-300w.jpeg 300w, /assets/pWe0ry-hUd8ZiV0LE-450w.jpeg 450w, /assets/pWe0ry-hUd8ZiV0LE-600w.jpeg 600w, /assets/pWe0ry-hUd8ZiV0LE-750w.jpeg 750w, /assets/pWe0ry-hUd8ZiV0LE-900w.jpeg 900w" sizes="100vw"><img src="/assets/pWe0ry-hUd8ZiV0LE-600w.jpeg" width="900" height="546" loading="lazy" decoding="async"></picture></p>
-<p>Como diz a página ali, aperte <code>ctrl</code>+ <code>'</code> para abrir um terminal dentro do VSCode.  Clique no arquivo <code>mod.ts</code>.</p>
+<p>Como diz a página ali, aperte <code>ctrl</code>+ <code>'</code> para abrir um terminal dentro do VSCode. Clique no arquivo <code>mod.ts</code>.</p>
 <p>Nele escreva um simples <code>console.log('tudo ok! =D')</code>, salve as modificações (<code>ctrl</code> + <code>s</code>) e no terminal execute <code>deno run mod.ts</code> para garantir que está tudo nos conformes:</p>
 <p><picture><source type="image/avif" srcset="/assets/w15fFp-n0Q9skRexn-150w.avif 150w, /assets/w15fFp-n0Q9skRexn-300w.avif 300w, /assets/w15fFp-n0Q9skRexn-450w.avif 450w, /assets/w15fFp-n0Q9skRexn-600w.avif 600w, /assets/w15fFp-n0Q9skRexn-750w.avif 750w, /assets/w15fFp-n0Q9skRexn-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/w15fFp-n0Q9skRexn-150w.webp 150w, /assets/w15fFp-n0Q9skRexn-300w.webp 300w, /assets/w15fFp-n0Q9skRexn-450w.webp 450w, /assets/w15fFp-n0Q9skRexn-600w.webp 600w, /assets/w15fFp-n0Q9skRexn-750w.webp 750w, /assets/w15fFp-n0Q9skRexn-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/w15fFp-n0Q9skRexn-150w.jpeg 150w, /assets/w15fFp-n0Q9skRexn-300w.jpeg 300w, /assets/w15fFp-n0Q9skRexn-450w.jpeg 450w, /assets/w15fFp-n0Q9skRexn-600w.jpeg 600w, /assets/w15fFp-n0Q9skRexn-750w.jpeg 750w, /assets/w15fFp-n0Q9skRexn-900w.jpeg 900w" sizes="100vw"><img src="/assets/w15fFp-n0Q9skRexn-600w.jpeg" width="900" height="545" loading="lazy" decoding="async"></picture></p>
 <p>De forma bem simples, concluímos nosso primeiro item o/</p>
@@ -116,7 +117,7 @@
 <p>O global <code>Deno</code> disponibiliza <code>args</code>, que retorna para o nosso programa o array de argumentos passados para o script. Se fizermos um console log e uns testes, funciona assim:</p>
 <p><picture><source type="image/avif" srcset="/assets/NCVc8X-SSFKiBctzX-150w.avif 150w, /assets/NCVc8X-SSFKiBctzX-300w.avif 300w, /assets/NCVc8X-SSFKiBctzX-450w.avif 450w, /assets/NCVc8X-SSFKiBctzX-600w.avif 600w, /assets/NCVc8X-SSFKiBctzX-750w.avif 750w, /assets/NCVc8X-SSFKiBctzX-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/NCVc8X-SSFKiBctzX-150w.webp 150w, /assets/NCVc8X-SSFKiBctzX-300w.webp 300w, /assets/NCVc8X-SSFKiBctzX-450w.webp 450w, /assets/NCVc8X-SSFKiBctzX-600w.webp 600w, /assets/NCVc8X-SSFKiBctzX-750w.webp 750w, /assets/NCVc8X-SSFKiBctzX-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/NCVc8X-SSFKiBctzX-150w.jpeg 150w, /assets/NCVc8X-SSFKiBctzX-300w.jpeg 300w, /assets/NCVc8X-SSFKiBctzX-450w.jpeg 450w, /assets/NCVc8X-SSFKiBctzX-600w.jpeg 600w, /assets/NCVc8X-SSFKiBctzX-750w.jpeg 750w, /assets/NCVc8X-SSFKiBctzX-900w.jpeg 900w" sizes="100vw"><img src="/assets/NCVc8X-SSFKiBctzX-600w.jpeg" width="900" height="545" loading="lazy" decoding="async"></picture></p>
 <p>Por questões de didática e simplicidade, no momento, vamos aceitar apenas um nome por vez em nosso programa. Então, vamos fazer assim:</p>
-<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> student <span class="token operator">=</span> Deno<span class="token punctuation">.</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span></code></pre>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> student <span class="token operator">=</span> Deno<span class="token punctuation">.</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
 <p>E é só isso. Assim já temos qual é o estudante. Para verificar qual é, basta <code>console.log(student)</code>.</p>
 <p>Com isso, concluímos nosso segundo item:</p>
 <ul>
@@ -182,14 +183,18 @@
     
     <footer>
         <article>
-            <p>Gostaria de receber esse conteúdo por e-mail? Sem spam.</p>
+            <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
             <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
                 <input type="email" name="email" placeholder="E-mail" required="">
-                <button data-tooltip="Todo o dia 15 você receberá por e-mail a minha newsletter, incluindo os últimos artigos publicados aqui." type="submit">Receber um e-mail por mês</button>
+                <button type="submit">Inscrever e-mail</button>
             </form>
         </article>
         <hr>
-        <p>Copyright © <a href="https://myreli.dev">Myreli</a> 2022</p>
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2022
+            <br>
+            Você também pode ler <a href="https://listed.to/@myreli">meus rascunhos</a> se tiver coragem.
+        </p>
     </footer>
     <script>
         var HYVOR_TALK_WEBSITE = 545;
