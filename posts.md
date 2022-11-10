@@ -7,7 +7,7 @@ eleventyNavigation:
   key: Posts
 ---
 
-{% for post in collections.all reversed %}
+{% for post in collections.post reversed %}
 
 - {{ post.data.date | date: "%Y-%m-%d" }} | [**{{ post.data.title | default: post.url }}**]({{ post.url }}) {{ post.data.subtitle }}
 

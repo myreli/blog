@@ -1,20 +1,10 @@
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const eleventySyntaxHighlightPlugin = require("@11ty/eleventy-plugin-syntaxhighlight");
 
-const externalAnchorPlugin = require('@orchidjs/eleventy-plugin-ids');
+const externalAnchorPlugin = require("@orchidjs/eleventy-plugin-ids");
 const externalPicturePlugin = require("eleventy-plugin-img2picture");
 
 module.exports = function (eleventyConfig) {
-  // Collect all tags
-  eleventyConfig.addCollection("tagList", function (collection) {
-    let tags = new Set();
-    collection.getAll().forEach(item => {
-      (item.data.tags || []).forEach(tag => tags.add(tag));
-    });
-    
-    return [...tags];
-  });
-
   // Plugins
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
   eleventyConfig.addPlugin(eleventySyntaxHighlightPlugin);
@@ -25,6 +15,21 @@ module.exports = function (eleventyConfig) {
     eleventyInputDir: "posts",
     imagesOutputDir: "_site/assets",
     urlPath: "/assets/",
-    fetchRemote: true
+    fetchRemote: true,
+  });
+
+  // Collections
+
+  eleventyConfig.addCollection("post", (collection) => {
+    return collection.getFilteredByGlob("./posts/*.md");
+  });
+
+  eleventyConfig.addCollection("tags", (collections) => {
+    const tags = collections
+      .getAll()
+      .reduce((tags, item) => tags.concat(item.data.tags), [])
+      .filter((tag) => !!tag)
+      .filter((tag) => tag !== "post");
+    return Array.from(new Set(tags));
   });
 };
