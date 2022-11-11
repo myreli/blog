@@ -6,7 +6,7 @@ const externalPicturePlugin = require("eleventy-plugin-img2picture");
 
 module.exports = function (eleventyConfig) {
   // Deploy
-  eleventyConfig.addPasstroughCopy("./CNAME");
+  eleventyConfig.addPassthroughCopy("./CNAME");
 
   // Plugins
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
