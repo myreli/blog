@@ -1,9 +1,9 @@
 ---
+title: Tags
+
 eleventyNavigation:
   key: Tags
 ---
-
-# Tags
 
 {% for tag in collections.tags %}
 
