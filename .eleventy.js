@@ -5,6 +5,9 @@ const externalAnchorPlugin = require("@orchidjs/eleventy-plugin-ids");
 const externalPicturePlugin = require("eleventy-plugin-img2picture");
 
 module.exports = function (eleventyConfig) {
+  // Deploy
+  eleventyConfig.addPasstroughCopy("./CNAME");
+
   // Plugins
   eleventyConfig.addPlugin(eleventyNavigationPlugin);
   eleventyConfig.addPlugin(eleventySyntaxHighlightPlugin);
@@ -19,7 +22,6 @@ module.exports = function (eleventyConfig) {
   });
 
   // Collections
-
   eleventyConfig.addCollection("post", (collection) => {
     return collection.getFilteredByGlob("./posts/*.md");
   });
