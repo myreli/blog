@@ -1,6 +1,6 @@
 ---
 title: Myreli
-subtitle: Compartilhando trechos de código e vida.
+subtitle: Divagações sobre software eficiente e sustentável.
 
 date: 2020-01-01
 
