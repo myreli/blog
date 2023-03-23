@@ -2,7 +2,7 @@
 id: /2020/11/03/Hello-World-Deno-Parte-5
 
 title: Hello World, Deno! - Parte 5 - Considerações Finais
-subtitle: Ambiente de desenvolvimento, formatação e linting embutidos, testes, distribuição de código e mais em Deno 🦕
+summary: Ambiente de desenvolvimento, formatação e linting embutidos, testes, distribuição de código e mais em Deno 🦕
 
 date: 2020-11-03 00:00:00 Z
 

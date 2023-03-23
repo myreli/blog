@@ -1,6 +1,6 @@
 ---
 title: Sobre
-subtitle: “Eu sou porque nós somos” (Ubuntu)
+summary: “Eu sou porque nós somos” (Ubuntu)
 
 date: 2020-01-01
 
@@ -11,7 +11,7 @@ eleventyNavigation:
 ## Myreli
 
 > *“Eu sou porque nós somos”*
-> 
+>
 > — **Ubuntu**
 
 *Dale!* Sou a Myreli, uma *coder* e aspirante a tudo que der na cabeça, inclusive artista nas horas vagas. Eu acredito e defendo que o mundo pode ser mudado através de códigos – as palavras, a música e a programação.

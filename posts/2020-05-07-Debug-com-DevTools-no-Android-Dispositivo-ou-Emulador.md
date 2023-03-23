@@ -3,7 +3,7 @@ id: /2020/05/07/Debug-com-DevTools-no-Android-Dispositivo-ou-Emulador
 date: 2020-05-07 20:02:13 Z
 
 title: Debug com DevTools no Android (Dispositivo ou Emulador)
-subtitle: Depuração Remota - como utilizar DevTools para debuggar comportamento no Android (Navegador e WebView)
+summary: Depuração Remota - como utilizar DevTools para debuggar comportamento no Android (Navegador e WebView)
 
 cover: "/img/posts/
 2020-05-07-Debug-com-DevTools-no-Android-Dispositivo-ou-Emulador/cover.jpg"

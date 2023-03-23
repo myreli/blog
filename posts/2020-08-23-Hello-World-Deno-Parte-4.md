@@ -2,7 +2,7 @@
 id: /2020/08/23/Hello-World-Deno-Parte-4
 
 title: Hello World, Deno! - Parte 4 - Visitando APIS Nativas
-subtitle: Escrevendo em arquivos com JavaScript utilizando as APIs Nativas de Deno 🦕
+summary: Escrevendo em arquivos com JavaScript utilizando as APIs Nativas de Deno 🦕
 
 date: 2020-08-23 03:11:21 Z
 

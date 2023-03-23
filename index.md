@@ -1,24 +1,19 @@
 ---
 title: Myreli
-subtitle: Divagações sobre software eficiente e sustentável.
+summary: Divagações sobre software eficiente e sustentável.
 
 date: 2020-01-01
 
 hideComments: true
+eleventyNavigation:
+  key: Posts
 ---
 
-## Recentes
+{% for post in collections.post reversed %}
 
-{% assign latest = collections.post | reverse | slice:0,2 %}
+- **[{{ post.data.title | default: post.url }}]({{ post.url }})**
+{{ post.data.summary }} *({{ post.data.date | date: "%Y-%m" }})*
 
-{% for post in latest %}
-<a href="{{ post.url }}" style="text-decoration: none;">
+---
 
-<article>
-<h3>{{ post.data.title | default: post.url }}</h3>
-<p style="color: var(--muted-color)">{{ post.excerpt | default: post.data.subtitle }}</p>
-</article>
-</a>
 {% endfor %}
-
-<a style="width: 100%;" role="button" href="/posts">Ver todos</a>

@@ -2,7 +2,7 @@
 id: /2020/11/27/Como-Particionar-Array-JavaScript
 
 title: JavaScript - Como particionar um array?
-subtitle: Como particionar (ou dividir) um array em JavaScript puro baseado em um filtro condicional
+summary: Como particionar (ou dividir) um array em JavaScript puro baseado em um filtro condicional
 
 date: 2020-11-27 00:00:00 Z
 

@@ -20,7 +20,7 @@
             overflow-x: hidden;
         }
 
-        button { 
+        button {
             --background-color: transparent;
             --color: var(--primary);
         }
@@ -41,24 +41,22 @@
         </nav>
         <hgroup>
             <h1>{{ title }}</h1>
-            <h2>{{ subtitle }}</h2>
+            <h2>{{ summary }}</h2>
         </hgroup>
         <hr />
     </header>
     <main>
         {{ content | safe }}
-        
+
         {% if not hideComments %}
             <hr />
-            
+
             <section id="discussion-section">
                 <button onClick="loadDiscussionSection()">ver comentários</button>
             </section>
         {% endif %}
     </main>
 
-    <hr />
-    
     <footer>
         <article>
             <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
@@ -72,7 +70,7 @@
         <p>
             Copyright © <a href="https://myreli.dev">Myreli</a> 2022
             <br />
-            Você também pode ler <a href="https://listed.to/@myreli">meus rascunhos</a> se tiver coragem.
+            Você também pode ler <a href="https://listed.to/@myreli">meu bloco de notas</a> (coragem).
         </p>
     </footer>
     <script>
@@ -80,20 +78,20 @@
         var HYVOR_TALK_CONFIG  = {
             id: "{{ id or false }}"
         }
-        
+
         function loadDiscussionSection() {
           const discussions = document.getElementById('discussion-section')
           if (!discussions) return;
 
           discussions.children[0].setAttribute("aria-busy", true)
-          
+
           const widget = document.createElement("div")
           widget.id = "hyvor-talk-view"
 
           const script = document.createElement("script")
           script.type = "text/javascript"
           script.src = "https://talk.hyvor.com/web-api/embed.js"
-          
+
           discussions.replaceChildren(widget)
           document.body.appendChild(script)
         }

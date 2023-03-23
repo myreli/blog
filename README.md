@@ -1,6 +1,6 @@
 # myreli/blog
 
-Personal blog. Sharing lines of code and pieces of my life.
+Sharing lines of code and pieces of my life. (personal blog)
 
 **[Acesse](https://blog.myreli.dev)**
 
@@ -11,6 +11,7 @@ Found a bug or an issue with this blog? [Open a new issue](https://github.com/my
 ## Setup
 
 ```shell
+npm install
 npm run serve
 ```
 

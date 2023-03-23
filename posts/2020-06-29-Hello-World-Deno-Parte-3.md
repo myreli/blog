@@ -2,7 +2,7 @@
 id: /2020/06/29/Hello-World-Deno-Parte-3
 
 title: Hello World, Deno! - Parte 3 - Visitando APIs Web
-subtitle: O poder do JavaScript do browser no Back-End de verdade - APIs da Web em Deno 🦕
+summary: O poder do JavaScript do browser no Back-End de verdade - APIs da Web em Deno 🦕
 
 date: 2020-06-29 09:23:21 Z
 

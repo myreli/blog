@@ -2,7 +2,7 @@
 id: /2020/05/16/Hello-World-Deno
 
 title: Hello World, Deno!
-subtitle: Uhul! Saiu oficialmente a primeira versão da nova runtime Deno 🦕
+summary: Uhul! Saiu oficialmente a primeira versão da nova runtime Deno 🦕
 
 date: 2020-05-16 02:02:25 Z
 

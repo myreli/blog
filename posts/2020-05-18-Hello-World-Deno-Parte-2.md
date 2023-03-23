@@ -2,7 +2,7 @@
 id: /2020/05/18/Hello-World-Deno-Parte-2
 
 title: Hello World, Deno! - Parte 2 - Iniciando uma aplicação
-subtitle: Babel, Webpack, Prettier? Que nada. Deno! 🦕
+summary: Babel, Webpack, Prettier? Que nada. Deno! 🦕
 
 date: 2020-05-18 20:32:38 Z
 
