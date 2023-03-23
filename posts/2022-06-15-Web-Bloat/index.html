@@ -17,7 +17,7 @@
             overflow-x: hidden;
         }
 
-        button { 
+        button {
             --background-color: transparent;
             --color: var(--primary);
         }
@@ -35,8 +35,7 @@
                 </li>
             </ul>
             <ul><li><a href="/about/">Sobre</a></li>
-<li><a href="https://garden.myreli.dev/">Garden</a></li>
-<li><a href="/posts/">Posts</a></li>
+<li><a href="/">Posts</a></li>
 <li><a href="/tags/">Tags</a></li></ul>
         </nav>
         <hgroup>
@@ -62,15 +61,13 @@
 <p>O epub que tenho de um dos maiores livros do mundo, Em Busca do Tempo Perdido (Marcel Proust), possui quase 4 mil páginas e pesa menos do que a página para comprar esse ebook: <strong>enquanto o livro ocupa 4894 KB, a página de compra pesa 15940 KB.</strong></p>
 <p>Uma página com informações resumidas sobre o livro (e um botão para comprar) ocupa mais espaço do que o livro inteiro. Por isso ler livros no Kindle que possui <em>hardware</em> modesto é suave e fluido, mas comprar? Nem tanto.</p>
 <p>Observe você mesmo:</p>
-<pre><code>→ https://www.amazon.com.br/Marcel-Proust-Search-volumes-English-ebook/dp/B0837BFZBL
-
-64 / 215 requests
+<p>→ https://www.amazon.com.br/Marcel-Proust-Search-volumes-English-ebook/dp/B0837BFZBL</p>
+<p>64 / 215 requests
 3.5 MB / 6.0 MB transferred
 13.8 MB / 20.0 MB resources
 Finish: 1.2 min
 DOMContentLoaded: 1.73 s
-Load: 2.75 s
-</code></pre>
+Load: 2.75 s</p>
 <p>Precisamos de tudo isso para entregar o conteúdo?</p>
 <p>Um site como semi-brincadeira criou o *Web Bloat Score Calculator - <strong>Web-BS.*</strong></p>
 <p>Basicamente faz a seguinte comparação: o tamanho da página web VS o tamanho de um print daquela mesma página.</p>
@@ -83,15 +80,12 @@ Load: 2.75 s
 <p>Para exemplificar esse problema resolvi fazer um teste irônico: quanto tempo leva para conseguir ler o conteúdo de uma página que fala sobre acessibilidade. Como a Apple é reconhecida pelo seu minimalismo, design limpo, engenharia inteligente, etc, peguei essa página sobre as <a href="https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility">Human Interface Guidelines, na seção de acessibilidade</a>.</p>
 <p>Os resultados foram mais tristes do que eu esperava. A página pesa quase 10 disquetes (~12MB) e faz quase 200 requisições.</p>
 <p>Em um Moto G4, com a conexão 3g lenta (o padrão do Brasil), esses foram os resultados:</p>
-<pre><code>→ https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility
-
-178 requests
-12.2 MB transferred
-
-Finish: 4.4 min
+<p>→ https://developer.apple.com/design/human-interface-guidelines/foundations/accessibility</p>
+<p>178 requests
+12.2 MB transferred</p>
+<p>Finish: 4.4 min
 DOMContentLoaded: 36.28 s
-Load: 4.4 min
-</code></pre>
+Load: 4.4 min</p>
 <p>Embora o conteúdo tenha carregado em 36.28s, a página só se tornou visível após 2 minutos e 36 segundos. Para concluir tudo levou <strong><em>mais de quatro minutos</em></strong>! Li todo o conteúdo em cinco minutos, então literalmente me custou o tempo de outro artigo.</p>
 <p>Imagine viver com essa conexão para estudar, escrever um artigo ou assistir a aula online enquanto o mundo está fechado por causa da pandemia?</p>
 <p>Bom, sessa página são descritas as melhores práticas de acessibilidade de acordo com a Apple, a primeira delas sendo <em>design with accessibility in mind</em>:</p>
@@ -223,18 +217,16 @@ Load: 4.4 min
 </ul>
 <p>Como o inchaço da web tem te afetado?</p>
 
-        
+
         
             <hr>
-            
+
             <section id="discussion-section">
                 <button onclick="loadDiscussionSection()">ver comentários</button>
             </section>
         
     </main>
 
-    <hr>
-    
     <footer>
         <article>
             <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
@@ -247,7 +239,7 @@ Load: 4.4 min
         <p>
             Copyright © <a href="https://myreli.dev">Myreli</a> 2022
             <br>
-            Você também pode ler <a href="https://listed.to/@myreli">meus rascunhos</a> se tiver coragem.
+            Você também pode ler <a href="https://listed.to/@myreli">meu bloco de notas</a> (coragem).
         </p>
     </footer>
     <script>
@@ -255,24 +247,25 @@ Load: 4.4 min
         var HYVOR_TALK_CONFIG  = {
             id: "false"
         }
-        
+
         function loadDiscussionSection() {
           const discussions = document.getElementById('discussion-section')
           if (!discussions) return;
 
           discussions.children[0].setAttribute("aria-busy", true)
-          
+
           const widget = document.createElement("div")
           widget.id = "hyvor-talk-view"
 
           const script = document.createElement("script")
           script.type = "text/javascript"
           script.src = "https://talk.hyvor.com/web-api/embed.js"
-          
+
           discussions.replaceChildren(widget)
           document.body.appendChild(script)
         }
     </script>
+
 
 
 </body></html>

@@ -17,7 +17,7 @@
             overflow-x: hidden;
         }
 
-        button { 
+        button {
             --background-color: transparent;
             --color: var(--primary);
         }
@@ -35,13 +35,12 @@
                 </li>
             </ul>
             <ul><li><a href="/about/">Sobre</a></li>
-<li><a href="https://garden.myreli.dev/">Garden</a></li>
-<li><a href="/posts/">Posts</a></li>
+<li><a href="/">Posts</a></li>
 <li><a href="/tags/">Tags</a></li></ul>
         </nav>
         <hgroup>
             <h1 id="tags">Tags</h1>
-            <h2 id=""></h2>
+            <h2 id="explorar-por-topicos-e-mais-interessante-que-por-datas-mas-cuidado-com-a-validade-das-informacoes">Explorar por tópicos é mais interessante que por datas, mas cuidado com a validade das informações.</h2>
         </hgroup>
         <hr>
     </header>
@@ -61,18 +60,16 @@
 </li>
 </ol>
 
-        
+
         
             <hr>
-            
+
             <section id="discussion-section">
                 <button onclick="loadDiscussionSection()">ver comentários</button>
             </section>
         
     </main>
 
-    <hr>
-    
     <footer>
         <article>
             <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
@@ -85,7 +82,7 @@
         <p>
             Copyright © <a href="https://myreli.dev">Myreli</a> 2022
             <br>
-            Você também pode ler <a href="https://listed.to/@myreli">meus rascunhos</a> se tiver coragem.
+            Você também pode ler <a href="https://listed.to/@myreli">meu bloco de notas</a> (coragem).
         </p>
     </footer>
     <script>
@@ -93,24 +90,25 @@
         var HYVOR_TALK_CONFIG  = {
             id: "false"
         }
-        
+
         function loadDiscussionSection() {
           const discussions = document.getElementById('discussion-section')
           if (!discussions) return;
 
           discussions.children[0].setAttribute("aria-busy", true)
-          
+
           const widget = document.createElement("div")
           widget.id = "hyvor-talk-view"
 
           const script = document.createElement("script")
           script.type = "text/javascript"
           script.src = "https://talk.hyvor.com/web-api/embed.js"
-          
+
           discussions.replaceChildren(widget)
           document.body.appendChild(script)
         }
     </script>
+
 
 
 </body></html>

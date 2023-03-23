@@ -17,7 +17,7 @@
             overflow-x: hidden;
         }
 
-        button { 
+        button {
             --background-color: transparent;
             --color: var(--primary);
         }
@@ -35,8 +35,7 @@
                 </li>
             </ul>
             <ul><li><a href="/about/">Sobre</a></li>
-<li><a href="https://garden.myreli.dev/">Garden</a></li>
-<li><a href="/posts/">Posts</a></li>
+<li><a href="/">Posts</a></li>
 <li><a href="/tags/">Tags</a></li></ul>
         </nav>
         <hgroup>
@@ -46,27 +45,66 @@
         <hr>
     </header>
     <main>
-        <h2 id="recentes">Recentes</h2>
-<a href="/posts/2022-06-15-Web-Bloat/" style="text-decoration: none;">
-<article>
-<h3 id="o-inchaco-da-web">O Inchaço da Web</h3>
-<p style="color: var(--muted-color)">Porque a web está crescendo cada vez mais e uma página simples de texto leva cinco segundos para carregar e pesa mais que um livro?</p>
-</article>
-</a>
-<a href="/posts/2022-06-15-Retorno/" style="text-decoration: none;">
-<article>
-<h3 id="hello-world-again">Hello world, again</h3>
-<p style="color: var(--muted-color)">Estou voltando para o blog e começo contando como construí a nova versão, 97% mais leve, mais rápida e simples de manter.</p>
-</article>
-</a>
-<p><a style="width: 100%;" role="button" href="/posts">Ver todos</a></p>
+        <ul>
+<li><strong><a href="/posts/Docker-not-Docker-Desktop/">Docker ≠ Docker Desktop</a></strong>
+Registrando como utilizo Docker sem Docker Desktop e porque eu acho melhor. <em>(2023-02)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2022-06-15-Web-Bloat/">O Inchaço da Web</a></strong>
+Porque a web está crescendo cada vez mais e uma página simples de texto leva cinco segundos para carregar e pesa mais que um livro? <em>(2022-06)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2022-06-15-Retorno/">Hello world, again</a></strong>
+Estou voltando para o blog e começo contando como construí a nova versão, 97% mais leve, mais rápida e simples de manter. <em>(2022-06)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-11-27-Como-Particionar-Array-JavaScript/">JavaScript - Como particionar um array?</a></strong>
+Como particionar (ou dividir) um array em JavaScript puro baseado em um filtro condicional <em>(2020-11)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-11-03-Hello-World-Deno-Parte-5/">Hello World, Deno! - Parte 5 - Considerações Finais</a></strong>
+Ambiente de desenvolvimento, formatação e linting embutidos, testes, distribuição de código e mais em Deno 🦕 <em>(2020-11)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-08-23-Hello-World-Deno-Parte-4/">Hello World, Deno! - Parte 4 - Visitando APIS Nativas</a></strong>
+Escrevendo em arquivos com JavaScript utilizando as APIs Nativas de Deno 🦕 <em>(2020-08)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-06-29-Hello-World-Deno-Parte-3/">Hello World, Deno! - Parte 3 - Visitando APIs Web</a></strong>
+O poder do JavaScript do browser no Back-End de verdade - APIs da Web em Deno 🦕 <em>(2020-06)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-05-18-Hello-World-Deno-Parte-2/">Hello World, Deno! - Parte 2 - Iniciando uma aplicação</a></strong>
+Babel, Webpack, Prettier? Que nada. Deno! 🦕 <em>(2020-05)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-05-16-Hello-World-Deno/">Hello World, Deno!</a></strong>
+Uhul! Saiu oficialmente a primeira versão da nova runtime Deno 🦕 <em>(2020-05)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-05-07-Debug-com-DevTools-no-Android-Dispositivo-ou-Emulador/">Debug com DevTools no Android (Dispositivo ou Emulador)</a></strong>
+Depuração Remota - como utilizar DevTools para debuggar comportamento no Android (Navegador e WebView) <em>(2020-05)</em></li>
+</ul>
+<hr>
+<ul>
+<li><strong><a href="/posts/2020-05-01-Hello-World/">Hello World!</a></strong>
+Minha entrada no mundo dos blogueiros <em>(2020-05)</em></li>
+</ul>
+<hr>
 
-        
+
         
     </main>
 
-    <hr>
-    
     <footer>
         <article>
             <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
@@ -79,7 +117,7 @@
         <p>
             Copyright © <a href="https://myreli.dev">Myreli</a> 2022
             <br>
-            Você também pode ler <a href="https://listed.to/@myreli">meus rascunhos</a> se tiver coragem.
+            Você também pode ler <a href="https://listed.to/@myreli">meu bloco de notas</a> (coragem).
         </p>
     </footer>
     <script>
@@ -87,24 +125,25 @@
         var HYVOR_TALK_CONFIG  = {
             id: "false"
         }
-        
+
         function loadDiscussionSection() {
           const discussions = document.getElementById('discussion-section')
           if (!discussions) return;
 
           discussions.children[0].setAttribute("aria-busy", true)
-          
+
           const widget = document.createElement("div")
           widget.id = "hyvor-talk-view"
 
           const script = document.createElement("script")
           script.type = "text/javascript"
           script.src = "https://talk.hyvor.com/web-api/embed.js"
-          
+
           discussions.replaceChildren(widget)
           document.body.appendChild(script)
         }
     </script>
+
 
 
 </body></html>

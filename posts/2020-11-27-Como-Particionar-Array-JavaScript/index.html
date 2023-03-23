@@ -17,7 +17,7 @@
             overflow-x: hidden;
         }
 
-        button { 
+        button {
             --background-color: transparent;
             --color: var(--primary);
         }
@@ -35,8 +35,7 @@
                 </li>
             </ul>
             <ul><li><a href="/about/">Sobre</a></li>
-<li><a href="https://garden.myreli.dev/">Garden</a></li>
-<li><a href="/posts/">Posts</a></li>
+<li><a href="/">Posts</a></li>
 <li><a href="/tags/">Tags</a></li></ul>
         </nav>
         <hgroup>
@@ -82,18 +81,16 @@
 <p>A imagem da capa é cortesia do <a href="https://unsplash.com/@pankajpatel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Pankaj Patel</a> no <a href="https://unsplash.com/s/photos/javascript?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
 <p>Até a próxima!</p>
 
-        
+
         
             <hr>
-            
+
             <section id="discussion-section">
                 <button onclick="loadDiscussionSection()">ver comentários</button>
             </section>
         
     </main>
 
-    <hr>
-    
     <footer>
         <article>
             <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
@@ -106,7 +103,7 @@
         <p>
             Copyright © <a href="https://myreli.dev">Myreli</a> 2022
             <br>
-            Você também pode ler <a href="https://listed.to/@myreli">meus rascunhos</a> se tiver coragem.
+            Você também pode ler <a href="https://listed.to/@myreli">meu bloco de notas</a> (coragem).
         </p>
     </footer>
     <script>
@@ -114,24 +111,25 @@
         var HYVOR_TALK_CONFIG  = {
             id: "/2020/11/27/Como-Particionar-Array-JavaScript"
         }
-        
+
         function loadDiscussionSection() {
           const discussions = document.getElementById('discussion-section')
           if (!discussions) return;
 
           discussions.children[0].setAttribute("aria-busy", true)
-          
+
           const widget = document.createElement("div")
           widget.id = "hyvor-talk-view"
 
           const script = document.createElement("script")
           script.type = "text/javascript"
           script.src = "https://talk.hyvor.com/web-api/embed.js"
-          
+
           discussions.replaceChildren(widget)
           document.body.appendChild(script)
         }
     </script>
+
 
 
 </body></html>
