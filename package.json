@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npx eleventy",
-    "serve": "npx eleventy --serve",
-    "debug": "DEBUG=* npx eleventy",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx eleventy --serve",
+    "debug": "DEBUG=* npx eleventy"
   },
   "author": "myreli",
   "license": "ISC",
