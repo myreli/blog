@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0" />
     <meta name="author" content="{{ author or 'Myreli <myreli@proton.me>' }}">
 
-    <title>{{ title }} | blog.myreli.dev</title>
+    <title>{{ title }} | noted.myreli.dev</title>
 
     <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
@@ -33,7 +33,7 @@
             <ul>
                 <li>
                   <a href="/">
-                    <code>blog.myreli.dev</code>
+                    <code>noted.myreli.dev</code>
                   </a>
                 </li>
             </ul>
@@ -49,28 +49,24 @@
         {{ content | safe }}
 
         {% if not hideComments %}
-            <hr />
-
-            <section id="discussion-section">
+            <span id="discussion-section">
                 <button onClick="loadDiscussionSection()">ver comentários</button>
-            </section>
+            </span>
         {% endif %}
     </main>
 
     <footer>
         <article>
-            <p>Quer receber atualizações mensais por e-mail? Sem spam.</p>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
             <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow"
                 onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
-                <input type="email" name="email" placeholder="E-mail" required>
-                <button type="submit">Inscrever e-mail</button>
+                <input type="email" name="email" placeholder="Digite seu e-mail" required>
+                <button type="submit">Receber atualizações</button>
             </form>
         </article>
-        <hr />
+
         <p>
-            Copyright © <a href="https://myreli.dev">Myreli</a> 2022
-            <br />
-            Você também pode ler <a href="https://listed.to/@myreli">meu bloco de notas</a> (coragem).
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
         </p>
     </footer>
     <script>

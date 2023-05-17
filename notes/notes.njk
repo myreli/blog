@@ -1,0 +1,11 @@
+---
+pagination:
+  data: listed.notes
+  size: 1
+  alias: note
+permalink: /{{ note.data.url | slugify }}/
+---
+
+<h1>{{ note.data.title }}</h1>
+
+{{ note.data.content | safe }}

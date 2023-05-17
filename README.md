@@ -12,7 +12,7 @@ Found a bug or an issue with this blog? [Open a new issue](https://github.com/my
 
 ```shell
 npm install
-npm run serve
+npm start
 ```
 
 ## License

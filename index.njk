@@ -1,0 +1,32 @@
+---
+title: Myreli
+summary: Notas privadas, mas públicas. Divagações sobre software eficiente e sustentável.
+
+date: 2020-01-01
+
+hideComments: true
+eleventyNavigation:
+  key: Posts
+
+---
+
+<h3>✨ Mais acessado:
+    <small><a href="/articles/2022-06-15-Web-Bloat/">O inchaço da Web</a></small>
+</h3>
+
+{% set posts = collections.articles.concat(listed.notes) | sort(attribute='data.date') | reverse %}
+<ul>
+{% for post in posts %}
+  <li>
+    {% if post.data.type == 'note' %}
+        <kbd>Note</kbd>
+    {% else %}
+        <kbd>Article</kbd>
+    {% endif %}
+    <a href="{{ post.data.url | default(post.url) }}"><strong>{{ post.data.title | default(post.url) }}</strong></a>
+    <p>{{ post.data.summary }} <em>({{ post.data.date | date }}</em>)</p>
+
+  </li>
+  <hr />
+{% endfor %}
+</ul>
