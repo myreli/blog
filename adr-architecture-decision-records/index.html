@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="adr-architecture-decision-records">🌱 ADR - Architecture Decision Records</h1>
+
+
+<p></p>
+<p>Registro de Decisões Arquiteturais (ADRs)</p>
+
+<ul>
+<li>
+<strong>Why:</strong> registrar decisões arquiteturais significativas</li>
+<li>
+<strong>What:</strong> registros da decisão em texto e contextualizados </li>
+<li>
+<strong>When:</strong> quando qualquer proposta significativa surge (proposta, aceita, ou rejeitada)</li>
+<li>
+<strong>How:</strong> criar uma pasta no repositório e um arquivo para cada decisão</li>
+</ul>
+<h2 id="exemplos-de-adrs">Exemplos de ADRs</h2>
+
+<p><code class="prettyprint">/adr/0000-architecture-decision-records.md</code> (meu modelo para sugerir o uso de ADRs, quando aplicável, em um novo repositório)</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="err">#</span> <span class="nx">Architecture</span> <span class="nx">Decision</span> <span class="nx">Records</span>
+
+<span class="err">##</span> <span class="nx">Status</span>
+<span class="s2">`proposed`</span>
+
+<span class="err">##</span> <span class="nx">Context</span>
+<span class="nx">We</span> <span class="nx">want</span> <span class="nx">to</span> <span class="nx">contextualize</span> <span class="nx">our</span> <span class="nx">architecture</span> <span class="nx">decisions</span> <span class="nx">and</span> <span class="nb">document</span> <span class="nx">them</span> <span class="k">in</span> <span class="nx">a</span> <span class="nx">way</span> <span class="nx">that</span> <span class="nx">is</span> <span class="nx">easy</span> <span class="nx">to</span> <span class="nx">understand</span> <span class="nx">and</span> <span class="nx">easy</span> <span class="nx">to</span> <span class="nx">find</span><span class="p">.</span>
+
+<span class="nx">Relates</span> <span class="nx">to</span> <span class="err">#</span><span class="nx">issue</span><span class="o">-</span><span class="nx">number</span>
+
+<span class="err">##</span> <span class="nx">Decision</span>
+<span class="nx">Use</span> <span class="nx">the</span> <span class="p">[</span><span class="nx">lightweight</span><span class="p">](</span><span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/joelparkerhenderson/architecture-decision-record/blob/main/templates/decision-record-template-by-michael-nygard/index.md) Architecture Decision Records (ADR) format.</span>
+
+<span class="o">&gt;</span> <span class="nx">An</span> <span class="nx">Architectural</span> <span class="nx">Decision</span> <span class="p">(</span><span class="nx">AD</span><span class="p">)</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">justified</span> <span class="nx">software</span> <span class="nx">design</span> <span class="nx">choice</span> <span class="nx">that</span> <span class="nx">addresses</span> <span class="nx">a</span> <span class="nx">functional</span> <span class="nx">or</span> <span class="nx">non</span><span class="o">-</span><span class="nx">functional</span> <span class="nx">requirement</span> <span class="nx">that</span> <span class="nx">is</span> <span class="nx">architecturally</span> <span class="nx">significant</span><span class="p">.</span> <span class="nx">An</span> <span class="nx">Architecturally</span> <span class="nx">Significant</span> <span class="nx">Requirement</span> <span class="p">(</span><span class="nx">ASR</span><span class="p">)</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">requirement</span> <span class="nx">that</span> <span class="nx">has</span> <span class="nx">a</span> <span class="nx">measurable</span> <span class="nx">effect</span> <span class="nx">on</span> <span class="nx">a</span> <span class="nx">software</span> <span class="nx">system</span><span class="err">’</span><span class="nx">s</span> <span class="nx">architecture</span> <span class="nx">and</span> <span class="nx">quality</span><span class="p">.</span> <span class="nx">An</span> <span class="nx">Architectural</span> <span class="nx">Decision</span> <span class="nx">Record</span> <span class="p">(</span><span class="nx">ADR</span><span class="p">)</span> <span class="nx">captures</span> <span class="nx">a</span> <span class="nx">single</span> <span class="nx">AD</span> <span class="nx">and</span> <span class="nx">its</span> <span class="nx">rationale</span><span class="p">;</span> <span class="nx">the</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">ADRs</span> <span class="nx">created</span> <span class="nx">and</span> <span class="nx">maintained</span> <span class="k">in</span> <span class="nx">a</span> <span class="nx">project</span> <span class="nx">constitute</span> <span class="nx">its</span> <span class="nx">decision</span> <span class="nx">log</span><span class="p">.</span> <span class="nx">All</span> <span class="nx">these</span> <span class="nx">are</span> <span class="nx">within</span> <span class="nx">the</span> <span class="nx">topic</span> <span class="k">of</span> <span class="nx">Architectural</span> <span class="nx">Knowledge</span> <span class="nx">Management</span> <span class="p">(</span><span class="nx">AKM</span><span class="p">),</span> <span class="nx">but</span> <span class="nx">ADR</span> <span class="nx">usage</span> <span class="nx">can</span> <span class="nx">be</span> <span class="nx">extended</span> <span class="nx">to</span> <span class="nx">design</span> <span class="nx">and</span> <span class="nx">other</span> <span class="nx">decisions</span> <span class="p">(</span><span class="err">“</span><span class="nx">any</span> <span class="nx">decision</span> <span class="nx">record</span><span class="err">”</span><span class="p">).</span>
+
+<span class="nx">Extracted</span> <span class="k">from</span> <span class="o">&lt;</span><span class="nx">https</span><span class="p">:</span><span class="c1">//adr.github.io/&gt;. </span>
+
+<span class="nx">This</span> <span class="nx">first</span> <span class="nx">ADR</span> <span class="nx">is</span> <span class="nx">both</span> <span class="nx">the</span> <span class="nx">record</span> <span class="k">of</span> <span class="nx">our</span> <span class="nx">decision</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">it</span> <span class="nx">and</span> <span class="nx">a</span> <span class="nx">template</span> <span class="k">for</span> <span class="nx">future</span> <span class="nx">ADRs</span><span class="p">.</span>
+
+<span class="err">##</span> <span class="nx">Consequences</span>
+<span class="nx">We</span> <span class="nx">now</span> <span class="nx">have</span> <span class="nx">a</span> <span class="nx">centralized</span> <span class="nx">place</span> <span class="k">for</span> <span class="nx">architecture</span> <span class="nx">decisions</span> <span class="nx">that</span> <span class="nx">directly</span> <span class="nx">influence</span> <span class="k">this</span> <span class="nx">repository</span><span class="p">,</span> <span class="nx">but</span> <span class="nx">maintaining</span> <span class="nx">requires</span> <span class="nx">cultural</span> <span class="nx">shift</span> <span class="nx">and</span> <span class="nx">discipline</span><span class="p">.</span>
+</code></pre></div>
+<h2 id="inspiracao-para-templates-de-merge-requests">Inspiração para templates de merge requests</h2>
+
+<p><code class="prettyprint">.github/pull_request_template.md</code> </p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="err">#</span> <span class="nx">MR</span><span class="p">:</span> <span class="nx">One</span><span class="o">-</span><span class="nx">line</span> <span class="nx">summary</span> <span class="k">of</span> <span class="nx">requested</span> <span class="nx">change</span>
+
+<span class="err">##</span> <span class="nx">Context</span>
+<span class="nx">Brief</span> <span class="nx">comment</span> <span class="nx">on</span> <span class="nx">what</span> <span class="nx">is</span> <span class="nx">needed</span> <span class="nx">to</span> <span class="nx">know</span> <span class="nx">before</span> <span class="nx">reviewing</span> <span class="nx">the</span> <span class="nx">merge</span> <span class="nx">request</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">why</span> <span class="nx">it</span> <span class="nx">was</span> <span class="nx">created</span><span class="p">.</span>
+
+<span class="p">[</span><span class="nx">Resolves</span><span class="p">,</span> <span class="nx">Fixes</span><span class="p">]</span> <span class="err">#</span><span class="nx">issue</span><span class="o">-</span><span class="nx">number</span>
+
+<span class="err">##</span> <span class="nx">Implementation</span>
+<span class="nx">Brief</span> <span class="nx">description</span> <span class="k">of</span> <span class="nx">the</span> <span class="nx">implementation</span> <span class="nx">approach</span><span class="p">,</span> <span class="nx">considered</span> <span class="nx">alternatives</span> <span class="nx">and</span> <span class="nx">any</span> <span class="nx">other</span> <span class="nx">important</span> <span class="nx">information</span> <span class="nx">not</span> <span class="nx">explicitly</span> <span class="nx">declared</span> <span class="nx">by</span> <span class="nx">the</span> <span class="nx">code</span> <span class="nx">itself</span><span class="p">.</span> <span class="nx">Focus</span> <span class="nx">on</span> <span class="nx">why</span> <span class="nx">it</span> <span class="nx">was</span> <span class="nx">done</span> <span class="k">this</span> <span class="nx">way</span><span class="p">,</span> <span class="nx">not</span> <span class="nx">how</span> <span class="nx">or</span> <span class="nx">what</span> <span class="p">(</span><span class="nx">whitch</span> <span class="nx">is</span> <span class="nx">evidenced</span> <span class="nx">by</span> <span class="nx">the</span> <span class="nx">diff</span> <span class="nx">itself</span><span class="p">).</span> 
+
+<span class="err">##</span> <span class="nx">Impact</span>
+<span class="nx">Sumarize</span> <span class="nx">important</span> <span class="nx">breaking</span> <span class="nx">changes</span> <span class="nx">or</span> <span class="nx">other</span> <span class="nx">non</span><span class="o">-</span><span class="nx">clear</span> <span class="nx">impacts</span><span class="p">,</span> <span class="nx">such</span> <span class="k">as</span><span class="p">:</span> 
+<span class="o">-</span> <span class="nx">Changes</span> <span class="nx">required</span> <span class="nx">by</span> <span class="nx">clients</span>
+<span class="o">-</span> <span class="nx">Side</span> <span class="nx">effects</span>
+<span class="o">-</span> <span class="nx">Anything</span> <span class="nx">that</span> <span class="nx">everybody</span> <span class="nx">needs</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">aware</span>
+</code></pre></div>
+<h2 id="links">Links</h2>
+
+<ul>
+<li><a href="https://www.thoughtworks.com/en-us/radar/techniques/lightweight-architecture-decision-records" rel="noopener nofollow" target="_blank">https://www.thoughtworks.com/en-us/radar/techniques/lightweight-architecture-decision-records</a></li>
+<li><a href="https://adr.github.io/" rel="noopener nofollow" target="_blank">https://adr.github.io/</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>🌱 <strong>Seedlings</strong> são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
+</blockquote>
+
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

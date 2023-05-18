@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>Hello World, Deno! - Parte 2 - Iniciando uma aplicação | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="hello-world-deno-parte-2-iniciando-uma-aplicacao">Hello World, Deno! - Parte 2 - Iniciando uma aplicação</h1>
+            <h2 id="babel-webpack-prettier-que-nada-deno">Babel, Webpack, Prettier? Que nada. Deno! 🦕</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p>E aí! Tudo bem?</p>
+<p>No último artigo eu escrevi um pouco sobre Deno 🦕 , a nova runtime JavaScript do mesmo criador de Node, que foi a primeira parte de uma série de artigos sobre este tema. Caso ainda não tenha lido, pode começar <a href="https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html">aqui</a>.</p>
+<p>Hoje vamos dar continuidade àquele artigo, colocando a mão na massa para dar os primeiros passos nessa runtime.</p>
+<blockquote>
+<p>Essa é a segunda parte de uma série de artigos sobre Deno:</p>
+</blockquote>
+<ol>
+<li><a href="https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html">Hello World, Deno! - Parte I</a></li>
+<li><a href="#">Hello World, Deno! - Iniciando uma aplicação - Parte II</a> <strong>você está aqui</strong></li>
+<li><a href="#">Hello World, Deno! - Visitando APIs Web - Parte III</a> <em>em breve</em></li>
+<li><a href="#">Hello World, Deno! - Visitando APIS Nativas - Parte IV</a> <em>em breve</em></li>
+<li><a href="#">Hello World, Deno! - Considerações finais Parte V</a> <em>em breve</em></li>
+</ol>
+<blockquote>
+<p><strong>Disclaimer:</strong> o código aqui tem objetivo puramente didático e foi feito em noites aleatórias, então não está com foco em boas práticas. Muito menos em sua melhor implementação. Pega leve =D</p>
+</blockquote>
+<h2 id="apresentando-a-proposta">Apresentando a proposta</h2>
+<p>A missão de hoje é iniciar a construção de uma aplicação Deno e preparar a estrutura para toda a implementação.</p>
+<p>Recapitulando, vamos começar a construir essa aplicação aqui:</p>
+<p><picture><source type="image/avif" srcset="/assets/yoRMRq-z8UHEFz-_5-150w.avif 150w, /assets/yoRMRq-z8UHEFz-_5-300w.avif 300w, /assets/yoRMRq-z8UHEFz-_5-450w.avif 450w, /assets/yoRMRq-z8UHEFz-_5-600w.avif 600w, /assets/yoRMRq-z8UHEFz-_5-750w.avif 750w, /assets/yoRMRq-z8UHEFz-_5-900w.avif 900w, /assets/yoRMRq-z8UHEFz-_5-1050w.avif 1050w, /assets/yoRMRq-z8UHEFz-_5-1200w.avif 1200w, /assets/yoRMRq-z8UHEFz-_5-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/yoRMRq-z8UHEFz-_5-150w.webp 150w, /assets/yoRMRq-z8UHEFz-_5-300w.webp 300w, /assets/yoRMRq-z8UHEFz-_5-450w.webp 450w, /assets/yoRMRq-z8UHEFz-_5-600w.webp 600w, /assets/yoRMRq-z8UHEFz-_5-750w.webp 750w, /assets/yoRMRq-z8UHEFz-_5-900w.webp 900w, /assets/yoRMRq-z8UHEFz-_5-1050w.webp 1050w, /assets/yoRMRq-z8UHEFz-_5-1200w.webp 1200w, /assets/yoRMRq-z8UHEFz-_5-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/yoRMRq-z8UHEFz-_5-150w.jpeg 150w, /assets/yoRMRq-z8UHEFz-_5-300w.jpeg 300w, /assets/yoRMRq-z8UHEFz-_5-450w.jpeg 450w, /assets/yoRMRq-z8UHEFz-_5-600w.jpeg 600w, /assets/yoRMRq-z8UHEFz-_5-750w.jpeg 750w, /assets/yoRMRq-z8UHEFz-_5-900w.jpeg 900w, /assets/yoRMRq-z8UHEFz-_5-1050w.jpeg 1050w, /assets/yoRMRq-z8UHEFz-_5-1200w.jpeg 1200w, /assets/yoRMRq-z8UHEFz-_5-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/yoRMRq-z8UHEFz-_5-750w.jpeg" width="1350" height="1012" loading="lazy" decoding="async"></picture></p>
+<p>A pandemia está aí, então, todo mundo em quarentena e tal. Basicamente vamos ajudar a galera de Hogwarts tornando o sistema de seleção de casas um serviço online, assim eles não precisam se preocupar com ninguém doente por aí =D (#FiqueEmCasa).</p>
+<p>Mas como a gente faz o sorteio se não somos o Chapéu Seletor? Por sorte uma galera bacana do <em>open-source</em> já pensou nisso e disponibilizou uma interface de comunicação com o Chapéu Seletor através da internet (essa interface é conhecida como API), então vamos utilizar ela.</p>
+<p>No artigo anterior já utilizamos e vamos fazer exatamente o que fizemos antes: acessar uma API na Web que sorteia a casa. Mas precisamos resolver o problema do Chapéu Seletor- ele simplesmente não confia que vamos endereçar corretamente, então vamos precisar armazenar todas as seleções em um arquivo para poder consultar futuramente (isso são os <em>logs</em>).</p>
+<p>Dessa forma, nossa aplicação tem as seguintes etapas:</p>
+<ol>
+<li>O Harry Potter acessa o nosso programa e informa o nome dele.</li>
+<li>Através da internet consultamos a API</li>
+<li>A API consulta o Chapéu Seletor e retorna para nós a casa sorteada</li>
+<li>Salvamos em um arquivo a casa selecionada, a pessoa (neste caso, o Harry Potter) e o horário em que isso aconteceu</li>
+<li>Retornamos para o Harry Potter a sua casa</li>
+</ol>
+<p>Hoje nós vamos dar o "pontapé" da nossa aplicação, criando toda a base que vamos precisar e entender alguns conceitos, fazendo o seguinte:</p>
+<ul>
+<li>[ ] criar uma aplicação CLI em JavaScript/TypeScript</li>
+<li>[ ] receber o nome do estudante a ser sorteado</li>
+<li>[ ] utilizar um pouco do poder de JavaScript no back-end</li>
+<li>[ ] estruturar o que será feito nos próximos artigos</li>
+</ul>
+<p>Ou seja, vamos desenvolver essa parte aqui</p>
+<p><picture><source type="image/avif" srcset="/assets/B5PLN4-pJx6teZefE-150w.avif 150w, /assets/B5PLN4-pJx6teZefE-300w.avif 300w, /assets/B5PLN4-pJx6teZefE-450w.avif 450w" sizes="100vw"><source type="image/webp" srcset="/assets/B5PLN4-pJx6teZefE-150w.webp 150w, /assets/B5PLN4-pJx6teZefE-300w.webp 300w, /assets/B5PLN4-pJx6teZefE-450w.webp 450w" sizes="100vw"><source type="image/jpeg" srcset="/assets/B5PLN4-pJx6teZefE-150w.jpeg 150w, /assets/B5PLN4-pJx6teZefE-300w.jpeg 300w, /assets/B5PLN4-pJx6teZefE-450w.jpeg 450w" sizes="100vw"><img src="/assets/B5PLN4-pJx6teZefE-300w.jpeg" width="450" height="348" loading="lazy" decoding="async"></picture></p>
+<h2 id="talk-is-cheap-show-me-the-code">Talk is cheap, show me the code!</h2>
+<p>Pois bem! Chega de conversa fiada e bora codar =D</p>
+<blockquote>
+<p>Se quiser acompanhar todos os passos comigo, exatamente como estou fazendo, basta:</p>
+<ol>
+<li>seguir as instruções de instalação presentes no artigo anterior https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html</li>
+<li>instalar o VSCode do site oficial https://code.visualstudio.com/Download</li>
+<li>não tem passo três. é só isso aí mesmo =D</li>
+</ol>
+<p>Caso algo dê errado, fique a vontade de falar nos comentários.</p>
+</blockquote>
+<p>Para começar, vamos criar uma pasta contendo nosso projeto e entrar nela:</p>
+<pre class="language-shell"><code class="language-shell"><span class="token comment"># make a directory called hello-deno-harry-potter</span><br><span class="token function">mkdir</span> hello-deno-harry-potter<br><span class="token comment"># change directory to hello-deno-harry-potter</span><br><span class="token builtin class-name">cd</span> hello-deno-harry-potter</code></pre>
+<p>Vamos criar nosso arquivo principal, que será utiliado para começar tudo:</p>
+<pre class="language-shell"><code class="language-shell"><span class="token function">touch</span> mod.ts</code></pre>
+<p>E, por fim, vamos abrir o VSCode e importar a pasta lá (File &gt; Open) ou, simplesmente, aproveitar o terminal:</p>
+<pre class="language-shell"><code class="language-shell">code <span class="token builtin class-name">.</span></code></pre>
+<p>No fim fica, mais ou menos, assim:</p>
+<p><picture><source type="image/avif" srcset="/assets/pWe0ry-hUd8ZiV0LE-150w.avif 150w, /assets/pWe0ry-hUd8ZiV0LE-300w.avif 300w, /assets/pWe0ry-hUd8ZiV0LE-450w.avif 450w, /assets/pWe0ry-hUd8ZiV0LE-600w.avif 600w, /assets/pWe0ry-hUd8ZiV0LE-750w.avif 750w, /assets/pWe0ry-hUd8ZiV0LE-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/pWe0ry-hUd8ZiV0LE-150w.webp 150w, /assets/pWe0ry-hUd8ZiV0LE-300w.webp 300w, /assets/pWe0ry-hUd8ZiV0LE-450w.webp 450w, /assets/pWe0ry-hUd8ZiV0LE-600w.webp 600w, /assets/pWe0ry-hUd8ZiV0LE-750w.webp 750w, /assets/pWe0ry-hUd8ZiV0LE-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/pWe0ry-hUd8ZiV0LE-150w.jpeg 150w, /assets/pWe0ry-hUd8ZiV0LE-300w.jpeg 300w, /assets/pWe0ry-hUd8ZiV0LE-450w.jpeg 450w, /assets/pWe0ry-hUd8ZiV0LE-600w.jpeg 600w, /assets/pWe0ry-hUd8ZiV0LE-750w.jpeg 750w, /assets/pWe0ry-hUd8ZiV0LE-900w.jpeg 900w" sizes="100vw"><img src="/assets/pWe0ry-hUd8ZiV0LE-600w.jpeg" width="900" height="546" loading="lazy" decoding="async"></picture></p>
+<p>Como diz a página ali, aperte <code>ctrl</code>+ <code>'</code> para abrir um terminal dentro do VSCode. Clique no arquivo <code>mod.ts</code>.</p>
+<p>Nele escreva um simples <code>console.log('tudo ok! =D')</code>, salve as modificações (<code>ctrl</code> + <code>s</code>) e no terminal execute <code>deno run mod.ts</code> para garantir que está tudo nos conformes:</p>
+<p><picture><source type="image/avif" srcset="/assets/w15fFp-n0Q9skRexn-150w.avif 150w, /assets/w15fFp-n0Q9skRexn-300w.avif 300w, /assets/w15fFp-n0Q9skRexn-450w.avif 450w, /assets/w15fFp-n0Q9skRexn-600w.avif 600w, /assets/w15fFp-n0Q9skRexn-750w.avif 750w, /assets/w15fFp-n0Q9skRexn-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/w15fFp-n0Q9skRexn-150w.webp 150w, /assets/w15fFp-n0Q9skRexn-300w.webp 300w, /assets/w15fFp-n0Q9skRexn-450w.webp 450w, /assets/w15fFp-n0Q9skRexn-600w.webp 600w, /assets/w15fFp-n0Q9skRexn-750w.webp 750w, /assets/w15fFp-n0Q9skRexn-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/w15fFp-n0Q9skRexn-150w.jpeg 150w, /assets/w15fFp-n0Q9skRexn-300w.jpeg 300w, /assets/w15fFp-n0Q9skRexn-450w.jpeg 450w, /assets/w15fFp-n0Q9skRexn-600w.jpeg 600w, /assets/w15fFp-n0Q9skRexn-750w.jpeg 750w, /assets/w15fFp-n0Q9skRexn-900w.jpeg 900w" sizes="100vw"><img src="/assets/w15fFp-n0Q9skRexn-600w.jpeg" width="900" height="545" loading="lazy" decoding="async"></picture></p>
+<p>De forma bem simples, concluímos nosso primeiro item o/</p>
+<ul>
+<li>[x] criar uma aplicação CLI em JavaScript/TypeScript</li>
+</ul>
+<p>Pois bem, a primeiríssima coisa que precisamos fazer de verdade é a comunicação do Harry Potter com o nosso programa, ou seja, queremos saber o nome dele.</p>
+<h3 id="cli-reconhecendo-harry-potter">CLI: reconhecendo Harry Potter</h3>
+<p>Por exemplo, uma abordagem, pode ser receber o nome quando o programa é executado, desta forma: <code>deno run mod.ts "Harry Potter"</code>. Bora lá?</p>
+<p>O global <code>Deno</code> disponibiliza <code>args</code>, que retorna para o nosso programa o array de argumentos passados para o script. Se fizermos um console log e uns testes, funciona assim:</p>
+<p><picture><source type="image/avif" srcset="/assets/NCVc8X-SSFKiBctzX-150w.avif 150w, /assets/NCVc8X-SSFKiBctzX-300w.avif 300w, /assets/NCVc8X-SSFKiBctzX-450w.avif 450w, /assets/NCVc8X-SSFKiBctzX-600w.avif 600w, /assets/NCVc8X-SSFKiBctzX-750w.avif 750w, /assets/NCVc8X-SSFKiBctzX-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/NCVc8X-SSFKiBctzX-150w.webp 150w, /assets/NCVc8X-SSFKiBctzX-300w.webp 300w, /assets/NCVc8X-SSFKiBctzX-450w.webp 450w, /assets/NCVc8X-SSFKiBctzX-600w.webp 600w, /assets/NCVc8X-SSFKiBctzX-750w.webp 750w, /assets/NCVc8X-SSFKiBctzX-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/NCVc8X-SSFKiBctzX-150w.jpeg 150w, /assets/NCVc8X-SSFKiBctzX-300w.jpeg 300w, /assets/NCVc8X-SSFKiBctzX-450w.jpeg 450w, /assets/NCVc8X-SSFKiBctzX-600w.jpeg 600w, /assets/NCVc8X-SSFKiBctzX-750w.jpeg 750w, /assets/NCVc8X-SSFKiBctzX-900w.jpeg 900w" sizes="100vw"><img src="/assets/NCVc8X-SSFKiBctzX-600w.jpeg" width="900" height="545" loading="lazy" decoding="async"></picture></p>
+<p>Por questões de didática e simplicidade, no momento, vamos aceitar apenas um nome por vez em nosso programa. Então, vamos fazer assim:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> student <span class="token operator">=</span> Deno<span class="token punctuation">.</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+<p>E é só isso. Assim já temos qual é o estudante. Para verificar qual é, basta <code>console.log(student)</code>.</p>
+<p>Com isso, concluímos nosso segundo item:</p>
+<ul>
+<li>[x] receber o nome do estudante a ser sorteado</li>
+</ul>
+<p>No entanto, nem tudo é o "caminho feliz". o que acontece se a gente executa sem passar o nome? Ou se a gente passa mais de um nome? Vamos ver.</p>
+<p><picture><source type="image/avif" srcset="/assets/OTKqDa-eYUrIhVXo--150w.avif 150w, /assets/OTKqDa-eYUrIhVXo--300w.avif 300w, /assets/OTKqDa-eYUrIhVXo--450w.avif 450w, /assets/OTKqDa-eYUrIhVXo--600w.avif 600w, /assets/OTKqDa-eYUrIhVXo--750w.avif 750w, /assets/OTKqDa-eYUrIhVXo--900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/OTKqDa-eYUrIhVXo--150w.webp 150w, /assets/OTKqDa-eYUrIhVXo--300w.webp 300w, /assets/OTKqDa-eYUrIhVXo--450w.webp 450w, /assets/OTKqDa-eYUrIhVXo--600w.webp 600w, /assets/OTKqDa-eYUrIhVXo--750w.webp 750w, /assets/OTKqDa-eYUrIhVXo--900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/OTKqDa-eYUrIhVXo--150w.jpeg 150w, /assets/OTKqDa-eYUrIhVXo--300w.jpeg 300w, /assets/OTKqDa-eYUrIhVXo--450w.jpeg 450w, /assets/OTKqDa-eYUrIhVXo--600w.jpeg 600w, /assets/OTKqDa-eYUrIhVXo--750w.jpeg 750w, /assets/OTKqDa-eYUrIhVXo--900w.jpeg 900w" sizes="100vw"><img src="/assets/OTKqDa-eYUrIhVXo--600w.jpeg" width="900" height="544" loading="lazy" decoding="async"></picture></p>
+<ol>
+<li>Tudo certo. "Myreli" recebido e "Myreli" processado.</li>
+<li>Ahn... Nada recebido e "undefined" processado.</li>
+<li>Ahn... "Myreli" e "Harry" recebido e "Myreli" processado.</li>
+</ol>
+<p>Dos três cenários, somente um dá certo. Nos outros ou o Chapéu Seletor vai ficar bravo por receber o nome errado ou o Harry vai ficar confuso por não ter sido selecionado.</p>
+<p>Para corrigir isso, vamos implementar uma validação simples, para utilizar algumas coisas que já estamos acostumados do JS e TS:</p>
+<pre class="language-typescript"><code class="language-typescript"># salvamos todos os argumentos recebidos<br><span class="token keyword">const</span> args <span class="token operator">=</span> Deno<span class="token punctuation">.</span>args<br><br># verificamos que pelo menos um nome é <span class="token function">passado</span> <span class="token punctuation">(</span>resolve o cenário <span class="token number">2</span><span class="token punctuation">)</span><br><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>args<span class="token punctuation">.</span>length<span class="token punctuation">)</span><br>    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Ops, somos apenas uma interface de linha de comando, não podemos advinhar seu nome'</span><span class="token punctuation">)</span><br><br># verificamos que não foi passado mais de um <span class="token function">nome</span> <span class="token punctuation">(</span>resolve o cenário <span class="token number">3</span><span class="token punctuation">)</span><br><span class="token keyword">if</span> <span class="token punctuation">(</span>args<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">)</span><br>    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Ops, só conseguimos lidar com uma pessoa de cada vez'</span><span class="token punctuation">)</span><br><br># salvamos o nome em uma <span class="token function">variável</span> <span class="token punctuation">(</span>mantém o cenário <span class="token number">1</span><span class="token punctuation">)</span><br><span class="token keyword">const</span> student<span class="token operator">:</span> String <span class="token operator">=</span> args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><br><br># começamos o processamento<br><span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Olá, </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>student<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">! Vamos começar?</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span></code></pre>
+<p>Agora temos um resultado mais interessante, por exemplo, ao chamar sem passar nenhum nome:</p>
+<p><picture><source type="image/avif" srcset="/assets/oCzetU-Wd2Z9Edf78-150w.avif 150w, /assets/oCzetU-Wd2Z9Edf78-300w.avif 300w, /assets/oCzetU-Wd2Z9Edf78-450w.avif 450w, /assets/oCzetU-Wd2Z9Edf78-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/oCzetU-Wd2Z9Edf78-150w.webp 150w, /assets/oCzetU-Wd2Z9Edf78-300w.webp 300w, /assets/oCzetU-Wd2Z9Edf78-450w.webp 450w, /assets/oCzetU-Wd2Z9Edf78-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/oCzetU-Wd2Z9Edf78-150w.jpeg 150w, /assets/oCzetU-Wd2Z9Edf78-300w.jpeg 300w, /assets/oCzetU-Wd2Z9Edf78-450w.jpeg 450w, /assets/oCzetU-Wd2Z9Edf78-600w.jpeg 600w" sizes="100vw"><img src="/assets/oCzetU-Wd2Z9Edf78-450w.jpeg" width="600" height="96" loading="lazy" decoding="async"></picture></p>
+<p>Sinta-se a vontade para validar coisas mais interessantes como, por exemplo, se é um nome válido e tipos específicos de erros :wink:</p>
+<p>Com isso acabamos de</p>
+<ul>
+<li>[x] utilizar um pouco do poder de JavaScript no back-end</li>
+</ul>
+<p>Pois bem, agora criamos a nossa CLI - interface de linha de comando (Sim, isso também é uma "espécie" de API =D, nesse caso, conhecida como CLI). O que mais tínhamos para hoje? Estruturar o programa para os próximos passos.</p>
+<h3 id="estruturando-a-aplicacao">Estruturando a aplicação</h3>
+<p>Por enquanto temos tudo em um único arquivo de forma linear, que significa que quando adicionarmos as outras funcionalidades do nosso programa tudo vai ficar uma bagunça haha.</p>
+<p>Para evitar que isso ocorra, vamos pensar na estrutura final que desejamos para a nossa aplicação começando por separar as responsabilidades:</p>
+<ol>
+<li>Identificar o estudante (Harry Potter)</li>
+<li>Pedir a casa ao Chapéu Seletor</li>
+<li>Salvar as informações em um arquivo de logs</li>
+<li>Exibir o resultado para o usuário</li>
+</ol>
+<p>Existem várias formas de fazer isso, podemos separar em funções, em arquivos ou até em módulos. (brincadeira, não apliquem padrões de projetos de grande escopo em pequenos projetos). Podemos começar dessa forma:</p>
+<pre class="language-typescript"><code class="language-typescript"># <span class="token number">1.</span> identifica o estudante passado como argumento<br><span class="token function">identifyStudent</span><span class="token punctuation">(</span>Deno<span class="token punctuation">.</span>args<span class="token punctuation">)</span><br># <span class="token number">2.</span> solicita a <span class="token constant">API</span> que pergunte ao Chapéu Seletor qual a casa daquele estudante<br><span class="token function">identifyHouse</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><br># <span class="token number">3.</span> armazena em um arquivo a decisão <span class="token keyword">do</span> Chapéu Seletor<br><span class="token function">saveSortingHatDecision</span><span class="token punctuation">(</span>student<span class="token punctuation">,</span> house<span class="token punctuation">)</span><br># <span class="token number">4.</span> exibe ao usuário o resultado<br><span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>house<span class="token punctuation">)</span></code></pre>
+<p>E com isso:</p>
+<ul>
+<li>[x] estruturar o que será feito nos próximos artigos</li>
+</ul>
+<p>O código que desenvolvemos hoje está disponível no <a href="https://github.com/myreli/hello-deno-harry-potter/tree/first-part">Github</a>.</p>
+<p>Deno preza por ser <em>developer friendly</em> e eu espero que esse primeiro artigo tenha começado a mostrar que um excelente trabalho foi feito para chegar nisso.</p>
+<p>Utilizamos TypeScript e iniciamos um projeto em segundos. Isso é sensacional.</p>
+<p>Nos próximos artigos vamos ver tópicos como testes, documentação, formatação, e outros. E tudo isso também está nativamente em Deno.</p>
+<p>Sem mais ficar horas pelo StackOverflow tentando entender como juntar tudo e fazer funcionar em Node :)</p>
+<p>Sem mais <code>package.json</code> kilométrico. Tudo simples e objetivo.</p>
+<h2 id="proximos-passos">Próximos passos</h2>
+<p>No próximo artigo vamos começar a criar a nova estrutura comentada no fim da sessão anterior. E, finalmente, vamos iniciar o contato com as APIs da Web - sim, as do Browser. 🦕</p>
+<p>Vamos construir a parte de comunicação com a API do Chapéu Seletor, utilizando a Web API <code>fetch</code> e a API <em>open source</em> do Harry Potter.</p>
+<p>Novamente, muitíssimo obrigada por chegar até aqui, espero que tenha sido bacana. De qualquer forma, diga o que achou na área de comentários aí embaixo :)</p>
+<p>Se desejar receber um e-mail quando o próximo artigo for publicado basta inserir seu e-mail na "newsletter".</p>
+<p>Até mais!</p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "/2020/05/18/Hello-World-Deno-Parte-2"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

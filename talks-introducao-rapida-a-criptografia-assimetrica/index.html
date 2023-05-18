@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="talks-introducao-rapida-a-criptografia-assimetrica">🌿 [talks] Introdução Rápida a Criptografia Assimétrica</h1>
+
+
+<p></p>
+<p>Versão textual da tech talk de introdução à criptografia assimétrica.</p>
+
+<h2 id="conceitos">Conceitos</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Cryptography" rel="noopener nofollow" target="_blank">Criptografia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Public-key_cryptography" rel="noopener nofollow" target="_blank">Criptografia Assimétrica</a></li>
+<li>Exemplos: Aplicativos de Mensagens</li>
+</ul>
+<p><picture><source type="image/avif" srcset="/assets/250px-Public_key_encryption.svg-Puw4LVUHEh-150w.avif 150w" sizes="100vw"><source type="image/webp" srcset="/assets/250px-Public_key_encryption.svg-Puw4LVUHEh-150w.webp 150w" sizes="100vw"><source type="image/jpeg" srcset="/assets/250px-Public_key_encryption.svg-Puw4LVUHEh-150w.jpeg 150w" sizes="100vw"><img src="/assets/250px-Public_key_encryption.svg-Puw4LVUHEh-150w.jpeg" width="150" height="146" loading="lazy" decoding="async"></picture></p>
+
+<h2 id="ambiente">Ambiente</h2>
+
+<ul>
+<li>Node.js &gt;= 14 &lt;= 18</li>
+<li>TypeScript</li>
+<li>Jest</li>
+</ul>
+<p>Instruções podem ser encontradas <a href="https://itnext.io/testing-with-jest-in-typescript-cc1cd0095421" rel="noopener nofollow" target="_blank">aqui</a>.</p>
+
+<h2 id="demonstracao">Demonstração</h2>
+<div class="highlight"><pre class="highlight typescript"><code><span class="c1">// src/AsymmetricCrypto.test.ts</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AsymmetricCrypto</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./AsymmetricCrypto</span><span class="dl">"</span>
+
+<span class="cm">/**
+ * Async-Await (ou callbacks)
+ * Node.js Event Loop
+ */</span>
+
+<span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should enable secure message exchange between Ana and Bob</span><span class="dl">"</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">asymmetricCrypto</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AsymmetricCrypto</span><span class="p">()</span>
+    <span class="kd">const</span> <span class="nx">anaKeys</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">asymmetricCrypto</span><span class="p">.</span><span class="nx">generateKeyPair</span><span class="p">()</span>
+    <span class="kd">const</span> <span class="nx">bobKeys</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">asymmetricCrypto</span><span class="p">.</span><span class="nx">generateKeyPair</span><span class="p">()</span>
+
+    <span class="cm">/**
+     * Aqui ocorreria a Exchange de Keys 
+     * (Ana envia a publica para o Bob e vice-versa)
+     */</span>
+
+    <span class="c1">// Ana envia mensagem para Bob</span>
+    <span class="kd">const</span> <span class="nx">cryptedMessage</span> <span class="o">=</span> <span class="nx">asymmetricCrypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">,</span> <span class="nx">bobKeys</span><span class="p">.</span><span class="nx">publicKey</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">cryptedMessage</span><span class="p">.</span><span class="nx">toString</span><span class="p">()).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toEqual</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">)</span>
+
+    <span class="c1">// Bob recebe mensagem de Ana</span>
+    <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">asymmetricCrypto</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">cryptedMessage</span><span class="p">,</span> <span class="nx">bobKeys</span><span class="p">.</span><span class="nx">privateKey</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">toString</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">)</span>
+
+    <span class="c1">// Bob responde mensagem para Ana</span>
+    <span class="kd">const</span> <span class="nx">cryptedReply</span> <span class="o">=</span> <span class="nx">asymmetricCrypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, Ana</span><span class="dl">"</span><span class="p">,</span> <span class="nx">anaKeys</span><span class="p">.</span><span class="nx">publicKey</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">cryptedReply</span><span class="p">.</span><span class="nx">toString</span><span class="p">()).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toEqual</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, Ana</span><span class="dl">"</span><span class="p">)</span>
+
+    <span class="c1">// Ana recebe a resposta de Bob</span>
+    <span class="kd">const</span> <span class="nx">reply</span> <span class="o">=</span> <span class="nx">asymmetricCrypto</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">cryptedReply</span><span class="p">,</span> <span class="nx">anaKeys</span><span class="p">.</span><span class="nx">privateKey</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">reply</span><span class="p">.</span><span class="nx">toString</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello, Ana</span><span class="dl">"</span><span class="p">)</span>
+<span class="p">})</span>
+
+</code></pre></div>
+<h2 id="implementacao">Implementação</h2>
+<div class="highlight"><pre class="highlight typescript"><code><span class="c1">// src/AsymmetricCrypto.ts </span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">generateKeyPair</span> <span class="k">as</span> <span class="nx">cryptoGenerateKeyPair</span><span class="p">,</span> <span class="nx">publicEncrypt</span><span class="p">,</span> <span class="nx">privateDecrypt</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">node:crypto</span><span class="dl">"</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">promisify</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:util</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="kd">type</span> <span class="nx">KeyPair</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">privateKey</span><span class="p">:</span> <span class="kr">string</span> 
+    <span class="na">publicKey</span><span class="p">:</span> <span class="kr">string</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">AsymmetricCrypto</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">async</span> <span class="nx">generateKeyPair</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">KeyPair</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="p">{</span> <span class="nx">privateKey</span><span class="p">,</span> <span class="nx">publicKey</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">promisify</span><span class="p">(</span><span class="nx">cryptoGenerateKeyPair</span><span class="p">)(</span><span class="dl">'</span><span class="s1">rsa</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+            <span class="na">modulusLength</span><span class="p">:</span> <span class="mi">4096</span><span class="p">,</span>
+            <span class="na">publicKeyEncoding</span><span class="p">:</span> <span class="p">{</span>
+              <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">spki</span><span class="dl">'</span><span class="p">,</span>
+              <span class="na">format</span><span class="p">:</span> <span class="dl">'</span><span class="s1">pem</span><span class="dl">'</span>
+            <span class="p">},</span>
+            <span class="na">privateKeyEncoding</span><span class="p">:</span> <span class="p">{</span>
+              <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">pkcs8</span><span class="dl">'</span><span class="p">,</span>
+              <span class="na">format</span><span class="p">:</span> <span class="dl">'</span><span class="s1">pem</span><span class="dl">'</span>
+            <span class="p">}</span>
+          <span class="p">})</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="nx">privateKey</span><span class="p">,</span>
+            <span class="nx">publicKey</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="nx">encrypt</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">recipientKey</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">Buffer</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">publicEncrypt</span><span class="p">(</span><span class="nx">recipientKey</span><span class="p">,</span> <span class="nx">Buffer</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">message</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="nx">decrypt</span><span class="p">(</span><span class="nx">encryptedMessage</span><span class="p">:</span> <span class="nx">Buffer</span><span class="p">,</span> <span class="nx">privateKey</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">Buffer</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">privateDecrypt</span><span class="p">(</span><span class="nx">privateKey</span><span class="p">,</span> <span class="nx">encryptedMessage</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="mencoes">Menções</h2>
+
+<ul>
+<li><a href="https://nodejs.org/api/crypto.html#cryptogeneratekeypairtype-options-callback" rel="noopener nofollow" target="_blank">Módulo de criptografia nativo do Node</a></li>
+<li><a href="https://proton.me/blog/stop-using-sms" rel="noopener nofollow" target="_blank">SMSs não são seguros</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>🌿 <strong>Budding</strong> são ideias que já revisei ou editei um pouco. Estão começando a tomar forma, mas ainda precisam de refinamento. <a href="https://listed.to/@Myreli/the-garden">Saiba mais.</a></p>
+</blockquote>
+
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>Hello World, Deno! - Parte 3 - Visitando APIs Web | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="hello-world-deno-parte-3-visitando-apis-web">Hello World, Deno! - Parte 3 - Visitando APIs Web</h1>
+            <h2 id="o-poder-do-javascript-do-browser-no-back-end-de-verdade-apis-da-web-em-deno">O poder do JavaScript do browser no Back-End de verdade - APIs da Web em Deno 🦕</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p>Dale! Como vai?</p>
+<p>No artigo anterior falamos sobre várias coisas em busca de um único objetivo: preparar o terreno para o nosso aplicativo e entender um pouco da experiência de usuário fornecida por Deno. Caso não faça ideia do que estou falando, pode começar a ler <a href="https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html">aqui</a>.</p>
+<blockquote>
+<p>Demorei, mas voltei. :)</p>
+<p>Peço desculpas pela demora eterna hehe. Caso tenha curiosidade de saber o porquê de tanta demora, estou considerando abrir meu coração sobre aqui, mas enquanto isso <a href="https://vidasnegrasimportam.carrd.co/">acesse todos esses links</a>. Caso não tome coragem para publicar quero dizer aos meus amigos, conhecidos e desconhecidos negros: Eu sinto muito. Vidas negras importam.</p>
+<p>Além disso, nesse último final de semana saiu a terceira e última temporada de Dark.</p>
+</blockquote>
+<p>Hoje, vamos evoluir nossa aplicação comunicando de verdade com o Chapéu Seletor.</p>
+<blockquote>
+<p>Essa é a terceira parte de uma série de artigos sobre Deno:</p>
+</blockquote>
+<ol>
+<li><a href="https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html">Hello World, Deno! - Parte I</a> <em>disponível</em></li>
+<li><a href="https://myreli.dev/blog/2020/05/18/Hello-World-Deno-Parte-2.html">Hello World, Deno! - Iniciando uma aplicação - Parte II</a> <em>disponível</em></li>
+<li><a href="#">Hello World, Deno! - Visitando APIs Web - Parte III</a> <strong>você está aqui</strong></li>
+<li><a href="#">Hello World, Deno! - Visitando APIS Nativas - Parte IV</a> <em>em breve</em></li>
+<li><a href="#">Hello World, Deno! - Considerações finais Parte V</a> <em>em breve</em></li>
+</ol>
+<p>Lembra a introdução sobre Deno em que fizemos uma chamada no terminal para o chapéu seletor e ele dizia qual era a casa?</p>
+<p>Pois então, vamos trazer aquela mágica para dentro do nosso código.</p>
+<h3 id="comunicacao-acessando-e-consumindo-apis-com-deno">Comunicação: acessando e consumindo APIs com Deno</h3>
+<p>Precisamos comunicar com o Chapéu Seletor e isso ocorre através de uma <em>interface</em>, como mencionado anteriormente. Essa interface, conhecida como API, é uma interface HTTP disponível através da URL: <a href="https://www.potterapi.com/v1/sortingHat/">https://www.potterapi.com/v1/sortingHat/</a>.</p>
+<p>O que precisamos fazer é: acessar essa URL através do nosso programa para relacionar o sorteio ao aluno sorteado.</p>
+<p>Anteriormente, através de um terminal, a comunicação foi feita dessa forma:</p>
+<pre class="language-shell"><code class="language-shell">deno run https://deno.land/std/examples/curl.ts https://www.potterapi.com/v1/sortingHat/ --allow-net<span class="token operator">=</span>www.potterapi.com</code></pre>
+<p>Desmembrando cada parte desse comando, temos o seguinte:</p>
+<table>
+<thead>
+<tr>
+<th>comando</th>
+<th>descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deno run</code></td>
+<td>utilizamos o global Deno para invocar a sua função <code>run</code>, que serve para executar um script Deno</td>
+</tr>
+<tr>
+<td><code>https://deno.land/std/examples/curl.ts</code></td>
+<td>definimos que o programa a ser executado é o <code>curl.ts</code>, disponível em https://deno.land/std/examples/</td>
+</tr>
+<tr>
+<td><code>https://www.potterapi.com/v1/sortingHat/</code></td>
+<td>passamos como parâmetro para este programa a API de Harry Potter no endpoint do Chapéu Seletor</td>
+</tr>
+<tr>
+<td><code>--allow-net=www.potterapi.com</code></td>
+<td>permitimos a comunicação com a internet no endpoint especificado</td>
+</tr>
+</tbody>
+</table>
+<p>Ou seja, utilizamos um programa chamado <code>curl</code> do Deno para acessar uma página e exibir o resultado dela. Esse programa visita a página de Harry Potter, processa o conteúdo dela e retorna para quem chamou, mas podemos fazer isso de forma direta.</p>
+<p>Poderíamos importar este programa dentro do nosso e utilizar? Sim! Mas, neste caso, é mais rápido (e fácil) chamarmos através de uma Web API em nossa aplicação do que através de um outro programa e recuperar o conteúdo direto da fonte.</p>
+<p>Em síntese: nossa CLI precisa acessar a internet no endereço da API, a API falará com o chapéu seletor e retornará para a casa sorteada.</p>
+<h3 id="javascript-back-end-deno-web-apis">JavaScript, Back-End, Deno... Web APIs?</h3>
+<p>Deno tem o compromisso de não reinventar a roda (quando a roda funciona bem :stuck_out_tongue_winking_eye:) e por isso as APIs da Web que já são sólidas e atendem todas as necessidades são trazidas do Browser através de Deno.</p>
+<p>Um exemplo dessas APIs é o <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">fetch</a> que em sua forma mais simples funciona assim:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// collect raw response from URL</span><br><span class="token keyword">const</span> rawResponse <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"URL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">// proccess response as structured data</span><br><span class="token keyword">const</span> body <span class="token operator">=</span> <span class="token keyword">await</span> rawResponse<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// OR .json()</span></code></pre>
+<p>Primeiro, existe a função <code>fetch()</code> que retorna uma <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> contendo métodos utilitários e a resposta pura da página. Depois, utilizamos um desses métodos para processar a resposta no formato que desejamos, por exemplo, texto ou JSON.</p>
+<p>Agora vamos testar nossa própria implementação para chamar a API de Harry Potter e mostrar a casa sorteada.</p>
+<p>Para isso, utilizamos essa API e basta substituir o texto <code>'URL'</code> pela URL que queremos chamar, neste caso, a do Chapéu Seletor. Em um arquivo <code>.ts</code> qualquer, vai ser algo, mais ou menos, assim:</p>
+<p><picture><source type="image/avif" srcset="/assets/3zlGMm-QgHEetzQYV-150w.avif 150w, /assets/3zlGMm-QgHEetzQYV-300w.avif 300w, /assets/3zlGMm-QgHEetzQYV-450w.avif 450w, /assets/3zlGMm-QgHEetzQYV-600w.avif 600w, /assets/3zlGMm-QgHEetzQYV-750w.avif 750w, /assets/3zlGMm-QgHEetzQYV-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/3zlGMm-QgHEetzQYV-150w.webp 150w, /assets/3zlGMm-QgHEetzQYV-300w.webp 300w, /assets/3zlGMm-QgHEetzQYV-450w.webp 450w, /assets/3zlGMm-QgHEetzQYV-600w.webp 600w, /assets/3zlGMm-QgHEetzQYV-750w.webp 750w, /assets/3zlGMm-QgHEetzQYV-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/3zlGMm-QgHEetzQYV-150w.jpeg 150w, /assets/3zlGMm-QgHEetzQYV-300w.jpeg 300w, /assets/3zlGMm-QgHEetzQYV-450w.jpeg 450w, /assets/3zlGMm-QgHEetzQYV-600w.jpeg 600w, /assets/3zlGMm-QgHEetzQYV-750w.jpeg 750w, /assets/3zlGMm-QgHEetzQYV-900w.jpeg 900w" sizes="100vw"><img src="/assets/3zlGMm-QgHEetzQYV-600w.jpeg" width="900" height="571" loading="lazy" decoding="async"></picture></p>
+<p>Para executar, lembre-se de permitir corretamente o acesso a rede.</p>
+<p>Existem váárias outras APIs da Web implementadas, inclusive <strong><a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts#addEventListener">addEventListener</a>!!!</strong> Todas as funções estão disponíveis na <a href="https://doc.deno.land/https/github.com/denoland/deno/releases/latest/download/lib.deno.d.ts#fetch">documentação oficial</a>.</p>
+<h3 id="but-first">But first...</h3>
+<p><s><a href="https://www.youtube.com/watch?v=SuyG-lIkNow">Let me take a selfie</a></s> Vamos estruturar a aplicação =D</p>
+<p>Até o momento temos as peças do nosso projeto de forma separadas então precisamos fazer um trabalho de <em>refatoração</em> para preparar todas as etapas. E, então, ir preenchendo cada parte e formar o resultado final.</p>
+<blockquote>
+<p>No geral, eu gosto da prática de ir planejando a estrutura do código de forma macro antes de ir resolvendo cada problema de forma individual. Otimiza a solução de problemas grandes, favorece o sistema de recompensas do cérebro e encaixa muito bem com TDD.</p>
+</blockquote>
+<p>Do último artigo discutimos sobre qual seria a estrutura, mas não executamos ela de fato. E encerramos assim:</p>
+<p><picture><source type="image/avif" srcset="/assets/PolDPR-8pn_eKwGQQ-150w.avif 150w, /assets/PolDPR-8pn_eKwGQQ-300w.avif 300w, /assets/PolDPR-8pn_eKwGQQ-450w.avif 450w, /assets/PolDPR-8pn_eKwGQQ-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/PolDPR-8pn_eKwGQQ-150w.webp 150w, /assets/PolDPR-8pn_eKwGQQ-300w.webp 300w, /assets/PolDPR-8pn_eKwGQQ-450w.webp 450w, /assets/PolDPR-8pn_eKwGQQ-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/PolDPR-8pn_eKwGQQ-150w.jpeg 150w, /assets/PolDPR-8pn_eKwGQQ-300w.jpeg 300w, /assets/PolDPR-8pn_eKwGQQ-450w.jpeg 450w, /assets/PolDPR-8pn_eKwGQQ-600w.jpeg 600w" sizes="100vw"><img src="/assets/PolDPR-8pn_eKwGQQ-450w.jpeg" width="600" height="255" loading="lazy" decoding="async"></picture></p>
+<p>Agora vamos fazer aplicar essa estrutura. Apesar de ser uma simples CLI é importante manter as coisas minimamente organizadas, principalmente para no artigo final quando dermos uma olhadinha na suite nativa de testes. :)</p>
+<p>A primeira coisa que eu fiz foi mover a lógica anterior para uma função chamada <code>identifyStudent</code> e chamar essa função dentro do meu arquivo.</p>
+<p><picture><source type="image/avif" srcset="/assets/VhVN41-muNOFnvvnM-150w.avif 150w, /assets/VhVN41-muNOFnvvnM-300w.avif 300w, /assets/VhVN41-muNOFnvvnM-450w.avif 450w, /assets/VhVN41-muNOFnvvnM-600w.avif 600w, /assets/VhVN41-muNOFnvvnM-750w.avif 750w, /assets/VhVN41-muNOFnvvnM-900w.avif 900w, /assets/VhVN41-muNOFnvvnM-1050w.avif 1050w, /assets/VhVN41-muNOFnvvnM-1200w.avif 1200w, /assets/VhVN41-muNOFnvvnM-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/VhVN41-muNOFnvvnM-150w.webp 150w, /assets/VhVN41-muNOFnvvnM-300w.webp 300w, /assets/VhVN41-muNOFnvvnM-450w.webp 450w, /assets/VhVN41-muNOFnvvnM-600w.webp 600w, /assets/VhVN41-muNOFnvvnM-750w.webp 750w, /assets/VhVN41-muNOFnvvnM-900w.webp 900w, /assets/VhVN41-muNOFnvvnM-1050w.webp 1050w, /assets/VhVN41-muNOFnvvnM-1200w.webp 1200w, /assets/VhVN41-muNOFnvvnM-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/VhVN41-muNOFnvvnM-150w.jpeg 150w, /assets/VhVN41-muNOFnvvnM-300w.jpeg 300w, /assets/VhVN41-muNOFnvvnM-450w.jpeg 450w, /assets/VhVN41-muNOFnvvnM-600w.jpeg 600w, /assets/VhVN41-muNOFnvvnM-750w.jpeg 750w, /assets/VhVN41-muNOFnvvnM-900w.jpeg 900w, /assets/VhVN41-muNOFnvvnM-1050w.jpeg 1050w, /assets/VhVN41-muNOFnvvnM-1200w.jpeg 1200w, /assets/VhVN41-muNOFnvvnM-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/VhVN41-muNOFnvvnM-750w.jpeg" width="1350" height="653" loading="lazy" decoding="async"></picture></p>
+<p>Tudo funciona exatamente como antes, mas agora temos um código mais legível.</p>
+<blockquote>
+<p><strong>#code-tip:</strong> execute <code>deno info mod.ts</code> para inspecionar todas as dependências do seu projeto e tenha de forma detalhada a origem de tudo:</p>
+<pre class="language-shell"><code class="language-shell">➜  hello-deno-harry-potter <span class="token punctuation">(</span>hello-web-apis<span class="token punctuation">)</span> ✗ deno info mod.ts<br>local: /home/myreli/code/deno/hello-deno-harry-potter/mod.ts<br>type: TypeScript<br>compiled: /home/myreli/.cache/deno/gen/file/home/myreli/code/deno/hello-deno-harry-potter/mod.ts.js<br>map: /home/myreli/.cache/deno/gen/file/home/myreli/code/deno/hello-deno-harry-potter/mod.ts.js.map<br>deps:<br>file:///home/myreli/code/deno/hello-deno-harry-potter/mod.ts<br>  ├── file:///home/myreli/code/deno/hello-deno-harry-potter/student.ts<br>  ├── file:///home/myreli/code/deno/hello-deno-harry-potter/log.service.ts<br>  └── file:///home/myreli/code/deno/hello-deno-harry-potter/sorting_hat.service.ts</code></pre>
+</blockquote>
+<p>Seguindo o mesmo procedimento para os outros dois que precisamos, vamos terminar com algo assim:</p>
+<p><picture><source type="image/avif" srcset="/assets/74mpmF-3p2bicO97C-150w.avif 150w, /assets/74mpmF-3p2bicO97C-300w.avif 300w, /assets/74mpmF-3p2bicO97C-450w.avif 450w, /assets/74mpmF-3p2bicO97C-600w.avif 600w, /assets/74mpmF-3p2bicO97C-750w.avif 750w, /assets/74mpmF-3p2bicO97C-900w.avif 900w, /assets/74mpmF-3p2bicO97C-1050w.avif 1050w, /assets/74mpmF-3p2bicO97C-1200w.avif 1200w, /assets/74mpmF-3p2bicO97C-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/74mpmF-3p2bicO97C-150w.webp 150w, /assets/74mpmF-3p2bicO97C-300w.webp 300w, /assets/74mpmF-3p2bicO97C-450w.webp 450w, /assets/74mpmF-3p2bicO97C-600w.webp 600w, /assets/74mpmF-3p2bicO97C-750w.webp 750w, /assets/74mpmF-3p2bicO97C-900w.webp 900w, /assets/74mpmF-3p2bicO97C-1050w.webp 1050w, /assets/74mpmF-3p2bicO97C-1200w.webp 1200w, /assets/74mpmF-3p2bicO97C-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/74mpmF-3p2bicO97C-150w.jpeg 150w, /assets/74mpmF-3p2bicO97C-300w.jpeg 300w, /assets/74mpmF-3p2bicO97C-450w.jpeg 450w, /assets/74mpmF-3p2bicO97C-600w.jpeg 600w, /assets/74mpmF-3p2bicO97C-750w.jpeg 750w, /assets/74mpmF-3p2bicO97C-900w.jpeg 900w, /assets/74mpmF-3p2bicO97C-1050w.jpeg 1050w, /assets/74mpmF-3p2bicO97C-1200w.jpeg 1200w, /assets/74mpmF-3p2bicO97C-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/74mpmF-3p2bicO97C-750w.jpeg" width="1350" height="551" loading="lazy" decoding="async"></picture></p>
+<p>Algumas coisas importantes:</p>
+<ul>
+<li>preparei toda a estrutura do que será nosso programa final, de forma que agora precisamos apenas preencher os espaços</li>
+<li>diferente do Node, Deno <em>sempre</em> encerra o processo caso algum erro não tratado ocorra. então é importante sempre lembrar de lidar com eles. (o <code>try/catch</code> genérico ao redor de tudo é a forma como vamos lidar agora)</li>
+<li>não se preocupe em fazer tudo como eu fiz, as peças podem ser reunidas de diversas formas diferentes e essa não é a melhor :)</li>
+</ul>
+<h3 id="implementando-a-comunicacao">Implementando a comunicação</h3>
+<p>Vamos implementar na função <code>identifyHouse</code> a chamada a API externa do Harry Potter? yo o/</p>
+<p>Primeiro é necessário coletar a resposta da API:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"https://www.potterapi.com/v1/sortingHat/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Depois transformar essa resposta em texto e salvar a casa:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">const</span> house <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>E, finalmente, retornar a casa para que o processamento possa seguir em frente:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">return</span> house<span class="token punctuation">;</span></code></pre>
+<p>Agora, retornando para o nosso terminal, vamos ver como ficou tudo no final. Lembre-se de utilizar a flag de permissão de internet dessa vez, já que estamos acessando a internet:</p>
+<p><picture><source type="image/avif" srcset="/assets/iMteDR-YvJz-23GrM-150w.avif 150w, /assets/iMteDR-YvJz-23GrM-300w.avif 300w, /assets/iMteDR-YvJz-23GrM-450w.avif 450w, /assets/iMteDR-YvJz-23GrM-600w.avif 600w, /assets/iMteDR-YvJz-23GrM-750w.avif 750w, /assets/iMteDR-YvJz-23GrM-900w.avif 900w, /assets/iMteDR-YvJz-23GrM-1050w.avif 1050w, /assets/iMteDR-YvJz-23GrM-1200w.avif 1200w, /assets/iMteDR-YvJz-23GrM-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/iMteDR-YvJz-23GrM-150w.webp 150w, /assets/iMteDR-YvJz-23GrM-300w.webp 300w, /assets/iMteDR-YvJz-23GrM-450w.webp 450w, /assets/iMteDR-YvJz-23GrM-600w.webp 600w, /assets/iMteDR-YvJz-23GrM-750w.webp 750w, /assets/iMteDR-YvJz-23GrM-900w.webp 900w, /assets/iMteDR-YvJz-23GrM-1050w.webp 1050w, /assets/iMteDR-YvJz-23GrM-1200w.webp 1200w, /assets/iMteDR-YvJz-23GrM-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/iMteDR-YvJz-23GrM-150w.jpeg 150w, /assets/iMteDR-YvJz-23GrM-300w.jpeg 300w, /assets/iMteDR-YvJz-23GrM-450w.jpeg 450w, /assets/iMteDR-YvJz-23GrM-600w.jpeg 600w, /assets/iMteDR-YvJz-23GrM-750w.jpeg 750w, /assets/iMteDR-YvJz-23GrM-900w.jpeg 900w, /assets/iMteDR-YvJz-23GrM-1050w.jpeg 1050w, /assets/iMteDR-YvJz-23GrM-1200w.jpeg 1200w, /assets/iMteDR-YvJz-23GrM-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/iMteDR-YvJz-23GrM-750w.jpeg" width="1350" height="710" loading="lazy" decoding="async"></picture></p>
+<blockquote>
+<p><strong>#code-tip:</strong> a qualquer momento você pode executar <code>deno fmt &lt;arquivo&gt;</code> para formatar seu arquivo com as indentações, espaçamentos e organização corretinhas :wink:</p>
+</blockquote>
+<h3 id="proximos-passos">Próximos passos</h3>
+<p>E é isso! Um artigo inteiro para três linhas de código :stuck_out_tongue_closed_eyes: mas espero que tenha valido a pena! Em comparação, caso você não conheça node.js, uma requisição de forma nativa seria feita dessa forma:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> https <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"https"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>https<br>  <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"https://www.potterapi.com/v1/sortingHat/"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">response</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>    <span class="token keyword">let</span> data <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span><br><br>    response<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"data"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">chunk</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>      data <span class="token operator">+=</span> chunk<span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><br>    response<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"end"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>      console<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span><br>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><span class="token punctuation">)</span><br>  <span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><br>      <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Um erro impediu que a seleção fosse concluída </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>error<span class="token punctuation">.</span>message<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><br>    <span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Bleh! Por isso que a request ficou tão famosa que as pessoas começaram a pensar que ela era "nativa". E aí todo mundo se surpreendeu quando o criador decidiu <a href="https://github.com/request/request/issues/3142">encerrar o suporte</a>. (Com razões com as quais concordo plenamente, por sinal)</p>
+<p>No próximo artigo vamos implementar a última parte do nosso sistema para deixar o Chapéu Seletor, a OMS e os bruxos felizes: escrita no arquivo de log. <s>Mas, para deixar a Myreli feliz vamos ter um último artigo de considerações finais para outras curiosidades legais e úteis sobre Deno.</s></p>
+<p>Todo o código até agora está disponível no <a href="https://github.com/myreli/hello-deno-harry-potter/tree/hello-web-apis">Github</a>.</p>
+<p>Muito obrigada por ter lido até aqui! Espero que esteja sendo uma leitura e experiência prazerosa.</p>
+<p>Até breve.</p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "/2020/06/29/Hello-World-Deno-Parte-3"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

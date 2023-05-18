@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>Hello World, Deno! - Parte 4 - Visitando APIS Nativas | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="hello-world-deno-parte-4-visitando-apis-nativas">Hello World, Deno! - Parte 4 - Visitando APIS Nativas</h1>
+            <h2 id="escrevendo-em-arquivos-com-javascript-utilizando-as-apis-nativas-de-deno">Escrevendo em arquivos com JavaScript utilizando as APIs Nativas de Deno 🦕</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p>E aí, tudo joia?</p>
+<p>Na <a href="https://myreli.dev/blog/2020/06/29/Hello-World-Deno-Parte-3.html">publicação anterior</a> implementamos a comunicação com uma API externa de forma super rápida e prática. Agora, vamos fazer outra tarefa <em>muito</em> comum no desenvolvimento: acessar o sistema de arquivos e escrever neles.</p>
+<blockquote>
+<p>Essa é a quarta parte de uma série de artigos sobre Deno:</p>
+</blockquote>
+<ol>
+<li><a href="https://myreli.dev/blog/2020/05/16/Hello-World-Deno.html">Hello World, Deno! - Parte I</a>{:target="_blank"} <em>disponível</em></li>
+<li><a href="https://myreli.dev/blog/2020/05/18/Hello-World-Deno-Parte-2.html">Hello World, Deno! - Iniciando uma aplicação - Parte II</a>{:target="_blank"} <em>disponível</em></li>
+<li><a href="https://myreli.dev/blog/2020/06/29/Hello-World-Deno-Parte-3.html">Hello World, Deno! - Visitando APIs Web - Parte III</a>{:target="_blank"} <em>disponível</em></li>
+<li><a href="%5B#%5D(https://myreli.dev/blog/2020/08/23/Hello-World-Deno-Parte-4.html)">Hello World, Deno! - Visitando APIS Nativas - Parte IV</a> <strong>você está aqui</strong></li>
+<li><a href="https://myreli.dev/blog/2020/11/03/Hello-World-Deno-Parte-5.html">Hello World, Deno! - Considerações finais Parte V</a>{:target="_blank"} <em>disponível</em></li>
+</ol>
+<h2 id="por-que-escrever-em-arquivos">Por que escrever em arquivos?</h2>
+<p>A proposta da nossa aplicação é simples: recebe o nome de um aluno, conversa com o Chapéu Seletor e mostra a casa selecionada para esse aluno.</p>
+<p>Mas, na vida real, nada é simples - internet cai, Voldemort querendo voltar, <a href="https://www.forbes.com/sites/danidiplacido/2020/06/07/jk-rowling-is-destroying-her-legacy-one-tweet-at-a-time/#51c06fa412c7">J.K. Rowling destruindo tudo</a> rs... e é nosso trabalho, enquanto desenvolvedores, garantir que ainda que o mundo acabe, as aplicações permaneçam intactas. Ou, pelo menos, os registros delas.</p>
+<p>A forma mais comum de fazer isso é registrando todos os eventos da aplicação para consulta futura, os chamados <a href="https://pt.wikipedia.org/wiki/Log_de_dados">logs</a>. E bons logs são essenciais para evitar ser o Tom em Tom e Jerry.</p>
+<p><picture><source type="image/avif" srcset="/assets/YMC3tc-XU7AOw8wcQ-150w.avif 150w, /assets/YMC3tc-XU7AOw8wcQ-300w.avif 300w, /assets/YMC3tc-XU7AOw8wcQ-450w.avif 450w, /assets/YMC3tc-XU7AOw8wcQ-600w.avif 600w, /assets/YMC3tc-XU7AOw8wcQ-750w.avif 750w, /assets/YMC3tc-XU7AOw8wcQ-900w.avif 900w, /assets/YMC3tc-XU7AOw8wcQ-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/YMC3tc-XU7AOw8wcQ-150w.webp 150w, /assets/YMC3tc-XU7AOw8wcQ-300w.webp 300w, /assets/YMC3tc-XU7AOw8wcQ-450w.webp 450w, /assets/YMC3tc-XU7AOw8wcQ-600w.webp 600w, /assets/YMC3tc-XU7AOw8wcQ-750w.webp 750w, /assets/YMC3tc-XU7AOw8wcQ-900w.webp 900w, /assets/YMC3tc-XU7AOw8wcQ-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/YMC3tc-XU7AOw8wcQ-150w.jpeg 150w, /assets/YMC3tc-XU7AOw8wcQ-300w.jpeg 300w, /assets/YMC3tc-XU7AOw8wcQ-450w.jpeg 450w, /assets/YMC3tc-XU7AOw8wcQ-600w.jpeg 600w, /assets/YMC3tc-XU7AOw8wcQ-750w.jpeg 750w, /assets/YMC3tc-XU7AOw8wcQ-900w.jpeg 900w, /assets/YMC3tc-XU7AOw8wcQ-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/YMC3tc-XU7AOw8wcQ-600w.jpeg" width="1050" height="1050" alt="Debugging Meme By Java Assignment Help On Pinterest" loading="lazy" decoding="async"></picture></p>
+<h2 id="falar-e-facil-cade-o-codigo">Falar é fácil, cadê o código?</h2>
+<p>As APIs Nativas do Deno provem uma função <a href="https://doc.deno.land/builtin/stable#Deno.writeTextFile">Deno.writeTextFile</a> que faz justamente isso.</p>
+<p>Abra uma aba no terminal e entre no console interativo <code>deno</code> e experimente:</p>
+<pre class="language-shell"><code class="language-shell">Deno.writeTextFile<span class="token punctuation">(</span><span class="token string">"./arquivo.txt"</span>, <span class="token string">"tao facil?"</span><span class="token punctuation">)</span></code></pre>
+<p>Uma <code>Promise</code> (no momento do retorno, em estado pendente) é retornada porque estamos utilizando a função assíncrona para escrita em arquivos. Pode fechar o console interativo <code>ctrl d</code>.</p>
+<p><picture><source type="image/avif" srcset="/assets/3398dz-nxxT5wU-xz-150w.avif 150w, /assets/3398dz-nxxT5wU-xz-300w.avif 300w, /assets/3398dz-nxxT5wU-xz-450w.avif 450w, /assets/3398dz-nxxT5wU-xz-600w.avif 600w, /assets/3398dz-nxxT5wU-xz-750w.avif 750w" sizes="100vw"><source type="image/webp" srcset="/assets/3398dz-nxxT5wU-xz-150w.webp 150w, /assets/3398dz-nxxT5wU-xz-300w.webp 300w, /assets/3398dz-nxxT5wU-xz-450w.webp 450w, /assets/3398dz-nxxT5wU-xz-600w.webp 600w, /assets/3398dz-nxxT5wU-xz-750w.webp 750w" sizes="100vw"><source type="image/jpeg" srcset="/assets/3398dz-nxxT5wU-xz-150w.jpeg 150w, /assets/3398dz-nxxT5wU-xz-300w.jpeg 300w, /assets/3398dz-nxxT5wU-xz-450w.jpeg 450w, /assets/3398dz-nxxT5wU-xz-600w.jpeg 600w, /assets/3398dz-nxxT5wU-xz-750w.jpeg 750w" sizes="100vw"><img src="/assets/3398dz-nxxT5wU-xz-450w.jpeg" width="750" height="249" loading="lazy" decoding="async"></picture></p>
+<p>Se verificar o sistema de arquivos, vai ver que foi criado seu arquivo <code>arquivo.txt</code> no diretório atual. Bora abrir?</p>
+<p><picture><source type="image/avif" srcset="/assets/DQ5xyV-Fz1JuuDL4l-150w.avif 150w, /assets/DQ5xyV-Fz1JuuDL4l-300w.avif 300w, /assets/DQ5xyV-Fz1JuuDL4l-450w.avif 450w, /assets/DQ5xyV-Fz1JuuDL4l-600w.avif 600w, /assets/DQ5xyV-Fz1JuuDL4l-750w.avif 750w, /assets/DQ5xyV-Fz1JuuDL4l-900w.avif 900w" sizes="100vw"><source type="image/webp" srcset="/assets/DQ5xyV-Fz1JuuDL4l-150w.webp 150w, /assets/DQ5xyV-Fz1JuuDL4l-300w.webp 300w, /assets/DQ5xyV-Fz1JuuDL4l-450w.webp 450w, /assets/DQ5xyV-Fz1JuuDL4l-600w.webp 600w, /assets/DQ5xyV-Fz1JuuDL4l-750w.webp 750w, /assets/DQ5xyV-Fz1JuuDL4l-900w.webp 900w" sizes="100vw"><source type="image/jpeg" srcset="/assets/DQ5xyV-Fz1JuuDL4l-150w.jpeg 150w, /assets/DQ5xyV-Fz1JuuDL4l-300w.jpeg 300w, /assets/DQ5xyV-Fz1JuuDL4l-450w.jpeg 450w, /assets/DQ5xyV-Fz1JuuDL4l-600w.jpeg 600w, /assets/DQ5xyV-Fz1JuuDL4l-750w.jpeg 750w, /assets/DQ5xyV-Fz1JuuDL4l-900w.jpeg 900w" sizes="100vw"><img src="/assets/DQ5xyV-Fz1JuuDL4l-600w.jpeg" width="900" height="439" loading="lazy" decoding="async"></picture></p>
+<p>E tá aí minha gente! Fácil e lindo! 🙂</p>
+<h2 id="criando-o-arquivo-de-logs">Criando o arquivo de logs</h2>
+<p>Na <a href="https://myreli.dev/blog/2020/06/29/Hello-World-Deno-Parte-3.html">última versão do nosso código</a>, dentro do arquivo <code>log.service.ts</code> nós deixamos pronta a estrutura de uma função:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>student<span class="token operator">:</span> String<span class="token punctuation">,</span> house<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"registrando"</span><span class="token punctuation">,</span> student<span class="token punctuation">,</span> house<span class="token punctuation">,</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>O que precisamos agora é registrar esses dados, de fato, em um arquivo. Mas como?</p>
+<p>Vamos simplesmente trazer aquele código que construímos no console interativo para a nossa função, adaptando para o nosso caso de uso:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>student<span class="token operator">:</span> String<span class="token punctuation">,</span> house<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"registrando"</span><span class="token punctuation">,</span> student<span class="token punctuation">,</span> house<span class="token punctuation">,</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>  Deno<span class="token punctuation">.</span><span class="token function">writeTextFile</span><span class="token punctuation">(</span><br>    <span class="token string">"./app.log"</span><span class="token punctuation">,</span><br>    <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> | </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>student<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> nomeado para </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>house<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><br>  <span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Na hora de executar, da mesma forma que precisamos permitir o endereço da API, precisamos permitir a escrita de arquivos com a flag <code>allow-write</code>.</p>
+<p><picture><source type="image/avif" srcset="/assets/LyCCT7-1Ko_hTf7_J-150w.avif 150w, /assets/LyCCT7-1Ko_hTf7_J-300w.avif 300w, /assets/LyCCT7-1Ko_hTf7_J-450w.avif 450w, /assets/LyCCT7-1Ko_hTf7_J-600w.avif 600w, /assets/LyCCT7-1Ko_hTf7_J-750w.avif 750w, /assets/LyCCT7-1Ko_hTf7_J-900w.avif 900w, /assets/LyCCT7-1Ko_hTf7_J-1050w.avif 1050w, /assets/LyCCT7-1Ko_hTf7_J-1200w.avif 1200w, /assets/LyCCT7-1Ko_hTf7_J-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/LyCCT7-1Ko_hTf7_J-150w.webp 150w, /assets/LyCCT7-1Ko_hTf7_J-300w.webp 300w, /assets/LyCCT7-1Ko_hTf7_J-450w.webp 450w, /assets/LyCCT7-1Ko_hTf7_J-600w.webp 600w, /assets/LyCCT7-1Ko_hTf7_J-750w.webp 750w, /assets/LyCCT7-1Ko_hTf7_J-900w.webp 900w, /assets/LyCCT7-1Ko_hTf7_J-1050w.webp 1050w, /assets/LyCCT7-1Ko_hTf7_J-1200w.webp 1200w, /assets/LyCCT7-1Ko_hTf7_J-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/LyCCT7-1Ko_hTf7_J-150w.jpeg 150w, /assets/LyCCT7-1Ko_hTf7_J-300w.jpeg 300w, /assets/LyCCT7-1Ko_hTf7_J-450w.jpeg 450w, /assets/LyCCT7-1Ko_hTf7_J-600w.jpeg 600w, /assets/LyCCT7-1Ko_hTf7_J-750w.jpeg 750w, /assets/LyCCT7-1Ko_hTf7_J-900w.jpeg 900w, /assets/LyCCT7-1Ko_hTf7_J-1050w.jpeg 1050w, /assets/LyCCT7-1Ko_hTf7_J-1200w.jpeg 1200w, /assets/LyCCT7-1Ko_hTf7_J-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/LyCCT7-1Ko_hTf7_J-750w.jpeg" width="1350" height="515" loading="lazy" decoding="async"></picture></p>
+<p>Que delícia, né?</p>
+<h2 id="editando-um-arquivo">Editando um arquivo</h2>
+<p>Agora, tem um detalhe muito importante. Se você executar o programa novamente, vai ver que uma coisa indesejada acontece.</p>
+<p>Somente o último registro está sendo salvo:</p>
+<p><picture><source type="image/avif" srcset="/assets/a34Pjs-dHrU_8ttnn-150w.avif 150w, /assets/a34Pjs-dHrU_8ttnn-300w.avif 300w, /assets/a34Pjs-dHrU_8ttnn-450w.avif 450w, /assets/a34Pjs-dHrU_8ttnn-600w.avif 600w, /assets/a34Pjs-dHrU_8ttnn-750w.avif 750w, /assets/a34Pjs-dHrU_8ttnn-900w.avif 900w, /assets/a34Pjs-dHrU_8ttnn-1050w.avif 1050w, /assets/a34Pjs-dHrU_8ttnn-1200w.avif 1200w, /assets/a34Pjs-dHrU_8ttnn-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/a34Pjs-dHrU_8ttnn-150w.webp 150w, /assets/a34Pjs-dHrU_8ttnn-300w.webp 300w, /assets/a34Pjs-dHrU_8ttnn-450w.webp 450w, /assets/a34Pjs-dHrU_8ttnn-600w.webp 600w, /assets/a34Pjs-dHrU_8ttnn-750w.webp 750w, /assets/a34Pjs-dHrU_8ttnn-900w.webp 900w, /assets/a34Pjs-dHrU_8ttnn-1050w.webp 1050w, /assets/a34Pjs-dHrU_8ttnn-1200w.webp 1200w, /assets/a34Pjs-dHrU_8ttnn-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/a34Pjs-dHrU_8ttnn-150w.jpeg 150w, /assets/a34Pjs-dHrU_8ttnn-300w.jpeg 300w, /assets/a34Pjs-dHrU_8ttnn-450w.jpeg 450w, /assets/a34Pjs-dHrU_8ttnn-600w.jpeg 600w, /assets/a34Pjs-dHrU_8ttnn-750w.jpeg 750w, /assets/a34Pjs-dHrU_8ttnn-900w.jpeg 900w, /assets/a34Pjs-dHrU_8ttnn-1050w.jpeg 1050w, /assets/a34Pjs-dHrU_8ttnn-1200w.jpeg 1200w, /assets/a34Pjs-dHrU_8ttnn-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/a34Pjs-dHrU_8ttnn-750w.jpeg" width="1350" height="740" loading="lazy" decoding="async"></picture></p>
+<p>Em um cenário de arquivo de <em>logs,</em> queremos que todos os registros de todos os tempos sejam salvos. E isso é bem simples, basta passar a configuração <code>append: true</code> para o Deno, assim:</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>student<span class="token operator">:</span> String<span class="token punctuation">,</span> house<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"registrando"</span><span class="token punctuation">,</span> student<span class="token punctuation">,</span> house<span class="token punctuation">,</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>  <span class="token keyword">return</span> Deno<span class="token punctuation">.</span><span class="token function">writeTextFile</span><span class="token punctuation">(</span><br>    <span class="token string">"./app.log"</span><span class="token punctuation">,</span><br>    <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> | </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>student<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> nomeado para </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>house<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\n</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span><br>    <span class="token punctuation">{</span> append<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><br>  <span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Eu também incluí uma quebra de linha no fim do registro, para que cada inserção fique separada em uma linha. Agora sim:</p>
+<p><picture><source type="image/avif" srcset="/assets/b37Vkl-upUkmb77UX-150w.avif 150w, /assets/b37Vkl-upUkmb77UX-300w.avif 300w, /assets/b37Vkl-upUkmb77UX-450w.avif 450w, /assets/b37Vkl-upUkmb77UX-600w.avif 600w, /assets/b37Vkl-upUkmb77UX-750w.avif 750w, /assets/b37Vkl-upUkmb77UX-900w.avif 900w, /assets/b37Vkl-upUkmb77UX-1050w.avif 1050w, /assets/b37Vkl-upUkmb77UX-1200w.avif 1200w, /assets/b37Vkl-upUkmb77UX-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/b37Vkl-upUkmb77UX-150w.webp 150w, /assets/b37Vkl-upUkmb77UX-300w.webp 300w, /assets/b37Vkl-upUkmb77UX-450w.webp 450w, /assets/b37Vkl-upUkmb77UX-600w.webp 600w, /assets/b37Vkl-upUkmb77UX-750w.webp 750w, /assets/b37Vkl-upUkmb77UX-900w.webp 900w, /assets/b37Vkl-upUkmb77UX-1050w.webp 1050w, /assets/b37Vkl-upUkmb77UX-1200w.webp 1200w, /assets/b37Vkl-upUkmb77UX-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/b37Vkl-upUkmb77UX-150w.jpeg 150w, /assets/b37Vkl-upUkmb77UX-300w.jpeg 300w, /assets/b37Vkl-upUkmb77UX-450w.jpeg 450w, /assets/b37Vkl-upUkmb77UX-600w.jpeg 600w, /assets/b37Vkl-upUkmb77UX-750w.jpeg 750w, /assets/b37Vkl-upUkmb77UX-900w.jpeg 900w, /assets/b37Vkl-upUkmb77UX-1050w.jpeg 1050w, /assets/b37Vkl-upUkmb77UX-1200w.jpeg 1200w, /assets/b37Vkl-upUkmb77UX-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/b37Vkl-upUkmb77UX-750w.jpeg" width="1350" height="797" loading="lazy" decoding="async"></picture></p>
+<h2 id="proximos-passos">Próximos Passos</h2>
+<p>Terminamos, galera! Todo o fluxo planejado foi desenvolvido, de forma muito rápida e em pouquíssimas linhas de código:</p>
+<ol>
+<li>Qualquer aluno pode executar o programa enviando seu nome</li>
+<li>Deno está acessando a internet e coletando a decisão do Chapéu Seletor</li>
+<li>Por questões de segurança e auditoria de Hogwarts estamos salvando tudo em um arquivo de log</li>
+</ol>
+<p><picture><source type="image/avif" srcset="/assets/yoRMRq-z8UHEFz-_5-150w.avif 150w, /assets/yoRMRq-z8UHEFz-_5-300w.avif 300w, /assets/yoRMRq-z8UHEFz-_5-450w.avif 450w, /assets/yoRMRq-z8UHEFz-_5-600w.avif 600w, /assets/yoRMRq-z8UHEFz-_5-750w.avif 750w, /assets/yoRMRq-z8UHEFz-_5-900w.avif 900w, /assets/yoRMRq-z8UHEFz-_5-1050w.avif 1050w, /assets/yoRMRq-z8UHEFz-_5-1200w.avif 1200w, /assets/yoRMRq-z8UHEFz-_5-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/yoRMRq-z8UHEFz-_5-150w.webp 150w, /assets/yoRMRq-z8UHEFz-_5-300w.webp 300w, /assets/yoRMRq-z8UHEFz-_5-450w.webp 450w, /assets/yoRMRq-z8UHEFz-_5-600w.webp 600w, /assets/yoRMRq-z8UHEFz-_5-750w.webp 750w, /assets/yoRMRq-z8UHEFz-_5-900w.webp 900w, /assets/yoRMRq-z8UHEFz-_5-1050w.webp 1050w, /assets/yoRMRq-z8UHEFz-_5-1200w.webp 1200w, /assets/yoRMRq-z8UHEFz-_5-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/yoRMRq-z8UHEFz-_5-150w.jpeg 150w, /assets/yoRMRq-z8UHEFz-_5-300w.jpeg 300w, /assets/yoRMRq-z8UHEFz-_5-450w.jpeg 450w, /assets/yoRMRq-z8UHEFz-_5-600w.jpeg 600w, /assets/yoRMRq-z8UHEFz-_5-750w.jpeg 750w, /assets/yoRMRq-z8UHEFz-_5-900w.jpeg 900w, /assets/yoRMRq-z8UHEFz-_5-1050w.jpeg 1050w, /assets/yoRMRq-z8UHEFz-_5-1200w.jpeg 1200w, /assets/yoRMRq-z8UHEFz-_5-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/yoRMRq-z8UHEFz-_5-750w.jpeg" width="1350" height="1012" loading="lazy" decoding="async"></picture></p>
+<p>No próximo artigo, para encerrar a série, vou listar algumas coisas bacanas como a configuração de Deno no VSCode, como fazer testes unitários e outras funções muito maneiras para melhorar a nossa vida.</p>
+<p>Todo o código que criamos hoje está disponível no <a href="https://github.com/myreli/hello-deno-harry-potter/tree/hello-native-apis">Github</a>.</p>
+<p>De verdade, essa foi uma das melhores experiências de desenvolvimento que eu já tive de forma nativa em uma tecnologia. Deno conseguiu me convencer de que existem boas experiências para os devs que gostam de criar <em>scripts</em> rápidos fora do <a href="https://medium.com/swlh/why-you-should-use-python-to-script-8f1d591cf2c1">universo mágico de Python</a>.</p>
+<p>Muito obrigada! Espero que tenha sido uma leitura bacana.</p>
+<p>Até a próxima!</p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "/2020/08/23/Hello-World-Deno-Parte-4"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>Hello World, Deno! | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="hello-world-deno">Hello World, Deno!</h1>
+            <h2 id="turoriais-didaticos-explorando-deno">Turoriais didáticos explorando Deno 🦕</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p>Essa é uma série de artigos didáticos explorando a runtime:</p>
+<ol start="0">
+<li><a href="/series/2020-05-16-Hello-World-Deno">Hello World, Deno! - Parte I</a></li>
+<li><a href="/series/2020-05-18-Hello-World-Deno-Parte-2">Hello World, Deno! - Iniciando uma aplicação - Parte II</a></li>
+<li><a href="/series/2020-06-29-Hello-World-Deno-Parte-3">Hello World, Deno! - Visitando APIs Web - Parte III</a></li>
+<li><a href="/series/2020-08-23-Hello-World-Deno-Parte-4">Hello World, Deno! - Visitando APIS Nativas - Parte IV</a></li>
+<li><a href="/series/2020-11-03-Hello-World-Deno-Parte-5">Hello World, Deno! - Considerações finais Parte V</a></li>
+</ol>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "/2020/05/11/Hello-World-Deno"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="nosql-vs-sql">🌱 NoSQL vs SQL</h1>
+
+
+<p></p>
+<p>Some draft notes when helping clients decide between NoSQL and SQL.  </p>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://www.ibm.com/cloud/blog/brief-overview-database-landscape" rel="noopener nofollow" target="_blank">A Brief Overview of the Database Landscape</a></li>
+<li><p><a href="https://www.researchgate.net/publication/348363806_The_NoSQL_Movement" rel="noopener nofollow" target="_blank">The NoSQL movement</a></p></li>
+<li><p><a href="https://www.infoq.com/news/2022/10/netflix-timestone-priority-queue/" rel="noopener nofollow" target="_blank">https://www.infoq.com/news/2022/10/netflix-timestone-priority-queue/</a></p></li>
+</ul>
+<h2 id="tldr-decision-tree">TL;DR: Decision Tree</h2>
+
+<p><picture><source type="image/avif" srcset="/assets/image-dCYWQJPZWJ-150w.avif 150w, /assets/image-dCYWQJPZWJ-300w.avif 300w, /assets/image-dCYWQJPZWJ-450w.avif 450w, /assets/image-dCYWQJPZWJ-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/image-dCYWQJPZWJ-150w.webp 150w, /assets/image-dCYWQJPZWJ-300w.webp 300w, /assets/image-dCYWQJPZWJ-450w.webp 450w, /assets/image-dCYWQJPZWJ-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/image-dCYWQJPZWJ-150w.jpeg 150w, /assets/image-dCYWQJPZWJ-300w.jpeg 300w, /assets/image-dCYWQJPZWJ-450w.jpeg 450w, /assets/image-dCYWQJPZWJ-600w.jpeg 600w" sizes="100vw"><img src="/assets/image-dCYWQJPZWJ-450w.jpeg" width="600" height="624" alt="image" loading="lazy" decoding="async"></picture></p>
+
+<h2 id="questions-to-consider">Questions to Consider</h2>
+
+<ul>
+<li>
+<strong>Do you need to handle structured data such as tables with rows and columns?</strong> If so, SQL is probably the best choice as it directly represents structured data.</li>
+<li>
+<strong>Will your application handle high volumes or high velocity of data?</strong> NoSQL was created to handle a high volume of read operations, but keep in mind that SQL is also very performant.</li>
+<li>
+<strong>Do you need to support complex queries that include joins and aggregations?</strong> SQL is a better choice as it is designed to handle complex queries. Joining in NoSQL is not intended and may not perform well, especially with documents.</li>
+<li>
+<strong>Do you require ACID transactions?</strong> SQL follows ACID: Atomicity, Consistency, Isolation, and Durability.</li>
+<li>
+<strong>Will you be working with unstructured or semi-structured data such as JSON or XML?</strong> NoSQL might be the best choice as it handles unstructured data very well. Note that unstructured data also counts across objects, and NoSQL is often schemaless.</li>
+<li>
+<strong>Will your application require horizontal scalability?</strong> NoSQL scales best horizontally, and SQL scales best vertically.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+<li>
+<strong>Data</strong>: If your data is structured, relational data with a defined schema, SQL may be the better choice. If you have unstructured or semi-structured data, such as documents or JSON, NoSQL <em>may</em> be a better fit.</li>
+<li>
+<strong>Scalability</strong>: If you expect to handle <strong>large</strong> volumes of data and need to scale horizontally, NoSQL may be the better choice. If you expect to scale vertically, SQL.</li>
+<li>
+<strong>Performance</strong>: NoSQL databases are often faster than SQL databases when it comes to <strong>read-heavy workloads or large datasets</strong>. However, SQL databases may be better suited for complex queries and data analysis.</li>
+<li>
+<strong>Transactions</strong>: Determine if your application requires ACID compliance for data integrity and consistency. If so, SQL may be the better choice, as it is designed to handle transactions and ensure data consistency.</li>
+<li>
+<strong>Flexibility</strong>: Consider if your application needs flexibility in data modelling or if the schema may change frequently. NoSQL databases offer more flexibility and can adapt to changes more easily than SQL databases.</li>
+<li>
+<strong>Development</strong>: Evaluate the skills and resources of your development team. If your team has experience with SQL and relational databases, SQL may be the better choice. If your team has experience with NoSQL or document-based databases, NoSQL may be a better choice.</li>
+</ul>
+<hr>
+<blockquote>
+<p>🌱 <strong>Seedlings</strong> são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
+</blockquote>
+
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

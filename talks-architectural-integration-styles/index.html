@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="talks-architectural-integration-styles">🌱 [talks] Architectural Integration Styles</h1>
+
+
+<p></p>
+<p>Slides presented on Enterprise Integration Styles talk. Content extracted from <a href="https://www.enterpriseintegrationpatterns.com/" rel="noopener nofollow" target="_blank">Enterprise Integration Patterns</a>.</p>
+
+<p><picture><source type="image/avif" srcset="/assets/mBa6WO62Cl-5MpTlcQQE0-150w.avif 150w, /assets/mBa6WO62Cl-5MpTlcQQE0-300w.avif 300w, /assets/mBa6WO62Cl-5MpTlcQQE0-450w.avif 450w, /assets/mBa6WO62Cl-5MpTlcQQE0-600w.avif 600w, /assets/mBa6WO62Cl-5MpTlcQQE0-750w.avif 750w, /assets/mBa6WO62Cl-5MpTlcQQE0-900w.avif 900w, /assets/mBa6WO62Cl-5MpTlcQQE0-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/mBa6WO62Cl-5MpTlcQQE0-150w.webp 150w, /assets/mBa6WO62Cl-5MpTlcQQE0-300w.webp 300w, /assets/mBa6WO62Cl-5MpTlcQQE0-450w.webp 450w, /assets/mBa6WO62Cl-5MpTlcQQE0-600w.webp 600w, /assets/mBa6WO62Cl-5MpTlcQQE0-750w.webp 750w, /assets/mBa6WO62Cl-5MpTlcQQE0-900w.webp 900w, /assets/mBa6WO62Cl-5MpTlcQQE0-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/mBa6WO62Cl-5MpTlcQQE0-150w.jpeg 150w, /assets/mBa6WO62Cl-5MpTlcQQE0-300w.jpeg 300w, /assets/mBa6WO62Cl-5MpTlcQQE0-450w.jpeg 450w, /assets/mBa6WO62Cl-5MpTlcQQE0-600w.jpeg 600w, /assets/mBa6WO62Cl-5MpTlcQQE0-750w.jpeg 750w, /assets/mBa6WO62Cl-5MpTlcQQE0-900w.jpeg 900w, /assets/mBa6WO62Cl-5MpTlcQQE0-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/mBa6WO62Cl-5MpTlcQQE0-600w.jpeg" width="1050" height="554" loading="lazy" decoding="async"></picture></p>
+
+<p><picture><source type="image/avif" srcset="/assets/i55hE4KDQp-q3UMMdQjvZ-150w.avif 150w, /assets/i55hE4KDQp-q3UMMdQjvZ-300w.avif 300w, /assets/i55hE4KDQp-q3UMMdQjvZ-450w.avif 450w, /assets/i55hE4KDQp-q3UMMdQjvZ-600w.avif 600w, /assets/i55hE4KDQp-q3UMMdQjvZ-750w.avif 750w, /assets/i55hE4KDQp-q3UMMdQjvZ-900w.avif 900w, /assets/i55hE4KDQp-q3UMMdQjvZ-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/i55hE4KDQp-q3UMMdQjvZ-150w.webp 150w, /assets/i55hE4KDQp-q3UMMdQjvZ-300w.webp 300w, /assets/i55hE4KDQp-q3UMMdQjvZ-450w.webp 450w, /assets/i55hE4KDQp-q3UMMdQjvZ-600w.webp 600w, /assets/i55hE4KDQp-q3UMMdQjvZ-750w.webp 750w, /assets/i55hE4KDQp-q3UMMdQjvZ-900w.webp 900w, /assets/i55hE4KDQp-q3UMMdQjvZ-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/i55hE4KDQp-q3UMMdQjvZ-150w.jpeg 150w, /assets/i55hE4KDQp-q3UMMdQjvZ-300w.jpeg 300w, /assets/i55hE4KDQp-q3UMMdQjvZ-450w.jpeg 450w, /assets/i55hE4KDQp-q3UMMdQjvZ-600w.jpeg 600w, /assets/i55hE4KDQp-q3UMMdQjvZ-750w.jpeg 750w, /assets/i55hE4KDQp-q3UMMdQjvZ-900w.jpeg 900w, /assets/i55hE4KDQp-q3UMMdQjvZ-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/i55hE4KDQp-q3UMMdQjvZ-600w.jpeg" width="1050" height="541" loading="lazy" decoding="async"></picture></p>
+
+<p><picture><source type="image/avif" srcset="/assets/M3DxNE39kp-cT3xiyDRca-150w.avif 150w, /assets/M3DxNE39kp-cT3xiyDRca-300w.avif 300w, /assets/M3DxNE39kp-cT3xiyDRca-450w.avif 450w, /assets/M3DxNE39kp-cT3xiyDRca-600w.avif 600w, /assets/M3DxNE39kp-cT3xiyDRca-750w.avif 750w, /assets/M3DxNE39kp-cT3xiyDRca-900w.avif 900w, /assets/M3DxNE39kp-cT3xiyDRca-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/M3DxNE39kp-cT3xiyDRca-150w.webp 150w, /assets/M3DxNE39kp-cT3xiyDRca-300w.webp 300w, /assets/M3DxNE39kp-cT3xiyDRca-450w.webp 450w, /assets/M3DxNE39kp-cT3xiyDRca-600w.webp 600w, /assets/M3DxNE39kp-cT3xiyDRca-750w.webp 750w, /assets/M3DxNE39kp-cT3xiyDRca-900w.webp 900w, /assets/M3DxNE39kp-cT3xiyDRca-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/M3DxNE39kp-cT3xiyDRca-150w.jpeg 150w, /assets/M3DxNE39kp-cT3xiyDRca-300w.jpeg 300w, /assets/M3DxNE39kp-cT3xiyDRca-450w.jpeg 450w, /assets/M3DxNE39kp-cT3xiyDRca-600w.jpeg 600w, /assets/M3DxNE39kp-cT3xiyDRca-750w.jpeg 750w, /assets/M3DxNE39kp-cT3xiyDRca-900w.jpeg 900w, /assets/M3DxNE39kp-cT3xiyDRca-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/M3DxNE39kp-cT3xiyDRca-600w.jpeg" width="1050" height="541" loading="lazy" decoding="async"></picture></p>
+
+<p><picture><source type="image/avif" srcset="/assets/S8nu8QKfWx-kX-1mSxF_4-150w.avif 150w, /assets/S8nu8QKfWx-kX-1mSxF_4-300w.avif 300w, /assets/S8nu8QKfWx-kX-1mSxF_4-450w.avif 450w, /assets/S8nu8QKfWx-kX-1mSxF_4-600w.avif 600w, /assets/S8nu8QKfWx-kX-1mSxF_4-750w.avif 750w, /assets/S8nu8QKfWx-kX-1mSxF_4-900w.avif 900w, /assets/S8nu8QKfWx-kX-1mSxF_4-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/S8nu8QKfWx-kX-1mSxF_4-150w.webp 150w, /assets/S8nu8QKfWx-kX-1mSxF_4-300w.webp 300w, /assets/S8nu8QKfWx-kX-1mSxF_4-450w.webp 450w, /assets/S8nu8QKfWx-kX-1mSxF_4-600w.webp 600w, /assets/S8nu8QKfWx-kX-1mSxF_4-750w.webp 750w, /assets/S8nu8QKfWx-kX-1mSxF_4-900w.webp 900w, /assets/S8nu8QKfWx-kX-1mSxF_4-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/S8nu8QKfWx-kX-1mSxF_4-150w.jpeg 150w, /assets/S8nu8QKfWx-kX-1mSxF_4-300w.jpeg 300w, /assets/S8nu8QKfWx-kX-1mSxF_4-450w.jpeg 450w, /assets/S8nu8QKfWx-kX-1mSxF_4-600w.jpeg 600w, /assets/S8nu8QKfWx-kX-1mSxF_4-750w.jpeg 750w, /assets/S8nu8QKfWx-kX-1mSxF_4-900w.jpeg 900w, /assets/S8nu8QKfWx-kX-1mSxF_4-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/S8nu8QKfWx-kX-1mSxF_4-600w.jpeg" width="1050" height="541" loading="lazy" decoding="async"></picture></p>
+
+<p><picture><source type="image/avif" srcset="/assets/mX0krbkf1a-wasVLl6pfx-150w.avif 150w, /assets/mX0krbkf1a-wasVLl6pfx-300w.avif 300w, /assets/mX0krbkf1a-wasVLl6pfx-450w.avif 450w, /assets/mX0krbkf1a-wasVLl6pfx-600w.avif 600w, /assets/mX0krbkf1a-wasVLl6pfx-750w.avif 750w, /assets/mX0krbkf1a-wasVLl6pfx-900w.avif 900w, /assets/mX0krbkf1a-wasVLl6pfx-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/mX0krbkf1a-wasVLl6pfx-150w.webp 150w, /assets/mX0krbkf1a-wasVLl6pfx-300w.webp 300w, /assets/mX0krbkf1a-wasVLl6pfx-450w.webp 450w, /assets/mX0krbkf1a-wasVLl6pfx-600w.webp 600w, /assets/mX0krbkf1a-wasVLl6pfx-750w.webp 750w, /assets/mX0krbkf1a-wasVLl6pfx-900w.webp 900w, /assets/mX0krbkf1a-wasVLl6pfx-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/mX0krbkf1a-wasVLl6pfx-150w.jpeg 150w, /assets/mX0krbkf1a-wasVLl6pfx-300w.jpeg 300w, /assets/mX0krbkf1a-wasVLl6pfx-450w.jpeg 450w, /assets/mX0krbkf1a-wasVLl6pfx-600w.jpeg 600w, /assets/mX0krbkf1a-wasVLl6pfx-750w.jpeg 750w, /assets/mX0krbkf1a-wasVLl6pfx-900w.jpeg 900w, /assets/mX0krbkf1a-wasVLl6pfx-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/mX0krbkf1a-wasVLl6pfx-600w.jpeg" width="1050" height="554" loading="lazy" decoding="async"></picture></p>
+
+<p><picture><source type="image/avif" srcset="/assets/xLagDqlMEd-IiSRoGD-UY-150w.avif 150w, /assets/xLagDqlMEd-IiSRoGD-UY-300w.avif 300w, /assets/xLagDqlMEd-IiSRoGD-UY-450w.avif 450w, /assets/xLagDqlMEd-IiSRoGD-UY-600w.avif 600w, /assets/xLagDqlMEd-IiSRoGD-UY-750w.avif 750w, /assets/xLagDqlMEd-IiSRoGD-UY-900w.avif 900w, /assets/xLagDqlMEd-IiSRoGD-UY-1050w.avif 1050w" sizes="100vw"><source type="image/webp" srcset="/assets/xLagDqlMEd-IiSRoGD-UY-150w.webp 150w, /assets/xLagDqlMEd-IiSRoGD-UY-300w.webp 300w, /assets/xLagDqlMEd-IiSRoGD-UY-450w.webp 450w, /assets/xLagDqlMEd-IiSRoGD-UY-600w.webp 600w, /assets/xLagDqlMEd-IiSRoGD-UY-750w.webp 750w, /assets/xLagDqlMEd-IiSRoGD-UY-900w.webp 900w, /assets/xLagDqlMEd-IiSRoGD-UY-1050w.webp 1050w" sizes="100vw"><source type="image/jpeg" srcset="/assets/xLagDqlMEd-IiSRoGD-UY-150w.jpeg 150w, /assets/xLagDqlMEd-IiSRoGD-UY-300w.jpeg 300w, /assets/xLagDqlMEd-IiSRoGD-UY-450w.jpeg 450w, /assets/xLagDqlMEd-IiSRoGD-UY-600w.jpeg 600w, /assets/xLagDqlMEd-IiSRoGD-UY-750w.jpeg 750w, /assets/xLagDqlMEd-IiSRoGD-UY-900w.jpeg 900w, /assets/xLagDqlMEd-IiSRoGD-UY-1050w.jpeg 1050w" sizes="100vw"><img src="/assets/xLagDqlMEd-IiSRoGD-UY-600w.jpeg" width="1050" height="554" loading="lazy" decoding="async"></picture></p>
+
+<hr>
+<blockquote>
+<p>🌱 <strong>Seedlings</strong> são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
+</blockquote>
+
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

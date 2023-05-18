@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>Hello world, again | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="hello-world-again">Hello world, again</h1>
+            <h2 id="estou-voltando-para-o-blog-e-comeco-contando-como-construi-a-nova-versao-97percent-mais-leve-mais-rapida-e-simples-de-manter">Estou voltando para o blog e começo contando como construí a nova versão, 97% mais leve, mais rápida e simples de manter.</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p>Hoje lancei uma versão nova do blog: migrei o mesmo conteúdo e o estilo segue parecido. Porém... mais de 90% mais leve! =)</p>
+<p>Especificamente: 1.50mb → 37kb</p>
+<p>Desde que fiz a primeiríssima versão desse blog, oito anos atrás, muita coisa mudou -- eu tinha objetivos muito diferentes dos que tenho hoje, necessidades muito distantes das que tenho hoje e uma percepção muito diferente da web.</p>
+<p>Na época eu estava buscando meu primeiro emprego e tentando consolidar meus <em>freelas</em>. Então investi em um site que pudesse demonstrar todas as minhas habilidades de "fazer o que você precisar que envolva tecnologia". Fosse uma edição de redes sociais, fosse desenvolvimento, fosse infraestrutura.</p>
+<p>Na época, declínio do JQuery, as SPAs estavam fazendo sucesso, bem como os sites estáticos no GitHub Pages. Experimentei de tudo.</p>
+<p>Hoje tenho uma carreira e meu site já tem outro propósito: colecionar meus aprendizados ao longo do tempo, e compartilhar com quem gostar de ler.</p>
+<p>Quando notei que levava quase um segundo para carregar uma página do meu blog, e que carregava um monte de conteúdo totalizando mais de 1mb para uma publicação, percebi que meu blog não estava refletindo mais o meu momento.</p>
+<h2 id="o-inchaco-da-web">O Inchaço da Web</h2>
+<p>Comecei a me interessar por esse tema conforme o tempo passava e meu telefone ficava mais e mais ultrapassado.</p>
+<p>E ele não era ruim: 64gb, Android 9, 2GB RAM. Mas abrir qualquer site simples e fazer uma pesquisa levava <em>muito</em> tempo. Qualquer site trazia muita distração e era dificil encontrar o conteúdo que estava buscando, o que não é bem vindo com as <a href="https://canaltech.com.br/comportamento/voce-esta-se-sentindo-meio-meh-na-pandemia-isso-tem-um-nome-183056/">sequelas pandêmicas</a>.</p>
+<p>Comecei a me sentir cada vez mais atraída por experiências simples, objetivas, limpas, minimalistas. Descobri que a causa raiz disso tem um nome: <em>web bloat</em> e escrevi sobre isso.</p>
+<h2 id="novo-site">Novo site</h2>
+<p>Quanto mais lia sobre o tema, mais comecei a experimentar com reduções drásticas de complexidade que resultavam em uma experiência igual ou superior.</p>
+<p>Um exemplo foi o blog.myreli.dev.</p>
+<p>Como foi a criação e a migração:</p>
+<p>Comecei do zero porque queria garantir que não me empolgasse com novas tecnologias e me perdesse - meu blog são arquivos markdown estáticos, e não deveriam fugir disso.</p>
+<ol>
+<li>Criei um pasta nova <code>blog/</code> e migrei o conteúdo puro:
+<ul>
+<li>Todo o conteúdo dos posts já estava em Markdown, então a migração foi transparente para <code>blog/posts/</code></li>
+<li>Migrei as páginas HTML para Markdown em <code>blog/</code></li>
+</ul>
+</li>
+<li>Iniciei um projeto Eleventy para renderizar o Markdown em HTML</li>
+<li>Instalei o plugin de navegação para criar o menu automaticamente e o de estilização automática dos blocos de código (Opcional)</li>
+<li>Criei uma página nova de <em>Posts</em> para agregar todas as publicações e uma página inicial para listar os mais recentes</li>
+<li>Instalei um plugin de otimização das imagens em tempo de build (Opcional)</li>
+<li>Incluí um bloco, ativado pelo usuário, para se inscrever na newsletter</li>
+<li>Incluí um bloco, ativado pelo usuario, para interagir através de comentários</li>
+<li>Incluí um CSS base de estilos para garantir uma experiência de leitura agradável</li>
+<li>Escrevo a nota em texto a partir de qualquer editor</li>
+<li>Publico diretamente através do Git, complementando apenas com o que quero que seja o título e a descrição</li>
+</ol>
+<p>Se surgir como duvida de alguém posso detalhar melhor algum dos tópicos, mas resumidamente foi isso. =)</p>
+<h2 id="re-inventar-a-roda">Re-inventar a roda</h2>
+<p>Enquanto conversava com um amigo sobre isso ele perguntou se eu pretendia tornar o site <em>zero-depencency</em>. Não tenho uma resposta, mas acho que não.</p>
+<p>Não é esse o ponto, mas sim torná-lo zero acoplado.</p>
+<p>Hoje qualquer pessoa pode ler todo o conteúdo em markdown no GitHub, onde o repositório está hospedado.</p>
+<p>Eu também testei outro renderizador de markdown simples, o teeny, e em menos 20 minutos conseguiria migrar para outro renderizador.</p>
+<p>Estou utilizando o Prism para tornar os blocos de código bonitos, e o Pico para não me preocupar com CSS por enquanto. Remover ambos não deteriora a experiência do site, apenas muda a estilização para o padrão do navegador do usuário.</p>
+<p>Então, não tá inchado - está o que deveria ser. E embora somente quatro pessoas acessem, está contribuindo para <strong>reduzir o Inchaço da Web.</strong></p>
+<hr>
+<p>Espero que essa leitura tenha agregado algo a você, obrigada por chegar até aqui.</p>
+<p>Até mais! 🫰</p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

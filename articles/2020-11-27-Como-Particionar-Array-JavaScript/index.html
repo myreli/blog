@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title>JavaScript - Como particionar um array? | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id="javascript-como-particionar-um-array">JavaScript - Como particionar um array?</h1>
+            <h2 id="como-particionar-ou-dividir-um-array-em-javascript-puro-baseado-em-um-filtro-condicional">Como particionar (ou dividir) um array em JavaScript puro baseado em um filtro condicional</h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        <p><strong>TL;DR:</strong> Você pode pular diretamente para a <a href="#resultado">função <code>partition</code></a> que teremos implementado ao fim do artigo, ela será utilizada dessa forma (ou através do <code>Array.prototype.partition</code>):</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token punctuation">[</span>filteredIn<span class="token punctuation">,</span> filteredOut<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> condition<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="motivacao">Motivação</h2>
+<p>Recentemente uma colega se deparou com o seguinte problema: ela tinha uma função que filtrava um array e utilizava esse resultado para continuar o processamento, mas agora surgiu um novo requisito em que ela também precisaria dos itens que não passavam na condição do filtro.</p>
+<p>Ou seja, ela precisava dos resultados de <code>array.filter(x =&gt; x)</code> e <code>array.filter(x =&gt; !x)</code> divido em dois arrays para processamentos distintos, (semelhante ao que o <a href="https://lodash.com/docs/4.17.15#partition">lodash#partition</a> faz).</p>
+<p>Vou compartilhar aqui a solução que compartilhei com ela, sem utilizar mais de um loop ou ficar recriando o array — com JavaScript puro.</p>
+<h2 id="implementacao">Implementação</h2>
+<p><em>Como o objetivo aqui é didático, vou optar por nomenclatura e alternativas mais fáceis de compreender, mas não necessariamente as mais performáticas.</em></p>
+<p>A primeira coisa que precisamos é definir o que a nossa função precisa para particionar um array — a função condicional, além da lista propriamente dita.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> condition</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Precisamos iterar a lista e a cada iteração, precisamos aplicar o condicional e decidir se inserimos no array dos que passam no condicional e dos que não. E, após isso, precisamos retornar esses dois arrays resultantes.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// para cada item do array</span><br><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">condition</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span> verdadeiros<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token keyword">else</span> falsos<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Nesse caso em listas maiores, o <code>reduce</code> apresenta a melhor relação de legibilidade e performance, então vamos optar por ele em vez de um <code>for-loop</code>. Além disso, vamos fazer uso do operador vírgula, que avalia o valor das expressões da esquerda para a direita e retorna o valor da última expressão.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> condition</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>  <span class="token keyword">return</span> array<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><br>    <span class="token punctuation">(</span><span class="token parameter">result<span class="token punctuation">,</span> item</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span><br>      <span class="token function">condition</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><br>        <span class="token operator">?</span> <span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><br>        <span class="token operator">:</span> <span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><br>  <span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Agora já é possível particionar arrays! 🙂</p>
+<p>No entanto, estamos fazendo uma repetição de código: tanto o <code>if</code> quanto o <code>else</code> possuem comportamentos muito similares, alterando somente a posição em que o item é inserido.</p>
+<p>Para melhorar essa parte podemos nos aproveitar da natureza dos <em>booleanos</em> e utilizar o próprio resultado do condicional para estabelecer onde o item precisa ser inserido: <code>+!condition(item)</code> vai resultar justamente em <code>0</code> ou <code>1</code> e podemos utilizar isso para o índice do array.</p>
+<p>Refatorando, fica assim:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> condition</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><br>  <span class="token keyword">return</span> array<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><br>    <span class="token punctuation">(</span><span class="token parameter">result<span class="token punctuation">,</span> item</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token operator">+</span><span class="token operator">!</span><span class="token function">condition</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><br>  <span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h2 id="utilizando">Utilizando</h2>
+<p>Para utilizar a função é bastante simples, passamos a lista a ser particionada e a condição que define a divisão.</p>
+<p>Suponha um array de testes com o status de aprovação ou reprovação em uma prova:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> testes <span class="token operator">=</span> <span class="token punctuation">[</span><br>  <span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">"A"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">"A"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">"R"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">"R"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br>  <span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">"A"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span><br><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+<p>Como podemos dividir os alunos entre aprovados e reprovados?</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> <span class="token punctuation">[</span>aprovados<span class="token punctuation">,</span> reprovados<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span><br>  testes<span class="token punctuation">,</span><br>  <span class="token punctuation">(</span><span class="token parameter">teste</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> teste<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token string">"A"</span><br><span class="token punctuation">)</span><span class="token punctuation">;</span><br><span class="token comment">// 5 testes.length</span><br><span class="token comment">// 3 aprovados.length</span><br><span class="token comment">// 2 reprovados.length</span></code></pre>
+<p>E pronto, resolvido. E pode ser passada qualquer condição, assim como ocorre com as outras funções utilitárias do <code>Array</code>.</p>
+<h2 id="resultado">Resultado</h2>
+<p>No fim, nossa função utilitária para particionar um array fica assim:</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">/**<br> * Particiona um array baseado em uma condição.<br> * @param {Array} array - O array a ser particionado.<br> * @param {function} condition - A condição a ser aplicada no array.<br> * @return {Array} Array contendo outros arrays particionados pela condição.<br> */</span><br><span class="token keyword">const</span> <span class="token function-variable function">partition</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> condition</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span><br>  array<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><br>    <span class="token punctuation">(</span><span class="token parameter">result<span class="token punctuation">,</span> item</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>result<span class="token punctuation">[</span><span class="token operator">+</span><span class="token operator">!</span><span class="token function">condition</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">,</span><br>    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><br>  <span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="encerramento">Encerramento</h2>
+<p>Uma alternativa elegante para alguns projetos pode ser estender o próprio <code>Array</code>, adicionando o método <code>partition</code> nele, modificando a API para manter a utilização exatamente como nas outras funções (<code>map</code>, <code>filter</code>, <code>reduce</code>, ...).</p>
+<p>Você também pode ler mais sobre o <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Operador_Virgula">Operador Vírgula</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce"><code>Array.prototype.reduce</code></a> e <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/filtro"><code>Array.prototype.filter</code></a> na MDN.</p>
+<p>Obrigada por chegar até aqui! Espero que tenha sido uma leitura agradável e qualquer dúvida estou a disposição.</p>
+<p>A imagem da capa é cortesia do <a href="https://unsplash.com/@pankajpatel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Pankaj Patel</a> no <a href="https://unsplash.com/s/photos/javascript?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+<p>Até a próxima!</p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "/2020/11/27/Como-Particionar-Array-JavaScript"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>
