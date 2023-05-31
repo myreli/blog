@@ -19,4 +19,4 @@ npm start
 
 `CC BY-SA`
 
-Copyright 2017-2020 Myreli.
+Copyright 2017-2023 Myreli.

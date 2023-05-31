@@ -1,6 +1,6 @@
 const EleventyFetch = require("@11ty/eleventy-fetch");
 
-const base_url = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Flisted.to%2F%40Myreli%2Ffeed`
+const base_url = `https://www.toptal.com/developers/feed2json/convert?url=https%3A%2F%2Flisted.to%2F%40myreli%2Ffeed`
 
 module.exports = async function() {
   try {
@@ -10,7 +10,8 @@ module.exports = async function() {
       type: "json"
     });
 
-    if (!feed.status) throw new Error("Unable to fetch Listed Feed due to Listed error.", { feed });
+    if (!feed.version) throw new Error("Unable to fetch Listed Feed due to Listed error.", { feed });
+
 
     return {
       notes: feed.items.map((item) => {
@@ -18,10 +19,10 @@ module.exports = async function() {
           data: {
             type: "note",
             title: item.title,
-            url: item.link.split("/").pop(),
-            date: new Date(item.pubDate.replace(" ", "T")) || new Date(),
-            summary: extractFirstPhraseFromDescription(item.description),
-            content: item.description,
+            url: item.url.split("/").pop(),
+            date: new Date(item.date_published),
+            summary: extractFirstPhraseFromDescription(item.summary),
+            content: item.content_html,
           }
         }
       }),
