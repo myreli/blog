@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="localstack">🌳 LocalStack</h1>
+
+<p></p><p>Uma abordagem para desenvolvimento e testes de aplicações <em>cloud</em> em ambiente local: rápida, sem custo e offline.</p>
+
+<h1 id="como-simular-os-recursos-da-aws-localmente-com-localstack">Como simular os recursos da AWS localmente com LocalStack</h1>
+
+<p>Uma abordagem para desenvolvimento e testes de aplicações <em>cloud</em> em ambiente local: rápida, sem custo e offline.</p>
+
+<p>Neste artigo vamos estudar uma abordagem para o desenvolvimento de aplicações que utilizem AWS, para desenvolvimento e testes em Integração Contínua. Ao fim, queremos pode executar os principais serviços da AWS (com suas APIs oficiais) utilizando Docker. </p>
+
+<p>Isso nos permite um ciclo de desenvolvimento mais rápido e eficiente, além de conseguir incluir os serviços da AWS em nossa pipeline.</p>
+
+<p><picture><source type="image/avif" srcset="/assets/diagram-mZIbUk1iZz-150w.avif 150w, /assets/diagram-mZIbUk1iZz-300w.avif 300w, /assets/diagram-mZIbUk1iZz-450w.avif 450w, /assets/diagram-mZIbUk1iZz-600w.avif 600w, /assets/diagram-mZIbUk1iZz-750w.avif 750w, /assets/diagram-mZIbUk1iZz-900w.avif 900w, /assets/diagram-mZIbUk1iZz-1050w.avif 1050w, /assets/diagram-mZIbUk1iZz-1200w.avif 1200w, /assets/diagram-mZIbUk1iZz-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/diagram-mZIbUk1iZz-150w.webp 150w, /assets/diagram-mZIbUk1iZz-300w.webp 300w, /assets/diagram-mZIbUk1iZz-450w.webp 450w, /assets/diagram-mZIbUk1iZz-600w.webp 600w, /assets/diagram-mZIbUk1iZz-750w.webp 750w, /assets/diagram-mZIbUk1iZz-900w.webp 900w, /assets/diagram-mZIbUk1iZz-1050w.webp 1050w, /assets/diagram-mZIbUk1iZz-1200w.webp 1200w, /assets/diagram-mZIbUk1iZz-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/diagram-mZIbUk1iZz-150w.jpeg 150w, /assets/diagram-mZIbUk1iZz-300w.jpeg 300w, /assets/diagram-mZIbUk1iZz-450w.jpeg 450w, /assets/diagram-mZIbUk1iZz-600w.jpeg 600w, /assets/diagram-mZIbUk1iZz-750w.jpeg 750w, /assets/diagram-mZIbUk1iZz-900w.jpeg 900w, /assets/diagram-mZIbUk1iZz-1050w.jpeg 1050w, /assets/diagram-mZIbUk1iZz-1200w.jpeg 1200w, /assets/diagram-mZIbUk1iZz-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/diagram-mZIbUk1iZz-750w.jpeg" width="1350" height="639" alt="Diagram By LocalStack" loading="lazy" decoding="async"></picture></p>
+
+<h2 id="requisitos">Requisitos</h2>
+
+<p>Não precisa de muita coisa para seguir este tutorial além de pouca familiridade com docker e AWS, mas são necessárias algumas instalações com, no mínimo, as seguintes versões:</p>
+
+<p><picture><source type="image/avif" srcset="/assets/requirements-ts2M36Wxfv-150w.avif 150w, /assets/requirements-ts2M36Wxfv-300w.avif 300w, /assets/requirements-ts2M36Wxfv-450w.avif 450w, /assets/requirements-ts2M36Wxfv-600w.avif 600w, /assets/requirements-ts2M36Wxfv-750w.avif 750w, /assets/requirements-ts2M36Wxfv-900w.avif 900w, /assets/requirements-ts2M36Wxfv-1050w.avif 1050w, /assets/requirements-ts2M36Wxfv-1200w.avif 1200w, /assets/requirements-ts2M36Wxfv-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/requirements-ts2M36Wxfv-150w.webp 150w, /assets/requirements-ts2M36Wxfv-300w.webp 300w, /assets/requirements-ts2M36Wxfv-450w.webp 450w, /assets/requirements-ts2M36Wxfv-600w.webp 600w, /assets/requirements-ts2M36Wxfv-750w.webp 750w, /assets/requirements-ts2M36Wxfv-900w.webp 900w, /assets/requirements-ts2M36Wxfv-1050w.webp 1050w, /assets/requirements-ts2M36Wxfv-1200w.webp 1200w, /assets/requirements-ts2M36Wxfv-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/requirements-ts2M36Wxfv-150w.jpeg 150w, /assets/requirements-ts2M36Wxfv-300w.jpeg 300w, /assets/requirements-ts2M36Wxfv-450w.jpeg 450w, /assets/requirements-ts2M36Wxfv-600w.jpeg 600w, /assets/requirements-ts2M36Wxfv-750w.jpeg 750w, /assets/requirements-ts2M36Wxfv-900w.jpeg 900w, /assets/requirements-ts2M36Wxfv-1050w.jpeg 1050w, /assets/requirements-ts2M36Wxfv-1200w.jpeg 1200w, /assets/requirements-ts2M36Wxfv-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/requirements-ts2M36Wxfv-750w.jpeg" width="1350" height="655" alt="Requisitos" loading="lazy" decoding="async"></picture></p>
+
+<h2 id="as-dores-de-cabeca-que-surgiram-com-a-computacao-em-nuvem">As dores de cabeça que surgiram com a computação em nuvem</h2>
+
+<p><a href="https://idapgroup.com/blog/how-cloud-changed-app-development/" rel="noopener nofollow" target="_blank">A computação em nuvem trouxe muitas mudanças</a> e benefícios para o ciclo de desenvolvimento -  menos preocupação com infraestrutura e mais preocupação com código. Mas esses benefícios chegaram a um custo para os desenvolvedores: agora não é mais possível ter um ambiente de desenvolvimento completo e isolado. </p>
+
+<p>Enquanto <a href="https://spectrum.ieee.org/tech-talk/computing/software/software-development-environments-cloud" rel="noopener nofollow" target="_blank">cloud-based development</a> não é popularizado, desenvolvedores de aplicações em nuvem trabalham em um ambiente hibrido - utilizando recursos <em>cloud</em> da AWS, por exemplo, é comum alocar uma infraestrutura completa de "desenvolvimento" para experimentar os serviços e permitir que os devs trabalhem. </p>
+
+<p>Essa abordagem tem diversos pontos negativos, mas vou  destacar dois principais: custos e limitações. </p>
+
+<p>Por parte do custo, não existe uma versão gratuita dos serviços cloud para desenvolvimento, toda a utilização de recursos é cobrada e isso inclui testes, desenvolvimento, pipeline, experimentação, POCs e etc. Diferente de trabalhar em um cenário <em>on-premise</em> em que tudo é executado de forma local. Isso significa que testes de integração ficam prejudicados e limitados as bibliotecas de testes que tentam simular aquele ambiente. </p>
+
+<p>Já na parte das limitações - além da latência e configurações de rede no caso de <a href="https://aws.amazon.com/vpc" rel="noopener nofollow" target="_blank">VPCs</a> - muita liberdade do time de desenvolvimento é perdida, visto que eles estão atuando em um ambiente real que tem impacto imediato na conta e nos outros desenvolvedores. Em um time diverso, com pessoas com muita ou pouca experiência em <em>cloud</em> o ambiente cloud se torna uma dor de cabeça para quem utiliza e para quem paga a conta. </p>
+
+<ol>
+<li>Setup</li>
+<li>Provisionar/Utilizar recursos de forma transparente com aws-cli</li>
+<li>Utilização (desenvolvimento e testes de integração em CI)</li>
+</ol>
+
+<h2 id="localstack-ftw-trazendo-a-nuvem-para-o-ambiente-de-desenvolvimento">LocalStack FTW: trazendo a nuvem para o ambiente de desenvolvimento</h2>
+
+<p><a href="https://localstack.cloud/" rel="noopener nofollow" target="_blank">LocalStack</a> surgiu para resolver justamente este problema: executando de forma local (Docker), podemos ter todos os serviços da AWS disponíveis e fazer a bagunça que quisermos - offline, sem custos, sem limitações e sem atrapalhar os colegas. Por ser eficiente e portátil permite que o desenvolvimento utilize todo o poder da nuvem em um container. </p>
+
+<p><img src="https://external-preview.redd.it/aR6WdUcsrEgld5xUlglgKX_0sC_NlryCPTXIHk5qdu8.jpg?auto=webp&amp;s=5fe64dd318eec71711d87805d43def2765dd83cd" alt="It works on my machine... Docker Meme By ProgrammerHumor"></p>
+
+<p>O conceito é simples: ter um ambiente completamente funcional da AWS sendo executado de forma local, respeitando as APIs oficiais e sendo o mais transparente possível. Além disso, LocalStack simula erros reais da AWS e executa os serviços de forma totalmente desacoplada. </p>
+
+<h2 id="instalando-e-executando-localstack">Instalando e Executando LocalStack</h2>
+
+<p>Dado todo esse contexto, agora veremos como instalar e executar os serviços AWS de fato com LocalStack. E é bem simples, instala o pacote <code class="prettyprint">localstack</code> pelo pip e então executa com o comando <code class="prettyprint">start</code>:</p>
+
+<p><picture><source type="image/avif" srcset="/assets/localstack-S6Am7RNDXg-150w.avif 150w, /assets/localstack-S6Am7RNDXg-300w.avif 300w, /assets/localstack-S6Am7RNDXg-450w.avif 450w, /assets/localstack-S6Am7RNDXg-600w.avif 600w, /assets/localstack-S6Am7RNDXg-750w.avif 750w, /assets/localstack-S6Am7RNDXg-900w.avif 900w, /assets/localstack-S6Am7RNDXg-1050w.avif 1050w, /assets/localstack-S6Am7RNDXg-1200w.avif 1200w, /assets/localstack-S6Am7RNDXg-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/localstack-S6Am7RNDXg-150w.webp 150w, /assets/localstack-S6Am7RNDXg-300w.webp 300w, /assets/localstack-S6Am7RNDXg-450w.webp 450w, /assets/localstack-S6Am7RNDXg-600w.webp 600w, /assets/localstack-S6Am7RNDXg-750w.webp 750w, /assets/localstack-S6Am7RNDXg-900w.webp 900w, /assets/localstack-S6Am7RNDXg-1050w.webp 1050w, /assets/localstack-S6Am7RNDXg-1200w.webp 1200w, /assets/localstack-S6Am7RNDXg-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/localstack-S6Am7RNDXg-150w.jpeg 150w, /assets/localstack-S6Am7RNDXg-300w.jpeg 300w, /assets/localstack-S6Am7RNDXg-450w.jpeg 450w, /assets/localstack-S6Am7RNDXg-600w.jpeg 600w, /assets/localstack-S6Am7RNDXg-750w.jpeg 750w, /assets/localstack-S6Am7RNDXg-900w.jpeg 900w, /assets/localstack-S6Am7RNDXg-1050w.jpeg 1050w, /assets/localstack-S6Am7RNDXg-1200w.jpeg 1200w, /assets/localstack-S6Am7RNDXg-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/localstack-S6Am7RNDXg-750w.jpeg" width="1350" height="655" alt="Requisitos" loading="lazy" decoding="async"></picture></p>
+
+<p>Se você digitar <code class="prettyprint">docker ps</code> vai ver que temos o container executando a partir da imagem <code class="prettyprint">localstack/localstack</code> expondo a porta 4566. </p>
+
+<p>E com isso, temos a AWS executando em nossa máquina. </p>
+
+<p>Para utilizar os recursos, podemos utilizar as <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html" rel="noopener nofollow" target="_blank">próprias ferramentas da AWS</a> para interagir, alterando apenas as configurações de perfil. Eu criei um perfil "localstack", mas pode ser o global, ou qualquer outra nomenclatura. </p>
+
+<p><picture><source type="image/avif" srcset="/assets/aws-configure-_7AflaehLL-150w.avif 150w, /assets/aws-configure-_7AflaehLL-300w.avif 300w, /assets/aws-configure-_7AflaehLL-450w.avif 450w, /assets/aws-configure-_7AflaehLL-600w.avif 600w, /assets/aws-configure-_7AflaehLL-750w.avif 750w, /assets/aws-configure-_7AflaehLL-900w.avif 900w, /assets/aws-configure-_7AflaehLL-1050w.avif 1050w, /assets/aws-configure-_7AflaehLL-1200w.avif 1200w, /assets/aws-configure-_7AflaehLL-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/aws-configure-_7AflaehLL-150w.webp 150w, /assets/aws-configure-_7AflaehLL-300w.webp 300w, /assets/aws-configure-_7AflaehLL-450w.webp 450w, /assets/aws-configure-_7AflaehLL-600w.webp 600w, /assets/aws-configure-_7AflaehLL-750w.webp 750w, /assets/aws-configure-_7AflaehLL-900w.webp 900w, /assets/aws-configure-_7AflaehLL-1050w.webp 1050w, /assets/aws-configure-_7AflaehLL-1200w.webp 1200w, /assets/aws-configure-_7AflaehLL-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/aws-configure-_7AflaehLL-150w.jpeg 150w, /assets/aws-configure-_7AflaehLL-300w.jpeg 300w, /assets/aws-configure-_7AflaehLL-450w.jpeg 450w, /assets/aws-configure-_7AflaehLL-600w.jpeg 600w, /assets/aws-configure-_7AflaehLL-750w.jpeg 750w, /assets/aws-configure-_7AflaehLL-900w.jpeg 900w, /assets/aws-configure-_7AflaehLL-1050w.jpeg 1050w, /assets/aws-configure-_7AflaehLL-1200w.jpeg 1200w, /assets/aws-configure-_7AflaehLL-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/aws-configure-_7AflaehLL-750w.jpeg" width="1350" height="547" alt="Configuração" loading="lazy" decoding="async"></picture></p>
+
+<p>E agora, se você está acostumado com a AWS e  digitar algum comando, por exemplo <code class="prettyprint">aws lambda list-functions</code>, verá um erro porque não temos credenciais válidas da AWS. </p>
+
+<p>Então, para conseguir executar os serviços, precisamos sobreescrever o endpoint padrão da AWS, utilizando o nosso local:</p>
+
+<p><picture><source type="image/avif" srcset="/assets/executing-localstack-iMt-YAuUti-150w.avif 150w, /assets/executing-localstack-iMt-YAuUti-300w.avif 300w, /assets/executing-localstack-iMt-YAuUti-450w.avif 450w, /assets/executing-localstack-iMt-YAuUti-600w.avif 600w, /assets/executing-localstack-iMt-YAuUti-750w.avif 750w, /assets/executing-localstack-iMt-YAuUti-900w.avif 900w, /assets/executing-localstack-iMt-YAuUti-1050w.avif 1050w, /assets/executing-localstack-iMt-YAuUti-1200w.avif 1200w, /assets/executing-localstack-iMt-YAuUti-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/executing-localstack-iMt-YAuUti-150w.webp 150w, /assets/executing-localstack-iMt-YAuUti-300w.webp 300w, /assets/executing-localstack-iMt-YAuUti-450w.webp 450w, /assets/executing-localstack-iMt-YAuUti-600w.webp 600w, /assets/executing-localstack-iMt-YAuUti-750w.webp 750w, /assets/executing-localstack-iMt-YAuUti-900w.webp 900w, /assets/executing-localstack-iMt-YAuUti-1050w.webp 1050w, /assets/executing-localstack-iMt-YAuUti-1200w.webp 1200w, /assets/executing-localstack-iMt-YAuUti-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/executing-localstack-iMt-YAuUti-150w.jpeg 150w, /assets/executing-localstack-iMt-YAuUti-300w.jpeg 300w, /assets/executing-localstack-iMt-YAuUti-450w.jpeg 450w, /assets/executing-localstack-iMt-YAuUti-600w.jpeg 600w, /assets/executing-localstack-iMt-YAuUti-750w.jpeg 750w, /assets/executing-localstack-iMt-YAuUti-900w.jpeg 900w, /assets/executing-localstack-iMt-YAuUti-1050w.jpeg 1050w, /assets/executing-localstack-iMt-YAuUti-1200w.jpeg 1200w, /assets/executing-localstack-iMt-YAuUti-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/executing-localstack-iMt-YAuUti-750w.jpeg" width="1350" height="762" alt="Execução" loading="lazy" decoding="async"></picture></p>
+
+<h2 id="exemplo-de-provisionamento-e-utilizacao-de-uma-fila-com-sqs">Exemplo de provisionamento e utilização de uma fila com SQS</h2>
+
+<p>Agora podemos utilizar todos os recursos da AWS pelo CLI ou pelas SDKs. Para o nosso caso de exemplo, vamos criar uma fila de pedidos a serem atendidos. </p>
+
+<p>A primeira etapa é criar e provisionar a fila e, assim como ocorre em um ambiente real da AWS, podemos fazer dessa forma:</p>
+
+<p><picture><source type="image/avif" srcset="/assets/create-sqs-Fsu7yzpSV6-150w.avif 150w, /assets/create-sqs-Fsu7yzpSV6-300w.avif 300w, /assets/create-sqs-Fsu7yzpSV6-450w.avif 450w, /assets/create-sqs-Fsu7yzpSV6-600w.avif 600w, /assets/create-sqs-Fsu7yzpSV6-750w.avif 750w, /assets/create-sqs-Fsu7yzpSV6-900w.avif 900w, /assets/create-sqs-Fsu7yzpSV6-1050w.avif 1050w, /assets/create-sqs-Fsu7yzpSV6-1200w.avif 1200w, /assets/create-sqs-Fsu7yzpSV6-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/create-sqs-Fsu7yzpSV6-150w.webp 150w, /assets/create-sqs-Fsu7yzpSV6-300w.webp 300w, /assets/create-sqs-Fsu7yzpSV6-450w.webp 450w, /assets/create-sqs-Fsu7yzpSV6-600w.webp 600w, /assets/create-sqs-Fsu7yzpSV6-750w.webp 750w, /assets/create-sqs-Fsu7yzpSV6-900w.webp 900w, /assets/create-sqs-Fsu7yzpSV6-1050w.webp 1050w, /assets/create-sqs-Fsu7yzpSV6-1200w.webp 1200w, /assets/create-sqs-Fsu7yzpSV6-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/create-sqs-Fsu7yzpSV6-150w.jpeg 150w, /assets/create-sqs-Fsu7yzpSV6-300w.jpeg 300w, /assets/create-sqs-Fsu7yzpSV6-450w.jpeg 450w, /assets/create-sqs-Fsu7yzpSV6-600w.jpeg 600w, /assets/create-sqs-Fsu7yzpSV6-750w.jpeg 750w, /assets/create-sqs-Fsu7yzpSV6-900w.jpeg 900w, /assets/create-sqs-Fsu7yzpSV6-1050w.jpeg 1050w, /assets/create-sqs-Fsu7yzpSV6-1200w.jpeg 1200w, /assets/create-sqs-Fsu7yzpSV6-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/create-sqs-Fsu7yzpSV6-750w.jpeg" width="1350" height="655" alt="Criar fila no SQS" loading="lazy" decoding="async"></picture></p>
+
+<p>Agora, vamos simular que dois pedidos diferentes foram feitos e vamos enviar um por um para a fila: </p>
+<div class="highlight"><pre class="highlight json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ORDER#0001"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Myreli"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Fries"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Chocolate Shake"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ORDER#0002"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"William"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Cheeseburger Combo Meal"</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><picture><source type="image/avif" srcset="/assets/send-message-sqs-gnZK0zzv65-150w.avif 150w, /assets/send-message-sqs-gnZK0zzv65-300w.avif 300w, /assets/send-message-sqs-gnZK0zzv65-450w.avif 450w, /assets/send-message-sqs-gnZK0zzv65-600w.avif 600w, /assets/send-message-sqs-gnZK0zzv65-750w.avif 750w, /assets/send-message-sqs-gnZK0zzv65-900w.avif 900w, /assets/send-message-sqs-gnZK0zzv65-1050w.avif 1050w, /assets/send-message-sqs-gnZK0zzv65-1200w.avif 1200w, /assets/send-message-sqs-gnZK0zzv65-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/send-message-sqs-gnZK0zzv65-150w.webp 150w, /assets/send-message-sqs-gnZK0zzv65-300w.webp 300w, /assets/send-message-sqs-gnZK0zzv65-450w.webp 450w, /assets/send-message-sqs-gnZK0zzv65-600w.webp 600w, /assets/send-message-sqs-gnZK0zzv65-750w.webp 750w, /assets/send-message-sqs-gnZK0zzv65-900w.webp 900w, /assets/send-message-sqs-gnZK0zzv65-1050w.webp 1050w, /assets/send-message-sqs-gnZK0zzv65-1200w.webp 1200w, /assets/send-message-sqs-gnZK0zzv65-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/send-message-sqs-gnZK0zzv65-150w.jpeg 150w, /assets/send-message-sqs-gnZK0zzv65-300w.jpeg 300w, /assets/send-message-sqs-gnZK0zzv65-450w.jpeg 450w, /assets/send-message-sqs-gnZK0zzv65-600w.jpeg 600w, /assets/send-message-sqs-gnZK0zzv65-750w.jpeg 750w, /assets/send-message-sqs-gnZK0zzv65-900w.jpeg 900w, /assets/send-message-sqs-gnZK0zzv65-1050w.jpeg 1050w, /assets/send-message-sqs-gnZK0zzv65-1200w.jpeg 1200w, /assets/send-message-sqs-gnZK0zzv65-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/send-message-sqs-gnZK0zzv65-750w.jpeg" width="1350" height="833" alt="Publicar na fila no SQS" loading="lazy" decoding="async"></picture></p>
+
+<p>E por último, vamos consumir essas mensagens da fila, assim como faríamos de uma fila na infraestrutura da AWS:</p>
+
+<p><picture><source type="image/avif" srcset="/assets/receive-message-sqs-sT_yuCGq9a-150w.avif 150w, /assets/receive-message-sqs-sT_yuCGq9a-300w.avif 300w, /assets/receive-message-sqs-sT_yuCGq9a-450w.avif 450w, /assets/receive-message-sqs-sT_yuCGq9a-600w.avif 600w, /assets/receive-message-sqs-sT_yuCGq9a-750w.avif 750w, /assets/receive-message-sqs-sT_yuCGq9a-900w.avif 900w, /assets/receive-message-sqs-sT_yuCGq9a-1050w.avif 1050w, /assets/receive-message-sqs-sT_yuCGq9a-1200w.avif 1200w, /assets/receive-message-sqs-sT_yuCGq9a-1350w.avif 1350w" sizes="100vw"><source type="image/webp" srcset="/assets/receive-message-sqs-sT_yuCGq9a-150w.webp 150w, /assets/receive-message-sqs-sT_yuCGq9a-300w.webp 300w, /assets/receive-message-sqs-sT_yuCGq9a-450w.webp 450w, /assets/receive-message-sqs-sT_yuCGq9a-600w.webp 600w, /assets/receive-message-sqs-sT_yuCGq9a-750w.webp 750w, /assets/receive-message-sqs-sT_yuCGq9a-900w.webp 900w, /assets/receive-message-sqs-sT_yuCGq9a-1050w.webp 1050w, /assets/receive-message-sqs-sT_yuCGq9a-1200w.webp 1200w, /assets/receive-message-sqs-sT_yuCGq9a-1350w.webp 1350w" sizes="100vw"><source type="image/jpeg" srcset="/assets/receive-message-sqs-sT_yuCGq9a-150w.jpeg 150w, /assets/receive-message-sqs-sT_yuCGq9a-300w.jpeg 300w, /assets/receive-message-sqs-sT_yuCGq9a-450w.jpeg 450w, /assets/receive-message-sqs-sT_yuCGq9a-600w.jpeg 600w, /assets/receive-message-sqs-sT_yuCGq9a-750w.jpeg 750w, /assets/receive-message-sqs-sT_yuCGq9a-900w.jpeg 900w, /assets/receive-message-sqs-sT_yuCGq9a-1050w.jpeg 1050w, /assets/receive-message-sqs-sT_yuCGq9a-1200w.jpeg 1200w, /assets/receive-message-sqs-sT_yuCGq9a-1350w.jpeg 1350w" sizes="100vw"><img src="/assets/receive-message-sqs-sT_yuCGq9a-750w.jpeg" width="1350" height="976" alt="Consumir mensagem da fila no SQS" loading="lazy" decoding="async"></picture></p>
+
+<p>Isso encerra o exemplo do uso de SQS com LocalStack, utilizando a ferramenta oficial da AWS para tal. </p>
+
+<p>Para expandir o exemplo, o mesmo pode ser feito com uma SDK oficial em Node ou Kotlin, por exemplo. E aí basta configurar quando sobreescrever a URL original - na pipeline de CI e no ambiente de desenvolvimento. </p>
+
+<p>Em Java, por exemplo, a implementação seria bem simples: </p>
+<div class="highlight"><pre class="highlight java"><code><span class="c1">// Builder em ambiente Cloud</span>
+<span class="nc">SqsClient</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">region</span><span class="o">(</span><span class="nd">@Region</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="c1">// Builder em ambiente Local</span>
+<span class="nc">SqsClient</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">region</span><span class="o">(</span><span class="nd">@Region</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">endpointOverride</span><span class="o">(</span><span class="s">"http://localhost:4576"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</code></pre></div>
+<h2 id="proximos-passos">Próximos Passos</h2>
+
+<p>Isso conclui a introdução ao LocalStack e já permite que seja implantado em projetos reais, mas é só uma ponta da ferramenta. Recomendo explorar o <a href="https://github.com/localstack/localstack" rel="noopener nofollow" target="_blank">repositório oficial</a> para otimizar o fluxo de trabalho. </p>
+
+<p>Além disso, é um bom exercício para praticar implementar exatamente o mesmo exemplo apresentado aqui com alguma SDK oficial. </p>
+
+<hr>
+
+<blockquote>
+<p>🌳 <strong>Evergreen</strong> são as ideias em que já investi algum tempo significativo. Foram refinadas, editadas, e provavelmente não vão mudar. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a> </p>
+</blockquote>
+<p></p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

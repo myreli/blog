@@ -48,18 +48,16 @@
         
 <h1 id="poc-etl-from-azure-storage-to-cosmosdb">🌱 PoC ETL from Azure Storage to CosmosDB</h1>
 
-
-<p></p>
-<p>PoC to transfer a CSV file from Azure Storage to Azure CosmosDB. </p>
+<p></p><p>PoC to transfer a CSV file from Azure Storage to Azure CosmosDB. </p>
 
 <h2 id="tldr">TL/DR</h2>
 
 <ul>
-<li>Gist containing artifacts: <a href="https://gist.github.com/myreli/fea928cf46d328838697833fd354eb23" rel="noopener nofollow" target="_blank">https://gist.github.com/myreli/fea928cf46d328838697833fd354eb23</a>
-</li>
+<li>Gist containing artifacts: <a href="https://gist.github.com/myreli/fea928cf46d328838697833fd354eb23" rel="noopener nofollow" target="_blank">https://gist.github.com/myreli/fea928cf46d328838697833fd354eb23</a></li>
 <li>Simple ETL implementation to transfer a file from a storage to a database (a "modern" implementation of the <a href="https://garden.myreli.dev/41011/architectural-integration-styles" rel="noopener nofollow" target="_blank">file transfer integration style</a>)</li>
 <li>Total costs R$0.69 on <a href="https://azure.microsoft.com/en-us/pricing/details/data-factory/data-pipeline/" rel="noopener nofollow" target="_blank">Azure Data Factory</a> (Storage and CosmosDB fall into always free services)</li>
 </ul>
+
 <h2 id="concept">Concept</h2>
 <div class="highlight"><pre class="highlight javascript"><code><span class="nx">Azure</span> <span class="nx">Storage</span> <span class="nx">Blob</span> <span class="err">→</span> <span class="nx">Azure</span> <span class="nx">Data</span> <span class="nx">Factory</span> <span class="err">→</span> <span class="nx">CosmosDB</span>
 </code></pre></div>
@@ -84,15 +82,12 @@
 <p>There are four available parameters, all optional: </p>
 
 <ul>
-<li>
-<code class="prettyprint">location</code> defaults to resourceGroup location</li>
-<li>
-<code class="prettyprint">dataFactoryName</code> defaults to auto-generated string</li>
-<li>
-<code class="prettyprint">storageAccountName</code> defaults to auto-generated string</li>
-<li>
-<code class="prettyprint">databaseAccountName</code> defaults to auto-generated string</li>
+<li><code class="prettyprint">location</code> defaults to resourceGroup location</li>
+<li><code class="prettyprint">dataFactoryName</code> defaults to auto-generated string</li>
+<li><code class="prettyprint">storageAccountName</code> defaults to auto-generated string</li>
+<li><code class="prettyprint">databaseAccountName</code> defaults to auto-generated string</li>
 </ul>
+
 <p>All other entities are named after their type, eg: </p>
 <div class="highlight"><pre class="highlight javascript"><code><span class="nx">resource</span> <span class="nx">databaseContainer</span> <span class="dl">'</span><span class="s1">Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2022-05-15</span><span class="dl">'</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">parent</span><span class="p">:</span> <span class="nx">database</span>
@@ -106,15 +101,14 @@
 <li>Upload <a href="https://gist.githubusercontent.com/myreli/fea928cf46d328838697833fd354eb23/raw/5192f11ccc40ef42e956103a67ed8a0c35dcdbe0/source.csv" rel="noopener nofollow" target="_blank">a CSV file</a> to the storage container
 
 <ol>
-<li>Must be delimited by <code class="prettyprint">;</code>
-</li>
+<li>Must be delimited by <code class="prettyprint">;</code></li>
 <li>Must contain a header row</li>
 <li>Must contain the <code class="prettyprint">name</code>, <code class="prettyprint">protein</code> and <code class="prettyprint">rating</code> fields</li>
-</ol>
-</li>
+</ol></li>
 <li>Manually trigger the pipeline inside Data Factory</li>
 <li>Check the output inside the Cosmos Database</li>
 </ol>
+
 <h2 id="clean-up">Clean up</h2>
 
 <p>Delete the entire resource group to prevent waste:</p>
@@ -123,12 +117,13 @@
 <h2 id="next">Next</h2>
 
 <ul>
-<li>[ ] Automate a trigger based on <a href="https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-event-trigger?tabs=data-factory" rel="noopener nofollow" target="_blank">uploaded files events</a>
-</li>
+<li>[ ] Automate a trigger based on <a href="https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-event-trigger?tabs=data-factory" rel="noopener nofollow" target="_blank">uploaded files events</a></li>
 <li>[ ] Expose mappping and translators as parameters to the pipeline execution level</li>
 <li>[ ] Stress test transfering to multiple outputs</li>
 </ul>
+
 <hr>
+
 <h2 id="resources">Resources</h2>
 
 <ul>
@@ -137,11 +132,13 @@
 <li><a href="https://gist.github.com/myreli/fea928cf46d328838697833fd354eb23" rel="noopener nofollow" target="_blank">PoC Template and dataset</a></li>
 <li><a href="https://www.enterpriseintegrationpatterns.com/patterns/messaging/FileTransferIntegration.html" rel="noopener nofollow" target="_blank">File Transfer    architecture integration style</a></li>
 </ul>
+
 <hr>
+
 <blockquote>
 <p>🌱 <strong>Seedlings</strong> são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
 </blockquote>
-
+<p></p>
 
 
         

@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="gestao-de-incidentes-postmortem-aprendendo-com-os-proprios-erros">🌱 [Gestão de Incidentes] Postmortem - aprendendo com os próprios erros</h1>
+
+<p></p><p>Uma abordagem sugerida para *postmortem *e gestão de incidentes (SRE at Google).</p>
+
+<p><code class="prettyprint">RASCUNHO</code></p>
+
+<p>O que é e como aplicar <em>postmortem</em>.</p>
+
+<ul>
+<li>  Registro por escrito de um incidente, o impacto, a resolução e as causas raízes</li>
+</ul>
+
+<h2 id="diretiva-primaria">Diretiva Primária</h2>
+
+<blockquote>
+<p><em>"Independentemente do que descobrimos, nós entendemos e acreditamos de verdade que todos fizeram o melhor trabalho que podiam, dado o que se sabia na época, suas habilidades e aptidões, os recursos disponíveis e a situação em questão."</em></p>
+</blockquote>
+
+<h2 id="premissas">Premissas</h2>
+
+<ul>
+<li><p>Focar em uma reunião produtiva e construtiva, sem apontar dedos ou culpados</p></li>
+<li><p>O objetivo é compartilhar conhecimento e melhoria contínua</p></li>
+</ul>
+
+<h2 id="sugestoes">Sugestões</h2>
+
+<ul>
+<li><p>Fazer uma publicação assíncrona (newsletter) mensal resumindo os <em>postmortems</em></p></li>
+<li><p>Registrar o postmortem na ferramenta de gerenciamento, junto com os incidentes</p></li>
+</ul>
+
+<h2 id="modelo">Modelo</h2>
+<div class="highlight"><pre class="highlight markdown"><code><span class="gh"># [#1234] Postmortem: Falha na geração automática do relatório XYZ</span>
+
+<span class="gs">**Síntese:**</span> 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+<span class="p">
+-</span> Atualizado em: 2022-03-16
+<span class="p">-</span> Autores: @Myreli, @Alguem, @Pessoa
+<span class="p">-</span> Anexos: <span class="p">[</span><span class="nv">Dashboard</span><span class="p">](</span><span class="sx">http://link.to/dashboard</span><span class="p">)</span>, <span class="p">[</span><span class="nv">Relatos</span><span class="p">](</span><span class="sx">http://link.to/relatos</span><span class="p">)</span>
+
+<span class="gu">## Impacto</span>
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+
+<span class="gu">## Causa Raíz</span>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+nisi ut aliquip ex ea commodo consequat.
+
+<span class="gu">## Resolução</span>
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae 
+dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
+sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+<span class="gu">## Detecção</span>
+Consectetur adipiscing elit.
+
+<span class="gu">## Aprendizados</span>
+<span class="gs">**O que foi bem**</span>
+<span class="p">-</span> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit
+<span class="p">-</span> Quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt
+
+<span class="gs">**O que precisa melhorar**</span>
+<span class="p">-</span> At vero eos et accusamus et iusto odio dignissimos ducimus
+<span class="p">-</span> Nam libero tempore, cum soluta nobis est eligendi optio cumque
+
+<span class="gu">## Planos de Ação</span>
+<span class="p">-</span> <span class="p">[</span><span class="nv">Sed ut perspiciatis unde omnis</span><span class="p">](</span><span class="sx">https://link.to/#4567</span><span class="p">)</span>
+<span class="p">-</span> <span class="p">[</span><span class="nv">Nemo enim ipsam</span><span class="p">](</span><span class="sx">https://link.to/#8901</span><span class="p">)</span>
+
+<span class="gu">## Linha do Tempo</span>
+<span class="p">-</span> 2022-03-14 14:30 <span class="sb">`REPORTADO`</span>: Incidente reportado pelo usuário XYZ 
+<span class="p">-</span> 2022-03-14 16:30 Investigando causa do problema (atualização automática 2h)
+<span class="p">-</span> 2022-03-14 17:03 <span class="sb">`IDENTIFICADO`</span>: Componente problemático identificado
+<span class="p">-</span> 2022-03-14 18:20 <span class="sb">`MITIGADO`</span>: Correção temporária liberada
+<span class="p">-</span> 2022-03-14 20:40 <span class="sb">`REPRODUZIDO`</span>: Problema reproduzido em ambiente de teste
+<span class="p">-</span> 2022-03-14 22:40 Investigando soluções
+<span class="p">-</span> 2022-03-15 09:00 <span class="sb">`RESOLVIDO`</span>: Solução definitiva liberada
+
+</code></pre></div>
+<h2 id="referencias">Referências:</h2>
+
+<ul>
+<li><p>📚 <a href="https://learning.oreilly.com/library/view/building-secure-and/9781492083115/" rel="noopener nofollow" target="_blank">Building Secure &amp; Reliable Systems</a> <em>[Book]</em></p></li>
+<li><p>📚 <a href="https://learning.oreilly.com/library/view/the-site-reliability/9781492029496/" rel="noopener nofollow" target="_blank">The Site Reliability Workbook</a> <em>[Book]</em></p></li>
+<li><p>📚 <a href="https://learning.oreilly.com/library/view/site-reliability-engineering/9781491929117/" rel="noopener nofollow" target="_blank">Site Reliability Engineering</a> <em>[Book]</em></p></li>
+<li><p>📚 <a href="https://sre.google/resources/practices-and-processes/anatomy-of-an-incident/" rel="noopener nofollow" target="_blank">Anatomy of an Incident</a> <em>[Book]</em></p></li>
+</ul>
+
+<hr>
+
+<p><em>🌱 *</em>Seedlings** são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">Saiba mais.</a>*</p>
+<p></p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

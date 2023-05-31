@@ -48,9 +48,7 @@
         
 <h1 id="poc-azure-frontdoor">🌱 PoC Azure FrontDoor</h1>
 
-
-<p></p>
-<p>PoC to secure Azure Function behind an Azure FrontDoor, gaining load balancing, DSA and WAF capabilities. </p>
+<p></p><p>PoC to secure Azure Function behind an Azure FrontDoor, gaining load balancing, DSA and WAF capabilities. </p>
 
 <h2 id="tldr">TL/DR</h2>
 
@@ -58,6 +56,7 @@
 <li>Gist containing artefacts: <a href="https://gist.github.com/myreli/fd37b6f29957c9b9180bed984ae5f1bd" rel="noopener nofollow" target="_blank">https://gist.github.com/myreli/fd37b6f29957c9b9180bed984ae5f1bd</a> </li>
 <li>Total costs R$0.21 on <a href="https://azure.microsoft.com/en-us/products/app-service/" rel="noopener nofollow" target="_blank">Azure App Service</a>&nbsp;(Due to the serverfarms, all other resources fall into always free services)</li>
 </ul>
+
 <h2 id="concept">Concept</h2>
 
 <p>Expose azure apps and functions through a secure FrontDoor instead of direct access (which is insecure) or API Gateway setup (which is a bit more complex, but combining both is a common approach). </p>
@@ -80,13 +79,11 @@
 <p>All parameters are optional:</p>
 
 <ul>
-<li>
-<code class="prettyprint">location</code>&nbsp;defaults to resourceGroup location</li>
-<li>
-<code class="prettyprint">appName</code> defaults to auto-generated string</li>
-<li>
-<code class="prettyprint">frontDoorEndpointName</code> defaults to auto-generated string</li>
+<li><code class="prettyprint">location</code>&nbsp;defaults to resourceGroup location</li>
+<li><code class="prettyprint">appName</code> defaults to auto-generated string</li>
+<li><code class="prettyprint">frontDoorEndpointName</code> defaults to auto-generated string</li>
 </ul>
+
 <p>All other resources are deployed using a auto-generated string or its own name, eg: </p>
 <div class="highlight"><pre class="highlight javascript"><code><span class="nx">resource</span> <span class="nx">frontDoorOriginGroup</span> <span class="dl">'</span><span class="s1">Microsoft.Cdn/profiles/originGroups</span><span class="dl">'</span>
   <span class="nx">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">frontDoorOriginGroupName</span><span class="dl">'</span>
@@ -97,11 +94,11 @@
 <h2 id="testing">Testing</h2>
 
 <ul>
-<li>Access the app without FrontDoor (the demo public function): [File: faf2cd3f-91fd-4e2b-9378-8fc03cd47de8]<picture><source type="image/avif" srcset="/assets/IjTm8kgR8U-WSjLaeO4WI-150w.avif 150w, /assets/IjTm8kgR8U-WSjLaeO4WI-300w.avif 300w, /assets/IjTm8kgR8U-WSjLaeO4WI-450w.avif 450w, /assets/IjTm8kgR8U-WSjLaeO4WI-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/IjTm8kgR8U-WSjLaeO4WI-150w.webp 150w, /assets/IjTm8kgR8U-WSjLaeO4WI-300w.webp 300w, /assets/IjTm8kgR8U-WSjLaeO4WI-450w.webp 450w, /assets/IjTm8kgR8U-WSjLaeO4WI-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/IjTm8kgR8U-WSjLaeO4WI-150w.jpeg 150w, /assets/IjTm8kgR8U-WSjLaeO4WI-300w.jpeg 300w, /assets/IjTm8kgR8U-WSjLaeO4WI-450w.jpeg 450w, /assets/IjTm8kgR8U-WSjLaeO4WI-600w.jpeg 600w" sizes="100vw"><img src="/assets/IjTm8kgR8U-WSjLaeO4WI-450w.jpeg" width="600" height="312" loading="lazy" decoding="async"></picture>
-</li>
+<li>Access the app without FrontDoor (the demo public function): [File: faf2cd3f-91fd-4e2b-9378-8fc03cd47de8]<picture><source type="image/avif" srcset="/assets/IjTm8kgR8U-WSjLaeO4WI-150w.avif 150w, /assets/IjTm8kgR8U-WSjLaeO4WI-300w.avif 300w, /assets/IjTm8kgR8U-WSjLaeO4WI-450w.avif 450w, /assets/IjTm8kgR8U-WSjLaeO4WI-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/IjTm8kgR8U-WSjLaeO4WI-150w.webp 150w, /assets/IjTm8kgR8U-WSjLaeO4WI-300w.webp 300w, /assets/IjTm8kgR8U-WSjLaeO4WI-450w.webp 450w, /assets/IjTm8kgR8U-WSjLaeO4WI-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/IjTm8kgR8U-WSjLaeO4WI-150w.jpeg 150w, /assets/IjTm8kgR8U-WSjLaeO4WI-300w.jpeg 300w, /assets/IjTm8kgR8U-WSjLaeO4WI-450w.jpeg 450w, /assets/IjTm8kgR8U-WSjLaeO4WI-600w.jpeg 600w" sizes="100vw"><img src="/assets/IjTm8kgR8U-WSjLaeO4WI-450w.jpeg" width="600" height="312" loading="lazy" decoding="async"></picture></li>
 <li><p>Access the app with FrontDoor (the demo private function): [File: 580d19d6-93b3-40aa-9066-7f263b71eb47]<picture><source type="image/avif" srcset="/assets/j5Pb2ELjvY-3y3q1O8gIY-150w.avif 150w, /assets/j5Pb2ELjvY-3y3q1O8gIY-300w.avif 300w, /assets/j5Pb2ELjvY-3y3q1O8gIY-450w.avif 450w, /assets/j5Pb2ELjvY-3y3q1O8gIY-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/j5Pb2ELjvY-3y3q1O8gIY-150w.webp 150w, /assets/j5Pb2ELjvY-3y3q1O8gIY-300w.webp 300w, /assets/j5Pb2ELjvY-3y3q1O8gIY-450w.webp 450w, /assets/j5Pb2ELjvY-3y3q1O8gIY-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/j5Pb2ELjvY-3y3q1O8gIY-150w.jpeg 150w, /assets/j5Pb2ELjvY-3y3q1O8gIY-300w.jpeg 300w, /assets/j5Pb2ELjvY-3y3q1O8gIY-450w.jpeg 450w, /assets/j5Pb2ELjvY-3y3q1O8gIY-600w.jpeg 600w" sizes="100vw"><img src="/assets/j5Pb2ELjvY-3y3q1O8gIY-450w.jpeg" width="600" height="312" loading="lazy" decoding="async"></picture></p></li>
 <li><p>Access the app <strong>trough</strong> FrontDoor:[File: 7b4b34da-ab56-4b5f-a1a2-fe56eedbe609]<picture><source type="image/avif" srcset="/assets/QPIUt5HlHp-rW0v3jW5TF-150w.avif 150w, /assets/QPIUt5HlHp-rW0v3jW5TF-300w.avif 300w, /assets/QPIUt5HlHp-rW0v3jW5TF-450w.avif 450w, /assets/QPIUt5HlHp-rW0v3jW5TF-600w.avif 600w" sizes="100vw"><source type="image/webp" srcset="/assets/QPIUt5HlHp-rW0v3jW5TF-150w.webp 150w, /assets/QPIUt5HlHp-rW0v3jW5TF-300w.webp 300w, /assets/QPIUt5HlHp-rW0v3jW5TF-450w.webp 450w, /assets/QPIUt5HlHp-rW0v3jW5TF-600w.webp 600w" sizes="100vw"><source type="image/jpeg" srcset="/assets/QPIUt5HlHp-rW0v3jW5TF-150w.jpeg 150w, /assets/QPIUt5HlHp-rW0v3jW5TF-300w.jpeg 300w, /assets/QPIUt5HlHp-rW0v3jW5TF-450w.jpeg 450w, /assets/QPIUt5HlHp-rW0v3jW5TF-600w.jpeg 600w" sizes="100vw"><img src="/assets/QPIUt5HlHp-rW0v3jW5TF-450w.jpeg" width="600" height="312" loading="lazy" decoding="async"></picture></p></li>
 </ul>
+
 <h2 id="clean-up">Clean Up</h2>
 
 <p>Delete the entire resource group to prevent waste:</p>
@@ -112,19 +109,21 @@
 <ul>
 <li>[ ] Restrict access to FrontDoor (eg <a href="https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/waf-front-door-configure-ip-restriction" rel="noopener nofollow" target="_blank">IP Restrictions</a>)</li>
 </ul>
+
 <h2 id="resources">Resources</h2>
 
 <ul>
 <li><a href="https://learn.microsoft.com/en-us/azure/frontdoor/" rel="noopener nofollow" target="_blank">Azure Networking / FrontDoor</a></li>
 <li><a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep" rel="noopener nofollow" target="_blank">Azure Resource Manager / Bicep</a></li>
-<li>
-<a href="https://gist.github.com/myreli/fd37b6f29957c9b9180bed984ae5f1bd" rel="noopener nofollow" target="_blank">Gist</a> </li>
+<li><a href="https://gist.github.com/myreli/fd37b6f29957c9b9180bed984ae5f1bd" rel="noopener nofollow" target="_blank">Gist</a> </li>
 </ul>
+
 <hr>
+
 <blockquote>
 <p>🌱 <strong>Seedlings</strong> são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
 </blockquote>
-
+<p></p>
 
 
         

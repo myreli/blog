@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="por-que-eu-gosto-de-nodejs-streams-ftw">🌱 Por que eu gosto de Node.js? Streams FTW</h1>
+
+<p></p><p>Devaneios sobre a evolução da experiência de desenvolvimento no JavaScript e porque eu gosto de Node. </p>
+
+<h1 id="devaneios-javascript-node-streams">devaneios #javascript #node #streams</h1>
+
+<p>A primeira vez que eu trabalhei com JavaScript foi uma experiência tenebrosa. Era um grande ecommerce construído em Java, com as famosas JSPs servindo HTML, JS e ~~só alegria~~ tristeza.</p>
+
+<blockquote>
+<p>📥 <strong>[side-topic]</strong> a página era "responsiva" – carregava as duas versões (mobile e web) para o cliente, testava o agente do navegador e então utilizava o famoso <code class="prettyprint">$("#element").hide()</code> do JQuery para escondar uma versão ou outra.</p>
+</blockquote>
+
+<p>Nem tão bons tempos assim, mas definitivamente nostálgico.</p>
+
+<p>O fato é que essa era a cena do ecossistema JavaScript na época e, como uma boa Dev BackEnd, eu clamava que não gostava de JavaScript. Na época, eu costumava explicar que o problema do JavaScript era a facilidade com que a comunidade aceitava gambiarra, a ausência de padronização na sintaxe, APIs pouco amigáveis, framework hell, etc.</p>
+
+<p>Então esse conjunto de APIs Também tem o fato da facilidade da linguagem para programadores iniciantes, o ônus e o bônus. Um tempo depois nesse memso projeto tivemos a oportunidade de </p>
+
+<p>Mas aí experimentei aprender de verdade, e veio o EcmaScript 6, e mudei bastante de ideia, de tal forma que JS se tornou minha principal linguagem, em que me especializo até hoje.</p>
+
+<blockquote>
+<p>📥 <strong>[side-topic]</strong> por sinal essa ausência de padronização no design core da linguagem é – na minha humilde opinião – o grande vilão do PHP. Mas isso fica para outro dia =)</p>
+</blockquote>
+
+<h2 id="ecmascript-6-e-a-nova-era">EcmaScript 6 e a nova era</h2>
+
+<p>As mudanças foram enormes, especialmente para projetos em que o paradigma funcional não fazia sentido. Codificar orientado a objetos com JavaScript se tornou mais decente, e com Typescript se tornou uma delícia.</p>
+
+<p>A comunidade começou a olhar para aqueles papos de BackEnd: código limpo, padrões de projeto. O surgimento de frameworks como Angular, React e Vue também ditaram muito dessa mudança. A linguagem amadureceu.</p>
+
+<p>Enfim, de volta ao Node. Recordo de como era anunciado como algo quase mágico: <em>O motor que consegue executar JavaScript no seu BackEnd!</em>, como todas as novas tecnologias fazem. Lembro também de um amigo que comentava que JS estava virando o que o Java prometeu ser e rodar em qualquer coisa (o que não é necessariamente uma coisa boa, mas chama atenção). </p>
+
+<h2 id="sob-demanda">Sob Demanda</h2>
+
+<p>Eu aprendi Streams quando resolvi me aprofundar no estudo da plataforma, realmente entender como funcionava e o que atraia tanto as pessoas.</p>
+
+<p>Quando eu era criança utilizava o Tumblr e foi lá eu aprendi o básico gambiarrento de CSS e HTML. Me sentia a própria <em>hackerwoman</em> quando conseguia colocar um efeito de mouse na tela.</p>
+
+<p>Independente da plataforma de blog utilizada, eu recordo de uma mudança massiva de páginas em que você apertava "próxima página" para páginas que possuíam Rolagem Infinita. O conceito de scroll infinito é controverso, mas a ideia é que você não deixe para o usuário a responsabilidade de paginar os resultados... Eles aparecem sob demanda, para ele, quando ele precisa ler. Quando bem implementado faz uma boa diferença na experiência.</p>
+
+<p>Por trás ainda é a mesma paginação, mas o efeito psicológico nos usuários foi de uma página mais rápida, otimizada, que funcionava tão rápido quanto ele podia ler e nunca era recarregada².</p>
+
+<p>Sob demanda.</p>
+
+<p>E as Node.js Streams causam esse mesmo efeito 🤯 em que, em vez de paginar os resultados em um número mágico¹, você lida com eles <strong>sob demanda</strong>. ~~Mas no caso das streams o efeito não é só psicologico, realmente economiza a memória e é mais rápido 😅~~</p>
+
+<p>Então, Streams são apenas sobre isso, lidar com os dados sob demanda, dispensa-los da memória assim que forem utilizados, sem ficar esperando uma fila enorme.</p>
+
+<p>É quase mágico. Do jeito mágico em que as coisas simplesmente fazem sentido, não que não sabemos como acontece.</p>
+
+<p>É claro que processamento de dados sob demanda existe em outras linguagens, mas o modelo não bloquante de Node.js pulveriza o recurso por toda a plataforma, além das APIs serem muito simples de trabalhar.</p>
+
+<h2 id="show-dont-tell">Show, Don't Tell</h2>
+
+<p>Bom, vamos ver se isso é verdade, bora codar:</p>
+
+<p>Situação: Precisamos consumir uma API de playlists e escrever os dados em um arquivo, substituindo todas as ocorrências de "a" por "Nicolas Cage". Ou todas as primeiras letras por maiúsculas, você quem sabe.</p>
+
+<h3 id="requisitos">Requisitos</h3>
+
+<p>Garanta que você tenha instalado:</p>
+
+<ul>
+<li><p>Node.js versão 12 na sua máquina</p></li>
+<li><p>Coragem no seu corpo</p></li>
+</ul>
+
+<h3 id="comum-em-memoria">Comum, em memória</h3>
+
+<ol>
+<li><p>Crie um arquivo, <code class="prettyprint">on-memory.js</code></p></li>
+<li><p>Faça requisição a API (listed...)</p></li>
+<li><p>Converta todas as ocorrências de "a" por "Nicolas Cage" e todos os</p></li>
+<li><p>Escreva num arquivo (bem bonito, mantendo tudo em um loop só e usando "os novos MAP/REDUCE/FILTER" :))</p></li>
+</ol>
+
+<p>Se executarmos essa função com um timer, levou aproximadamente X segundos aqui. E inspecionando o consumo de memória, ~400mb.</p>
+
+<p>Agora, vamos ver do que eu estava falando:</p>
+
+<h3 id="delicia--streaming-sob-demanda">Delicia, * streaming* (sob-demanda)</h3>
+
+<ol>
+<li><p>Crie um arquivo <code class="prettyprint">on-demand.js</code></p></li>
+<li><p>Faça a requisição para a API, mas armazene a stream</p></li>
+</ol>
+
+<p>3.</p>
+
+<p>Tcharam! Metade do tempo, e 1/3 da memória!</p>
+
+<p>É sobre isso e tá tudo ótimo.</p>
+
+<hr>
+
+<p>Com a ascenção de arquiteturas orientadas a eventos (depois que tudo virou microserviços e as pessoas lembraram que infra + tráfego de rede são caros) ter em nossas caixas de ferramentas recursos que permite agir sob demanda não só em nível arquitetural, mas em nível programático, é imprescindível.</p>
+
+<p>Pessoalmente minha parte favorita é pegar um código bem lento e bagunçado, limpar ele e deixar performático :). Gosto de desafios com alta volumetria, mas isso não significa que Streams sejam a bala de prata, nada é.</p>
+
+<p>E essa foi mais uma anotação feita as 3am pelo celular e publicada quase diretamente. Fiz esse teste com um amigo hoje no trabalho, então não tenho o código aqui, mas volto para colocar. Obrigada pela sua paciência e carinho lendo meus devaneios até aqui.</p>
+
+<p>Dale!</p>
+
+<hr>
+
+<p>¹ Não trabalhe com números mágicos, teste! 👁️👄👁️<br>
+² O consumo de memória: 🤡</p>
+
+<hr>
+
+<blockquote>
+<p>🌱 <strong>Seedlings</strong> são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">Saiba mais.</a></p>
+</blockquote>
+<p></p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

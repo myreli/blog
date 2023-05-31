@@ -48,9 +48,7 @@
         
 <h1 id="docker-docker-desktop">🌿 Docker ≠ Docker Desktop</h1>
 
-
-<p></p>
-<p>Registrando como utilizo Docker sem Docker Desktop e porque eu acho melhor. </p>
+<p></p><p>Registrando como utilizo Docker sem Docker Desktop e porque eu acho melhor. </p>
 
 <h2 id="tldr">TL;DR</h2>
 
@@ -60,10 +58,11 @@
 <li>O <em>host</em> e a <em>engine</em> existem somente para Linux. Então fora do Linux é necessário uma VM Linux com boa e rápida interação com o host, principalmente em rede e volume</li>
 <li>Pacotes:</li>
 <li>Ubuntu: <code class="prettyprint">(apt install) docker-ce docker-ce-cli containerd.io</code> Windows: <code class="prettyprint">(WSL2 apt install) docker-ce docker-ce-cli containerd.io</code>Mac: <code class="prettyprint">(brew install) colima docker</code> </li>
-<li>Se você tem que pagar, mas não quer/consegue e quer uma GUI, experimente o <a href="https://rancherdesktop.io/" rel="noopener nofollow" target="_blank">Rancher Desktop</a>
-</li>
+<li>Se você tem que pagar, mas não quer/consegue e quer uma GUI, experimente o <a href="https://rancherdesktop.io/" rel="noopener nofollow" target="_blank">Rancher Desktop</a></li>
 </ul>
+
 <hr>
+
 <p>Desde que o Docker anunciou que o Docker Desktop seria pago para empresas com mais de 250 colaboradores ou receita superior a 10MM as pessoas começaram a surtar (na bolha dev do twitter) e até hoje, meses depois, continua acontecendo. </p>
 
 <p>Nos times que participo também rolou bastante confusão e a maior parte é devido ao mal entendimento de o que é o docker e como ele funciona. O Docker Desktop nada mais é do que uma interface grafica para interagir com o Docker CLI e um embrulho de todos os componentes. </p>
@@ -73,12 +72,11 @@
 <p>O que precisamos de verdade é: </p>
 
 <ul>
-<li>
-<code class="prettyprint">docker-ce</code> <strong>Docker Engine</strong> (daemon)</li>
-<li>
-<code class="prettyprint">docker-ce-cli</code> <strong>Docker CLI</strong> </li>
+<li><code class="prettyprint">docker-ce</code> <strong>Docker Engine</strong> (daemon)</li>
+<li><code class="prettyprint">docker-ce-cli</code> <strong>Docker CLI</strong> </li>
 <li>Além disso, a <strong>engine</strong> utiliza uma <strong>runtime</strong> para os containers por trás, originalmente a <code class="prettyprint">containerd.io</code> e agora a <strong>Docker Runtime</strong> que é baseada  nela</li>
 </ul>
+
 <p>Todos esses componentes (Engine + Runtime e CLI) vem instalados junto com o Docker Desktop, incluindo um emulador para criar a máquina virtual Linux. Mas, fora isso, o Docker Desktop é só uma GUI para esse recursos. E ela vem beeem inchada, consumindo muito mais da máquina do que necessário para o que entrega. </p>
 
 <p>Aliás, no Linux o Docker Desktop nem existia foi lançado recentemente ~~e eu não acho que deveria, acho desperdício uma VM do mesmo sistema host! Mas existem <a href="https://docs.docker.com/desktop/faqs/linuxfaqs/#why-does-docker-desktop-for-linux-run-a-vm" rel="noopener nofollow" target="_blank">motivos válidos</a>~~.</p>
@@ -177,6 +175,7 @@
 <li><a href="https://docs.docker.com/engine/install/" rel="noopener nofollow" target="_blank">Docker Engine installation overview</a></li>
 <li><a href="https://www.docker.com/blog/roi-of-docker-desktop-vs-diy-considerations-risks-and-benefits-for-business/" rel="noopener nofollow" target="_blank">ROI of Docker Desktop vs. DIY: Considerations, Risks, and Benefits for Business</a></li>
 </ul>
+
 <h2 id="dicas">Dicas</h2>
 
 <ul>
@@ -185,13 +184,15 @@
 <li>Se você gosta de GUI e não pode pagar o Docker Desktop, <a href="https://rancherdesktop.io/" rel="noopener nofollow" target="_blank">Rancher Desktop</a> é uma opção similar e mais leve</li>
 <li>Você pode executar os containers em uma VM remota e ainda sim conectar via o Docker CLI. Aí vai ter o lag na redemas é útil para inspecionar containers de colegas ou do ambiente. </li>
 </ul>
+
 <p>[File: e9c63b77-d0ac-4b53-b100-fd3d9b9aa819]</p>
 
 <hr>
+
 <blockquote>
 <p>🌿 <strong>Budding</strong> são anotações e ideias que já revisei e editei minimamente. Estão começando a tomar forma, mas ainda precisam de refinamento. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
 </blockquote>
-
+<p></p>
 
 
         

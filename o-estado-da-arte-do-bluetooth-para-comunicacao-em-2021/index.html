@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="o-estado-da-arte-do-bluetooth-para-comunicacao-em-2021">🌿 O estado-da-arte do Bluetooth para comunicação em 2021</h1>
+
+<p></p><p>Fiquei indignada com Headsets, Bluetooth e áudio horrível nas ligações.</p>
+
+<p>Tecnologia sem fio está mais em pauta do que nunca com a migração para trabalho remoto e popularização dos Earbuds TWS (leia-se airpods e similares). No entanto, a tecnologia não avançou o suficiente na qualidade de áudio em geral mas, principalmente, na qualidade de comunicação. </p>
+
+<p>Parafraseando um cliente que avaliou um fone bluetooth de uma marca famosa na Amazon: </p>
+
+<blockquote>
+<p>Em vez de <strong><em>"plug and play"</em></strong> recebemos <strong><em>"buy and pray"</em></strong>. </p>
+</blockquote>
+
+<h2 id="tldr">TL;DR</h2>
+
+<p>Esse é um resumo em tópicos, pule-o se não quiser spoilers e preferir ler minhas divagações por completo. </p>
+
+<ul>
+<li>Fiquei indignada com Headsets, Bluetooth e áudio horrível nas ligações</li>
+<li>O problema não é seu fone/computador/sistema operacional</li>
+<li>Não existe nenhum headset bluetooth puro sem essa limitação atualmente</li>
+<li>A solução pode estar a caminho com os novos dispositivos BT 5.2 com suporte ao codec LC3</li>
+<li>Headsets com software e hardware proprietário são uma opção, como Jabra</li>
+<li>Headsets que utilizam a tecnologia wireless 2.4ghz com receptor próprio são outra opção, como Corsair ou Razer</li>
+<li>Descobri que gosto de testar headsets</li>
+</ul>
+
+<h2 id="por-que-o-som-dos-headsets-sem-fio-bluetooth-e-tao-horrivel-durante-ligacoes">Por que o som dos headsets sem fio bluetooth é tão horrível durante ligações?</h2>
+
+<p>Além de dias sombrios, a pandemia trouxe outro problema: com o despreparo das empresas para o trabalho remoto e a comunicação assíncrona, começaram a surgir infinitas reuniões que resultam em horas e horas utilizando fones de ouvido e causando uma dor de cabeça imensa diariamente. </p>
+
+<p>Isso me fez decidir deixar de lado meu <a href="https://www.logitechg.com/pt-br/products/gaming-audio/g230-stereo-gaming-headset.981-000552.html" rel="noopener nofollow" target="_blank">velho amigo com fio</a> e buscar alternativas que me dessem mais mobilidade e fossem mais leves para aguentar um dia inteiro de trabalho. </p>
+
+<p>Com tantas pessoas na rua utilizando fones sem fio como acessorios tive a ilusão de que seria super simples. </p>
+
+<p>Não foi. </p>
+
+<p>Então vou tornar pública uma obsessão recente minha: por que, em 2021, ainda não é possível fazer uma chamada de vídeo com um fone sem fio sem parecer o áudio de um rádio dos anos 90?</p>
+
+<h2 id="jornada">Jornada</h2>
+
+<p>Essa publicação é uma forma de auto-ajuda =D. Comecei a ficar tão obcecada e impressionada com o assunto que, quando percebi, estava compilando uma <a href="https://github.com/pali/hsphfpd-prototype" rel="noopener nofollow" target="_blank">implementação customizada</a> de Bluetooth para configurar meu ambiente de desenvolvimento. Assim começou essa nota e por isso vou registrar aqui tudo que aprendi após descobrir que fones bluetooth são terríveis para chamadas. </p>
+
+<p>No fim, desisti de resolver o problema definitivamente e decidi aguardar os próximos capítulos, mas descobri um novo <em>hobby</em>: avaliar a qualidade de <em>headsets</em>. Combina exatamente duas coisas que gosto muito - música (a parte teórica e física) e tecnologia. Quem sabe começo a escrever review de uns dispositivos por aí. </p>
+
+<p>Comecei buscando, furiosamente, a origem do problema. Inicialmente achei que poderia ser algo específico com hardware, sistema operacional, versão do Bluetooth, etc. Tudo isso é relevante, mas nenhum deles era o problema real.</p>
+
+<h2 id="problema">Problema</h2>
+
+<p>Tecnicamente, qual é o problema?</p>
+
+<p>Quando conectei meus fones e comecei a testar notei que o áudio e os controles funcionavam perfeitamente ouvindo música mas, quando eu mudava para uma ligação, o áudio ficava horrível e o microfone também. Geralmente os controles também pioravam - funcionavam de forma limitada ou não respondiam. </p>
+
+<p>Se você jogar imediatamente esse problema no Google bastante gente menciona que o problema é no Ubuntu/Linux (spoiler: não é). </p>
+
+<p>Quando estamos ouvindo música (ou seja, audio sendo transmitido de forma unidirecional) o perfil Bluetooth utilizado é o A2DP, com qualidade quase HD. Já quando estamos em uma chamada (ou seja, audio sendo recebido e enviado, transmitido de forma bidirecional) o perfil Bluetooth utilizado é o HSP/HFP, com qualidade quase ridícula =D. </p>
+
+<p>Esse é um <a href="https://lists.freedesktop.org/archives/pulseaudio-discuss/2011-September/011296.html" rel="noopener nofollow" target="_blank">problema antigo</a> e uma implementação mais antiga ainda, de quando a qualidade de áudio por telefones já era uma coisa mágica, bem distante da realidade atual. Em síntese algumas limitações são responsáveis por esse problema: </p>
+
+<ul>
+<li>Só é possível utilizar um perfil de bluetooth ao mesmo tempo. Então precisamos escolher entre A2PD (áudio ótimo mas o microfone não funciona) ou HSP (áudio horrível, mas microfone funciona) </li>
+<li>Apesar do Bluetooth ter quase <a href="https://www.explainthatstuff.com/howbluetoothworks.html" rel="noopener nofollow" target="_blank">80 canais de transmissão</a>, apenas dois são dedicados para transmissão de áudio. Isso significa que dois são utilizados inteiramente para a transmissão de áudio de música, mas que eles são divididos entre microfone e fone quando estamos em uma chamada</li>
+<li>Utilizando os codecs padrão, enquanto o A2DP transmite 48 kHz, o HSP transmite 8~16kHz (isso significa que o áudio é, literalmente, três vezes pior)</li>
+</ul>
+
+<p><strong>Afinal, existe uma solução para esse problema?</strong> Sinceramente, mais ou menos. Vou explorar melhor no próximo tópico, mas a verdade é que não existe ainda uma solução definitiva, ainda que parece que ela está a caminho.</p>
+
+<h2 id="solucao">Solução</h2>
+
+<p>A triste verdade é que ainda não existe uma solução definitiva para o problema, mas algumas alternativas são possíveis e parece que a correção está a caminho. </p>
+
+<h3 id="1-semi-gambiarra-faststream-codec-e-software-proprietario">#1 Semi Gambiarra: FastStream Codec e software proprietário</h3>
+
+<p><picture><source type="image/avif" srcset="/assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-150w.avif 150w, /assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-300w.avif 300w, /assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-450w.avif 450w" sizes="100vw"><source type="image/webp" srcset="/assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-150w.webp 150w, /assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-300w.webp 300w, /assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-450w.webp 450w" sizes="100vw"><source type="image/jpeg" srcset="/assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-150w.jpeg 150w, /assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-300w.jpeg 300w, /assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-450w.jpeg 450w" sizes="100vw"><img src="/assets/f6730132df8eba09ebb81aff33e5ae11-_Ezc1ryc6U-300w.jpeg" width="450" height="254" loading="lazy" decoding="async"></picture></p>
+
+<p>O objetivo do <em>codec FastStream</em> é habilitar comunicação bi-direcional utilizando o perfil A2P2 (ou seja, justamente resolver o problema) e parece que ele sucede relativamente bem nisso. </p>
+
+<p>No entanto a solução é trabalhosa e cara: é necessário encontrar headsets específicos que suportem FastStream e adquirir um adaptador de bluetooth separado para o computador/notebook. </p>
+
+<p>No Brasil existem pouquíssimos ou nenhum à venda, por isso não testei, mas gostaria; a implementação é bem curiosa e interessante. </p>
+
+<p>Além disso existe a opção de software proprietário. Soluções oferecidas pela Jabra, por exemplo, trazem uma implementação própria e panteteada que promete resolver o problema. Fiquei muito inclinada e com muita vontade de experimentar o <a href="https://www.jabra.br.com/business/office-headsets/jabra-evolve/jabra-evolve2-65" rel="noopener nofollow" target="_blank">Jabra Evolve 2 65</a>, mas <a href="https://ko-fi.com/myreli" rel="noopener nofollow" target="_blank">o orçamento não permite</a> e não existe revenda autorizada para pessoas físicas no Brasil. </p>
+
+<h3 id="2-super-gambiarra-microfone-separado">#2 Super Gambiarra: Microfone separado</h3>
+
+<p>Essa é uma semi solução, mas foi a que acabei  utilizando após pesar o custo-benefício. A ideia é adquirir um microfone USB de mesa e aí utilizar um fone sem fio apenas para o áudio (como os <em><a href="https://open.spotify.com/episode/6q43UhifGTC4KgGKl5wbbP" rel="noopener nofollow" target="_blank">podcasters</a></em> fazem). </p>
+
+<p>Isso garantiu mobilidade mínima para ir beber água ou esticar as pernas sem perder o que está acontecendo, mas gera uma situação engraçada de largar a cafeteira e sair correndo para responder quando alguém chama. Além disso, a qualidade desses microfones não é perfeita para quem divide o escritório: mesmo os do tipo cardioide captam <em>bastante</em> som externo então precisa ficar esperto no <code class="prettyprint">push-to-talk</code> ou então deixar as pessoas do outro lado sofrendo com qualquer vibração na mesa e falas de companheiros de casa.</p>
+
+<p>Fora do Brasil também existem opções desse <a href="https://antlionaudio.com/products/modmic-wireless" rel="noopener nofollow" target="_blank">microfone apartado sem fio</a>, que também resolveria o problema e sem atrapalhar a mobilidade. A tecnologia do microfone é excelente, os testes de qualidade de áudio dele são surpreendentes, esse seria um teste interessante e existem <em>reviews</em> bem promissoras, mas <a href="https://www.youtube.com/watch?v=F8Rze1juulc" rel="noopener nofollow" target="_blank">não tem no Brasil</a>.</p>
+
+<h3 id="3-esperanca-bluetooth-52">#3 Esperança: Bluetooth 5.2</h3>
+
+<p>A especificação da mais recente versão do Bluetooth (5.2) foi <a href="https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/le-audio/" rel="noopener nofollow" target="_blank">lançada recentemente</a> e trás umas novidades <em>muito</em> atrativas e que mudam bastante em relação as versões anteriores. </p>
+
+<p>Vale a pena ler o material completo, mas o que interessa para esse cenário é: <strong>MultiStream e o novo codec LC3</strong>. </p>
+
+<p>Na teoria essas mudanças vão possibilitar que o a recepção e transmissão de áudio sejam feitas ao mesmo tempo em alta definição, mantendo os benefícios de baixo consumo de energia e com alcance e qualidade ainda maiores e mais estáveis.</p>
+
+<h2 id="mas-bluetooth-e-a-unica-opcao-sem-fio">Mas bluetooth é a única opção sem fio?</h2>
+
+<p>Não! </p>
+
+<p>Existem opções de <em>headsets</em> sem fio que utilizam a tecnologia sem fio 2.4ghz e não sofre com os problemas do Bluetooth. Obviamente que nada é um mar de rosa e ela sofre com vários outros problemas, um deles, sendo o preço bem mais <strong>caro</strong> e a mobilidade menor já que na maioria das vezes o <strong>alcance é menor</strong> (30m do Bluetooth contra a média de 12m dos Wireless). </p>
+
+<p>Essa tecnologia é geralmente encontrada em Headsets Gamer, que podem ser uma opção para quem está buscando conforto, bom áudio e bom microfone. Atualmente estou de olho em dois:</p>
+
+<ul>
+<li><a href="https://www.soundguys.com/corsair-virtuoso-wireless-se-review-38016/" rel="noopener nofollow" target="_blank">Corsair Virtuoso Wireless SE</a></li>
+<li><a href="https://www.soundguys.com/razer-blackshark-v2-pro-review-39782/" rel="noopener nofollow" target="_blank">Razer BlackShark V2 (Pro)</a></li>
+</ul>
+
+<p>Vale ressaltar que se você curte muito ouvir música em alta definição nenhuma tecnologia sem fio ainda chega na mesma definição que fones com fio. A maioria das pessoas não vai notar a diferença, mas algumas pessoas sim. </p>
+
+<h2 id="referencias">Referências</h2>
+
+<ul>
+<li><a href="https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/le-audio/" rel="noopener nofollow" target="_blank">The next generation of Bluetooth® audio</a> </li>
+<li><a href="https://habr.com/en/post/456182/" rel="noopener nofollow" target="_blank">Audio over Bluetooth: most detailed information about profiles, codecs, and devices</a></li>
+<li><a href="https://gitlab.freedesktop.org/pulseaudio/pulseaudio/-/merge_requests/288" rel="noopener nofollow" target="_blank">WIP: Bluetooth HSP and HFP profiles implementation via hsphpfd daemon</a></li>
+<li><a href="https://hookeaudio.com/blog/hooke-verse/made-worlds-first-bluetooth-microphone/" rel="noopener nofollow" target="_blank">How We Made The World's First Bluetooth Microphone - Hooke Audio</a></li>
+<li>Outras pessoas perguntando coisas parecidas como <a href="https://www.reddit.com/r/headphones/comments/1odj2r/questions_about_bluetooth_audio/" rel="noopener nofollow" target="_blank">aqui</a></li>
+<li><a href="https://lists.freedesktop.org/archives/pulseaudio-discuss/2019-June/031175.html" rel="noopener nofollow" target="_blank">[pulseaudio-discuss] [PATCH v11 07/11] bluetooth: Add A2DP FastStream codec support</a></li>
+</ul>
+
+<hr>
+
+<blockquote>
+<p>🌿 <strong>Budding</strong> são anotações e ideias que já revisei e editei minimamente. Estão começando a tomar forma, mas ainda precisam de refinamento. <a href="https://listed.to/@Myreli/the-garden">O que é isso?</a></p>
+</blockquote>
+<p></p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

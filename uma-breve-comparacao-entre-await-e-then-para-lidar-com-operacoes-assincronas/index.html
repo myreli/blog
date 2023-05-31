@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="uma-breve-comparacao-entre-await-e-then-para-lidar-com-operacoes-assincronas">🌿 Uma breve comparação entre await e then para lidar com operações assíncronas</h1>
+
+<p></p><p dir="auto"></p><p dir="auto"></p><p dir="auto"><mark></mark></p><p dir="auto">async + await vs then e legibilidade de código.</p><p dir="auto"><mark><br></mark></p><p dir="auto"><mark>Em construção!</mark></p><p dir="auto">Existe uma conversa frequente nos fóruns de Node.js acerca de como lidar com funções assíncronas. Ainda que <code>async</code> e <code>then</code> nos fornecem a mesma funcionalidade para lidar com código assíncrono em JavaScript, ambas são distintas em seu funcionamento e efeitos colaterais.</p><hr dir="auto"><p dir="auto"><em>Essa não é uma introdução as promises ou programação assíncrona, apenas devaneios sobre formas de lidar com o resultado dessas operações. Aqui estão excelentes materiais para aprender sobre recursos de programação assíncrona no JavaScript:</em></p><ul dir="auto"><li dir="auto"><p dir="auto"><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Using_promises" rel="noopener nofollow" target="_blank">https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Using_promises</a></p></li><li dir="auto"><p dir="auto"><a href="https://web.dev/i18n/pt/promises/" rel="noopener nofollow" target="_blank">https://web.dev/i18n/pt/promises/</a></p></li><li dir="auto"><p dir="auto"><a href="https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/Asynchronous" rel="noopener nofollow" target="_blank">https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/Asynchronous</a></p></li></ul><hr dir="auto"><p dir="auto">Trabalhando com Node.js (JavaScript) você provavelmente já se deparou com esses dois tipos de código:</p><ol dir="auto"><li dir="auto"><p dir="auto">Requisição a API construída pelo time do <code>then</code></p></li></ol><pre dir="auto"><code class="language-javascript">fetch("https://emojihub.herokuapp.com/api/random")
+    .then(response =&gt; response.json())
+    .then(data =&gt; console.info(data))</code></pre><ol start="2" dir="auto"><li dir="auto"><p dir="auto">Requisição a API construída pelo time do <code>async/await</code></p></li></ol><pre dir="auto"><code class="language-javascript">const response = await fetch("https://emojihub.herokuapp.com/api/random")
+
+const data = await response.json()
+
+console.info(data)</code></pre><p dir="auto">Ambas resultam na mesma coisa: um emoji retornado randomicamente pela API e exibido no console. Mas cada API tem seus objetivos e seus respectivos casos de uso, e a semântica de cada um é diferente.</p><p dir="auto">Defendo que não existe bala de prata e cada recurso tem sua razão de ser, então esse rascunho não serve para dizer qual é melhor, mas sim comparar ambos e ajudar na escolha, além de compartilhar minha preferência do ponto de vista da legibilidade.</p><h1 dir="auto" id="historia"><strong>História</strong></h1><p dir="auto">Para que o próximo tópico faça sentido, vou começar traduzindo cada uma das implementações:</p><ol dir="auto"><li dir="auto"><p dir="auto">Utilizando <code>then</code>, estamos essencialmente:</p></li></ol><pre dir="auto"><code class="language-javascript">'BUSCAR O EMOJI NA API'
+    ENTÃO 'TRANSFORMAR A RESPOSTA EM JSON'
+    ENTÃO 'IMPRIMIR OS DADOS'</code></pre><ol dir="auto"><li dir="auto"><p dir="auto">Utilizando <code>await</code>, estamos essencialmente:</p></li></ol><pre dir="auto"><code class="language-javascript">RESPOSTA = (AGUARDE) 'BUSCAR O EMOJI NA API'
+
+DADOS = (AGUARDE) 'TRANSFORMAR A RESPOSTA EM JSON'
+
+'IMPRIMIR OS DADOS'</code></pre><p dir="auto">A implementação sozinha pode parecer pouca diferença, mas no segundo caso o código lê mais natural, muito semelhante ao síncrono. Enquanto o primeiro depende de bastante compreensão do <a href="https://subscription.packtpub.com/book/web-development/9781783287314/1/ch01lvl1sec10/the-callback-pattern" rel="noopener nofollow" target="_blank">https://subscription.packtpub.com/book/web-development/9781783287314/1/ch01lvl1sec10/the-callback-pattern</a> e corre o risco do <a href="http://callbackhell.com/" rel="noopener nofollow" target="_blank">http://callbackhell.com/</a>, caso seja mal implementado.</p><p dir="auto">Para além da naturalidade, cada formato tem objetivo diferente e internalidades diferentes. Apesar de parecer apenas um açúcar sintático, <code>await</code> implica em outras diferenças também.</p><p dir="auto">E esse é um motivo histórico, em linha do tempo:</p><ol dir="auto"><li dir="auto"><p dir="auto">Node.js foi criado profundamente atrelado ao Padrão Callback, que permitia a utilização de código assíncrono</p></li><li dir="auto"><p dir="auto">Foram criadas as <em>promises</em> e as novas APIs de <code>then/catch/finally</code> que permitiram minimizar o <em>callback hell</em></p></li><li dir="auto"><p dir="auto">Finalmente foram criadas as <em>funções assíncronas</em>, que trouxeram o <code>async/await</code> e permitiram o código mais legível e natural (<a href="https://developers.google.com/web/fundamentals/primers/async-functions" rel="noopener nofollow" target="_blank">https://developers.google.com/web/fundamentals/primers/async-functions</a>)</p></li></ol><p dir="auto">Apesar de não serem sempre recursos concorrentes e terem seus próprios casos de uso, a nova sintaxe é uma evolução levando em conta diversos dos problemas anteriores. Por isso, para alguns casos ela claramente será mais compreensível, porque surgiu em um contexto diferente — de resolver problemas anteriores.</p><p dir="auto">O mesmo vale para as novas APIs de manipulação de coleções — <code>map</code>, <code>filter</code>,<code>reduce</code> — nenhum deles substitui o bom e velho <code>for</code> ou ainda o <code>while</code>, apenas resolvem problemas específicos.</p><h1 dir="auto" id="compreensibilidade"><strong>Compreensibilidade</strong></h1><p dir="auto">Escreverei pouco sobre este tópico porque o código fala mais do que mil palavras. E porque existem materiais melhores escritos sobre isso (como esse da Google <a href="https://developers.google.com/web/fundamentals/primers/async-functions" rel="noopener nofollow" target="_blank">https://developers.google.com/web/fundamentals/primers/async-functions</a> ou <a rel="noopener noreferrer nofollow" href="https://">esse da MDN </a><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises" rel="noopener nofollow" target="_blank">https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Promises</a>).</p><p dir="auto">Naturalmente (ao menos na nossa região) fazemos a leitura de cima para baixo e da esquerda para a direita. E é isso que o código expressa:</p><pre dir="auto"><code class="language-javascript">console.log("#1");
+
+await something();
+
+console.log("#2");
+
+console.log("#3");</code></pre><p dir="auto">Já utilizando <code>then</code>, não podemos garantir que o código a seguir será executado nessa ordem, mas sim que vai acontecer na ordem que for mais performática:</p><pre dir="auto"><code>console.log("#1");
+
+something().then(() =&gt; { 
+    console.log("#3? (or #2)");
+})
+
+console.log("#2? (or #3)");</code></pre><p dir="auto">Para garantir a ordem, seria necessário encadear a execução a resolução da <em>Promise</em>, causando aninhamento e possível quebra de semântica:</p><pre dir="auto"><code>console.log("#1");
+
+something().then(() =&gt; { 
+    console.log("#2");
+}).finally(() =&gt; {
+    console.log("#3");
+})</code></pre><p dir="auto">Código limpo é código limpo em qualquer lugar e com qualquer padrão, então sem aninhar seus <em>thens</em>. Em qualquer nível, sempre evite o <strong>callback hell: </strong><a href="https://ibb.co/DkMWQfq" rel="noopener nofollow" target="_blank">https://ibb.co/DkMWQfq</a>.</p><h1 dir="auto" id="performance">Performance</h1><p dir="auto">Hoje em dia, o <code>async/await</code> é mais rápido que as outras opções, e muito mais rápido que implementações manuais de promise. Isso é graças ao <a href="https://v8.dev/blog/fast-async" rel="noopener nofollow" target="_blank">https://v8.dev/blog/fast-async</a>, uma implementação da V8 que se aproveitou dos recursos para evitar o <em>overhead </em>que era causado pela <em>promise </em>extra no <code>await</code> .</p><p dir="auto">De todo modo, sempre priorize realizar em “paralelo” processamentos que não são bloqueantes e dependentes entre si e aguardar por todos de uma vez só. O <a rel="noopener noreferrer nofollow" href="https://">promise.all</a> é um exemplo de recurso que possibilita isso, e pode ser utilizado em qualquer uma das maneiras. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all" rel="noopener nofollow" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all</a>)</p><h1 dir="auto" id="tratamento-de-erros">Tratamento de Erros</h1><p dir="auto">Além de possibilitar o tratamento de erros mais familiar (<code>try/catch</code>), a V8 trabalhou em um recurso poderosíssimo para o tratamento de erros com <code>async/await</code>: Zero-cost async stack traces (<a href="https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit#heading=h.e6lcalo0cl47" rel="noopener nofollow" target="_blank">https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit#heading=h.e6lcalo0cl47</a>). Isso significa que o rastreamento de erro contempla as informações do código síncrono e assíncrono, resolvendo uma dor forte do padrão de <em>callbacks</em> ou do <code>then/catch</code>, que era detectar a origem de erros não capturados quando surgiam de código assíncrono.</p><p dir="auto">Por outro lado, como JavaScript não possui <em>catchs</em> condicionais, o tratamento específico de exceção pode ser mais verboso, enquanto temos o par <code>then/catch</code> que pode especificar por cada operação assíncrona.</p><p dir="auto">Para se aprofundar nas convenções de tratamento de erro, veja:</p><ul dir="auto"><li dir="auto"><p dir="auto"><a href="https://nodejs.org/en/knowledge/errors/what-are-the-error-conventions/" rel="noopener nofollow" target="_blank">https://nodejs.org/en/knowledge/errors/what-are-the-error-conventions/</a></p></li><li dir="auto"><p dir="auto"><a href="https://nodejs.dev/learn/error-handling-in-nodejs" rel="noopener nofollow" target="_blank">https://nodejs.dev/learn/error-handling-in-nodejs</a></p></li><li dir="auto"><p dir="auto"><a href="https://www.honeybadger.io/blog/errors-nodejs/" rel="noopener nofollow" target="_blank">https://www.honeybadger.io/blog/errors-nodejs/</a></p></li><li dir="auto"><p dir="auto"><a href="https://mathiasbynens.be/notes/async-stack-traces" rel="noopener nofollow" target="_blank">https://mathiasbynens.be/notes/async-stack-traces</a></p></li></ul><h1 dir="auto" id="afinal-qual-forma-e-a-melhor">Afinal, qual forma é a melhor?</h1><p dir="auto">Nenhuma. Cada uma pode ter um caso de uso mais ou menos adequado, de acordo com o contexto.</p><p dir="auto">Assim como não devemos encadear vários condicionais (<code>if</code>) também não deveríamos encadear vários resolvedores de promessas (<code>then</code>). E assim como não deveríamos implementar um complexo padrão de projeto para resolver uma validação de sim ou não, não deveríamos criar uma função para utilizar <code>await</code> quando o padrão de <em>callback</em> resolveria.</p><p dir="auto">Por causa do ganho em compreensibilidade e das possibilidades de melhoria em performance que chegaram com a sintaxe <code>async/await</code>, a discussão ainda vem evoluindo para que <code>await</code> possa ser utilizado também em nível de módulos.</p><p dir="auto">As propostas originais mencionadas servem como contexto para o problema do <em>callback hell </em>e as vantagens observadas com a nova sintaxe:</p><ul dir="auto"><li dir="auto"><p dir="auto"><a href="https://tc39.es/proposal-async-await/" rel="noopener nofollow" target="_blank">https://tc39.es/proposal-async-await/</a></p></li><li dir="auto"><p dir="auto"><a href="https://tc39.es/proposal-top-level-await/" rel="noopener nofollow" target="_blank">https://tc39.es/proposal-top-level-await/</a></p></li></ul><p dir="auto">Isso não demonstra que ele seja melhor, mas que foi amplamente adotado e o uso vem crescendo. As pessoas olhariam estranho para um código cheio de <code>then</code> encadeado sendo que temos uma API muito mais limpa para lidar com isso.</p><p dir="auto">E as pessoas também olhariam estranho para uma lista de <em>awaits </em>dentro de uma mesma função porque isso pode estar criando um bloqueio por forçar o comportamento síncrono, principalmente quando dentro de <em>loops</em>. <em>(off-topic: Se você tem trabalhando com várias operações encadeadas, recomendo fortemente o estudo de streams. Especialmente as pipelines </em><a href="https://nodejs.org/api/stream.html#streampipelinesource-transforms-destination-callback" rel="noopener nofollow" target="_blank">https://nodejs.org/api/stream.html#streampipelinesource-transforms-destination-callback</a><em>)</em></p><p dir="auto">Lembrando do Fowler:</p><blockquote dir="auto"><p dir="auto">Any fool can write code that a computer can understand. Good programmers write code that humans can understand.</p></blockquote><p dir="auto">No fim, o melhor para a aplicação é não bloquear o <em>event loop</em>. A forma como isso será codificado depende muito mais do código e das pessoas que vão ler ele — pessoalmente vejo que a sintaxe <code>async/await</code> costuma atender a maioria dos casos comuns, além de ser compatível com a especificação de <em>async iterators</em> (<a href="https://tc39.es/proposal-async-iteration/" rel="noopener nofollow" target="_blank">https://tc39.es/proposal-async-iteration/</a>).</p><p dir="auto">Isso não exime de utilizar <em>callbacks</em>, eles são core do Node (<a href="https://nodejs.org/en/knowledge/getting-started/control-flow/what-are-callbacks/" rel="noopener nofollow" target="_blank">https://nodejs.org/en/knowledge/getting-started/control-flow/what-are-callbacks/</a>), ainda que eles próprios tratem <code>async/await</code> como a alternativa moderna para lidar com assincronismo (<a href="https://nodejs.dev/learn/modern-asynchronous-javascript-with-async-and-await" rel="noopener nofollow" target="_blank">https://nodejs.dev/learn/modern-asynchronous-javascript-with-async-and-await</a>).</p><p dir="auto">Além disso, vale mencionar que a V8, o motor que faz a magica acontecer e JS executar no Back-End com Node.js, aconselha (1) a utilização de <code>async/await</code> em vez de <em>promises</em> escritas manualmente pelos ganhos em performance e (2) a utilização das implementações nativas de <em>promise</em> em vez de bibliotecas pelos outros benefícios mencionados anteriormente, na seção de performance.</p><h1 dir="auto" id="nao-bloqueie-o-event-loop">“Não bloqueie o <em>Event Loop</em>”</h1><p dir="auto">Afinal, por que tudo isso? <em>(em homenagem ao meu amigo que xingou Node.js dizendo que ler um arquivo em Java na aula de POO foi mais simples que entender o Event Loop)</em></p><p dir="auto">Quando alguém me questiona porque tantas APIs nativas do Node.js, ou mesmo as bibliotecas mais utilizadas, são assíncronas e se não seria mais simples elas simplesmente serem síncronas como em algumas outras linguagens, minha resposta gira em torno dê: <em>“Não bloqueie o Event Loop”.</em></p><p dir="auto">Node.js® é descrito em sua própria documentação como <em>“um ambiente de execução JavaScript assíncrono e orientado a eventos”</em> que utiliza um <em>“modelo de I/O não bloqueante”</em>. Na prática isso quer dizer muitas coisas, e a arquitetura do Node.js é uma que vale estudar, mas podemos resumir em “não bloqueie o <em>event loop</em>” porque essa é a estratégia para que ele seja não bloqueante e orientado a eventos por padrão.</p><p dir="auto">O <em>event loop</em> nada mais é do que a <em>thread</em> principal, e devemos mantê-la livre de processos pesados para que ela se mantenha performática e segura. Em vez disso, enviamos tarefas pesadas para outras <em>threads</em> e lidamos com o resultado de forma assíncrona, através de eventos.</p><p dir="auto">Por isso, para garantirmos nunca bloquear a <em>thread</em> principal, que tantas APIs nativas são assíncronas por padrão, e assim deve ser com as SDKs e bibliotecas que utilizamos. Se não é assíncrono por padrão, torne-a. <strong><em>Não bloqueie o Event Loop</em></strong> :)</p><p dir="auto">Alguns recursos da própria documentação para se aprofundar nesse tema e na arquitetura do Node.js:</p><ul dir="auto"><li dir="auto"><p dir="auto"><a href="https://nodejs.dev/learn" rel="noopener nofollow" target="_blank">https://nodejs.dev/learn</a></p></li><li dir="auto"><p dir="auto"><a href="https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/" rel="noopener nofollow" target="_blank">https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/</a></p></li><li dir="auto"><p dir="auto"><a href="https://nodejs.org/en/docs/guides/dont-block-the-event-loop/" rel="noopener nofollow" target="_blank">https://nodejs.org/en/docs/guides/dont-block-the-event-loop/</a></p></li></ul><hr dir="auto"><h1 dir="auto" id="conclusao">Conclusão</h1><p dir="auto">Não existe bala de prata, como tudo na tecnologia e na vida. Ambos são recursos poderosos, assim como o próprio padrão callback e o ideal é entender os dois para definir o mais adequado ao contexto — afinal foram criados em contextos diferentes para resolver problemas diferentes.</p><p dir="auto">Quando estamos falando de tratamento de erros, legibilidade e desempenho, o <code>async/await</code> performa melhor, mas apenas isso não o torna a solução ideal.</p><p dir="auto">Para se aprofundar nesse tema você pode ler mais nos materiais que eu utilizei como base para escrever:</p><ul dir="auto"><li dir="auto"><p dir="auto"><a href="https://mathiasbynens.be/notes/async-stack-traces" rel="noopener nofollow" target="_blank">https://mathiasbynens.be/notes/async-stack-traces</a></p></li><li dir="auto"><p dir="auto"><a href="https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit" rel="noopener nofollow" target="_blank">https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit</a></p></li><li dir="auto"><p dir="auto"><a href="https://tc39.es/ecma262/#await" rel="noopener nofollow" target="_blank">https://tc39.es/ecma262/#await</a></p></li><li dir="auto"><p dir="auto"><a href="https://tc39.es/ecma262/#sec-promise.prototype.then" rel="noopener nofollow" target="_blank">https://tc39.es/ecma262/#sec-promise.prototype.then</a></p></li><li dir="auto"><p dir="auto"><a href="https://github.com/tc39/ecma262/pull/1250" rel="noopener nofollow" target="_blank">https://github.com/tc39/ecma262/pull/1250</a></p></li><li dir="auto"><p dir="auto"><a href="https://nodejs.org/en/docs/guides/dont-block-the-event-loop/" rel="noopener nofollow" target="_blank">https://nodejs.org/en/docs/guides/dont-block-the-event-loop/</a></p></li></ul><hr dir="auto"><p dir="auto">Gratíssima a você por ler até aqui. Espero que esse conteúdo tenha agregado de alguma forma. 🤗</p><p dir="auto">Se quiser conversar sobre o tema você pode me enviar um e-mail para <a rel="noopener noreferrer nofollow" href="mailto:myreli@duck.com">myreli@duck.com</a>, deixar uma mensagem no <a rel="noopener noreferrer nofollow" href="https://">Guestbook</a> ou ainda um <a target="_blank" rel="noopener noreferrer nofollow" href="https://listed.to/@myreli/tip">agradecimento</a>.</p><p dir="auto"><br></p><p dir="auto">***</p><p dir="auto"><br></p><p dir="auto"><span style="color: rgb(0, 0, 0); font-size: 17.5px;">🌿&nbsp;</span><span style="font-weight: bolder; color: rgb(0, 0, 0); font-size: 17.5px;">Budding</span><span style="color: rgb(0, 0, 0); font-size: 17.5px;">&nbsp;são ideias que já revisei ou editei um pouco. Estão começando a tomar forma, mas ainda precisam de refinamento.&nbsp;</span><a href="https://listed.to/@Myreli/the-garden" target="_blank">O que é isso?</a></p><p dir="auto"><br></p><p dir="auto"><br><br></p>
+<p></p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>

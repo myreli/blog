@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0">
+    <meta name="author" content="Myreli <myreli@proton.me>">
+
+    <title> | noted.myreli.dev</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.28.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.classless.min.css">
+    <style>
+        :root {
+            --spacing: .75rem;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        button {
+            --background-color: transparent;
+            --color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                  <a href="/">
+                    <code>noted.myreli.dev</code>
+                  </a>
+                </li>
+            </ul>
+            <ul><li><a href="/about/">Sobre</a></li>
+<li><a href="/">Posts</a></li>
+<li><a href="/tags/">Tags</a></li></ul>
+        </nav>
+        <hgroup>
+            <h1 id=""></h1>
+            <h2 id=""></h2>
+        </hgroup>
+        <hr>
+    </header>
+    <main>
+        
+<h1 id="kotlin-idiomatico-valor-padrao-ou-inicializacao-tardia">🌱 KOTLIN IDIOMÁTICO: Valor padrão ou inicialização tardia?</h1>
+
+<p></p><p>Em Kotlin, o uso inicialização tardia torna inicialização fora do construtor bem mais elegante.</p>
+
+<p>Em alguns casos não conseguimos injetar as propriedades via construtor, como em testes, e tendemos a aplicar um valor padrão, por exemplo: </p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">cobaia</span><span class="p">:</span> <span class="nx">Cobaia</span> <span class="o">=</span> <span class="kc">null</span>
+<span class="c1">// ... várias coisas até a cobaia estar disponível</span>
+<span class="nx">cobaia</span> <span class="o">=</span> <span class="nx">Myreli</span><span class="p">()</span>
+</code></pre></div>
+<p>Isso é muito comum com testes, porque em vez de inicializar no construtor, inicializamos em uma etapa de <em>setup</em> para nos aproveitarmos da injeção de dependências com <em>mocks</em> e outros recursos. Por exemplo o código abaixo não é um bom teste:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">CobaiaSpec</span> <span class="p">{</span>
+    <span class="nx">val</span> <span class="nx">cobaia</span><span class="p">:</span> <span class="nx">Cobaia</span> <span class="o">=</span> <span class="nx">Myreli</span><span class="p">()</span> <span class="c1">// 😿</span>
+
+    <span class="p">@</span><span class="nd">Test</span> <span class="nx">fun</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">cobaia</span><span class="p">.</span><span class="nx">executarExperimentosMalucos</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Então precisamos inicializar no setup dos testes:</p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">CobaiaSpec</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">cobaia</span><span class="p">:</span> <span class="nx">Cobaia</span> <span class="o">=</span> <span class="kc">null</span> <span class="c1">// 😿</span>
+
+    <span class="p">@</span><span class="nd">SetUp</span> <span class="nx">fun</span> <span class="nx">setUp</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">cobaia</span> <span class="o">=</span> <span class="nx">Myreli</span><span class="p">()</span> <span class="c1">// 😺</span>
+    <span class="p">}</span>
+
+    <span class="p">@</span><span class="nd">Test</span> <span class="nx">fun</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">cobaia</span><span class="p">?.</span><span class="nx">executarExperimentosMalucos</span><span class="p">()</span> <span class="c1">// 😿</span>
+    <span class="p">}</span>
+<span class="p">}</span> 
+</code></pre></div>
+<p>Mas dar um valor padrão para uma variável simplesmente porque precisamos dela em diferentes sub contextos sempre trás um aspecto estranho. O kotlin resolve esse problema com a <em>inicialização tardia:</em></p>
+<div class="highlight"><pre class="highlight javascript"><code><span class="kd">class</span> <span class="nx">CobaiaSpec</span> <span class="p">{</span>
+    <span class="nx">lateinit</span> <span class="kd">var</span> <span class="nx">cobaia</span><span class="p">:</span> <span class="nx">Cobaia</span> <span class="c1">// 😻</span>
+
+    <span class="p">@</span><span class="nd">SetUp</span> <span class="nx">fun</span> <span class="nx">setUp</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">cobaia</span> <span class="o">=</span> <span class="nx">Myreli</span><span class="p">()</span> <span class="c1">// 😻</span>
+    <span class="p">}</span>
+
+    <span class="p">@</span><span class="nd">Test</span> <span class="nx">fun</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">cobaia</span><span class="p">.</span><span class="nx">executarExperimentosMalucos</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span> 
+</code></pre></div>
+<p>Inicializar com <code class="prettyprint">null</code> (ou <code class="prettyprint">undefined</code>) é uma solução desagradável, mas as vezes inevitável. Gostei bastante da forma como Kotlin resolveu esse problema, tendo uma forma de declarar que aquela variável será inicializada em outro momento. </p>
+
+<h2 id="referencias">Referências</h2>
+
+<ul>
+<li>  <a href="https://kotlinlang.org/docs/properties.html#late-initialized-properties-and-variables" rel="noopener nofollow" target="_blank">https://kotlinlang.org/docs/properties.html#late-initialized-properties-and-variables</a></li>
+</ul>
+
+<hr>
+
+<p><em>🌱 *</em>Seedlings** são ideias que recém tive e precisam de cultivo, não foram revisadas ou refinadas. <a href="https://listed.to/@Myreli/the-garden">Saiba mais.</a>*</p>
+<p></p>
+
+
+        
+            <span id="discussion-section">
+                <button onclick="loadDiscussionSection()">ver comentários</button>
+            </span>
+        
+    </main>
+
+    <footer>
+        <article>
+            <p>Quer receber atualizações trimestrais por e-mail? Sem spam.</p>
+            <form action="https://buttondown.email/api/emails/embed-subscribe/myreli" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/myreli', 'popupwindow')">
+                <input type="email" name="email" placeholder="Digite seu e-mail" required="">
+                <button type="submit">Receber atualizações</button>
+            </form>
+        </article>
+
+        <p>
+            Copyright © <a href="https://myreli.dev">Myreli</a> 2023
+        </p>
+    </footer>
+    <script>
+        var HYVOR_TALK_WEBSITE = 545;
+        var HYVOR_TALK_CONFIG  = {
+            id: "false"
+        }
+
+        function loadDiscussionSection() {
+          const discussions = document.getElementById('discussion-section')
+          if (!discussions) return;
+
+          discussions.children[0].setAttribute("aria-busy", true)
+
+          const widget = document.createElement("div")
+          widget.id = "hyvor-talk-view"
+
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = "https://talk.hyvor.com/web-api/embed.js"
+
+          discussions.replaceChildren(widget)
+          document.body.appendChild(script)
+        }
+    </script>
+
+
+
+</body></html>
